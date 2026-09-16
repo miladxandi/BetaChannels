@@ -30,7 +30,7 @@
         }
     </div>
 
-    <div class="filter-chips'>
+    <div class="filter-chips">
         <div class="filter-chip @(selectedStatus == null ? "active" : "")" @onclick="() => { selectedStatus = null; Search(); }">همه وضعیت‌ها</div>
         @foreach (var status in statuses)
         {
@@ -42,7 +42,7 @@
 
     @if (freelancers.Count == 0)
     {
-        <div class="empty-state'>
+        <div class="empty-state">
             <i class="bi bi-people"></i>
             <h3>فریلنسری یافت نشد</h3>
             <p>فیلترهای جستجو را تغییر دهید</p>
@@ -53,7 +53,7 @@
         @foreach (var freelancer in freelancers)
         {
             <div class="freelancer-card" @onclick="() => ViewProfile(freelancer.Id)">
-                <div class="freelancer-header'>
+                <div class="freelancer-header">
                     <div class="freelancer-avatar">
                         @freelancer.FullName[0]
                     </div>
@@ -89,11 +89,11 @@
                 </div>
                 <div style="margin-top: 12px; display: flex; gap: 8px;">
                     <button class="btn btn-primary" style="flex: 1; padding: 10px;" @onclick:stopPropagation="true" @onclick="() => HireFreelancer(freelancer.Id)">
-                        <i class="bi bi-hand-index-thumb-fill'></i>
+                        <i class="bi bi-hand-index-thumb-fill"></i>
                         استخدام
                     </button>
                     <button class="btn btn-outline" style="padding: 10px 16px;" @onclick:stopPropagation="true" @onclick="() => ViewProfile(freelancer.Id)">
-                        <i class="bi bi-eye'></i>
+                        <i class="bi bi-eye"></i>
                     </button>
                 </div>
             </div>

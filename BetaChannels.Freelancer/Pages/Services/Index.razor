@@ -11,7 +11,7 @@
         </div>
         <div class="header-actions">
             <button class="header-btn" @onclick="ShowCreateForm">
-                <i class="bi bi-plus-lg'></i>
+                <i class="bi bi-plus-lg"></i>
             </button>
         </div>
     </div>
@@ -35,7 +35,7 @@
 
     @if (services.Count == 0)
     {
-        <div class="empty-state'>
+        <div class="empty-state">
             <i class="bi bi-briefcase"></i>
             <h3>هنوز خدمتی اضافه نکردید</h3>
             <p>اولین خدمت خود را اضافه کنید</p>
@@ -66,10 +66,10 @@
                     </div>
                     <div style="display: flex; gap: 8px;">
                         <button class="btn btn-outline" style="padding: 8px 16px; font-size: 12px;" @onclick="() => EditService(service)">
-                            <i class="bi bi-pencil'></i>
+                            <i class="bi bi-pencil"></i>
                         </button>
                         <button class="btn" style="padding: 8px 16px; font-size: 12px; background: rgba(244,67,54,0.15); color: var(--danger);" @onclick="() => DeleteService(service.Id)">
-                            <i class="bi bi-trash'></i>
+                            <i class="bi bi-trash"></i>
                         </button>
                     </div>
                 </div>

@@ -12,7 +12,7 @@
         </div>
         <div class="header-actions">
             <button class="header-btn" @onclick="ShowAddEvent">
-                <i class="bi bi-plus-lg'></i>
+                <i class="bi bi-plus-lg"></i>
             </button>
         </div>
     </div>
@@ -21,11 +21,11 @@
 <div class="page-content">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
         <button class="btn btn-outline" style="padding: 8px 16px;" @onclick="PreviousMonth">
-            <i class="bi bi-chevron-right'></i>
+            <i class="bi bi-chevron-right"></i>
         </button>
         <h3 style="font-size: 18px;">@currentMonthName @currentYear</h3>
         <button class="btn btn-outline" style="padding: 8px 16px;" @onclick="NextMonth">
-            <i class="bi bi-chevron-left'></i>
+            <i class="bi bi-chevron-left"></i>
         </button>
     </div>
 
@@ -43,7 +43,7 @@
         }
     </div>
 
-    <div class="section-title' style="padding: 0; margin-top: 20px;">
+    <div class="section-title" style="padding: 0; margin-top: 20px;">
         <h3>رویدادهای @selectedDate.ToString("yyyy/MM/dd")</h3>
     </div>
 
@@ -111,7 +111,7 @@
     private List<Shared.DTOs.ContentCalendarDto> dayEvents = new();
     private List<CalendarDay> calendarDays = new();
     private bool showAddEventForm = false;
-    private string eventTitle = "';
+    private string eventTitle = "";
     private string eventDescription = "";
     private DateTime eventDate = DateTime.Today;
     private Shared.Enums.SocialPlatform eventPlatform = Shared.Enums.SocialPlatform.Instagram;
