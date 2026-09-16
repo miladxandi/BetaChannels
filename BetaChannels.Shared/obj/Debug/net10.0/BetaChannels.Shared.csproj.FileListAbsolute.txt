@@ -1,0 +1,12 @@
+/data/BetaChannels/BetaChannels.Shared/bin/Debug/net10.0/BetaChannels.Shared.deps.json
+/data/BetaChannels/BetaChannels.Shared/bin/Debug/net10.0/BetaChannels.Shared.dll
+/data/BetaChannels/BetaChannels.Shared/bin/Debug/net10.0/BetaChannels.Shared.pdb
+/data/BetaChannels/BetaChannels.Shared/obj/Debug/net10.0/BetaChannels.Shared.GeneratedMSBuildEditorConfig.editorconfig
+/data/BetaChannels/BetaChannels.Shared/obj/Debug/net10.0/BetaChannels.Shared.AssemblyInfoInputs.cache
+/data/BetaChannels/BetaChannels.Shared/obj/Debug/net10.0/BetaChannels.Shared.AssemblyInfo.cs
+/data/BetaChannels/BetaChannels.Shared/obj/Debug/net10.0/BetaChannels.Shared.csproj.CoreCompileInputs.cache
+/data/BetaChannels/BetaChannels.Shared/obj/Debug/net10.0/BetaChannels.Shared.sourcelink.json
+/data/BetaChannels/BetaChannels.Shared/obj/Debug/net10.0/BetaChannels.Shared.dll
+/data/BetaChannels/BetaChannels.Shared/obj/Debug/net10.0/refint/BetaChannels.Shared.dll
+/data/BetaChannels/BetaChannels.Shared/obj/Debug/net10.0/BetaChannels.Shared.pdb
+/data/BetaChannels/BetaChannels.Shared/obj/Debug/net10.0/ref/BetaChannels.Shared.dll

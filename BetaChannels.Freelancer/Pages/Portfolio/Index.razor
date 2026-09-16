@@ -5,14 +5,14 @@
 <div class="app-header">
     <div class="header-top">
         <div class="app-logo">
-            <button class="header-btn" @onclick="() => Navigation.NavigateTo("/")">
+            <button class="header-btn" @onclick='() => Navigation.NavigateTo("/")'>
                 <i class="bi bi-arrow-right"></i>
             </button>
             <div class="logo-text">نمونه کارها</div>
         </div>
         <div class="header-actions">
-            <button class="header-btn" @onclick="ShowAddForm">
-                <i class="bi bi-plus-lg"></i>
+            <button class="header-btn" @onclick='ShowAddForm">
+                <i class="bi bi-plus-lg'></i>
             </button>
         </div>
     </div>
@@ -43,7 +43,7 @@
         <div class="card" style="width: 100%; max-width: 500px;">
             <div class="card-header">
                 <h3>افزودن نمونه کار</h3>
-                <button class="header-btn" @onclick="() => showAddForm = false" style="background: rgba(255,255,255,0.1);">
+                <button class="header-btn" @onclick='() => showAddForm = false" style="background: rgba(255,255,255,0.1);'>
                     <i class="bi bi-x-lg"></i>
                 </button>
             </div>
@@ -64,7 +64,7 @@
                     }
                 </select>
             </div>
-            <button class="btn btn-primary btn-full" @onclick="AddPortfolioItem">افزودن</button>
+            <button class="btn btn-primary btn-full" @onclick='AddPortfolioItem">افزودن</button>
         </div>
     </div>
 }
@@ -74,7 +74,7 @@
 @code {
     private List<Shared.DTOs.PortfolioItemDto> portfolioItems = new();
     private bool showAddForm = false;
-    private string newTitle = "";
+    private string newTitle = "';
     private string newDescription = "";
     private Shared.Enums.ServiceCategory newCategory = Shared.Enums.ServiceCategory.Videography;
 

@@ -5,14 +5,14 @@
 <div class="app-header">
     <div class="header-top">
         <div class="app-logo">
-            <button class="header-btn" @onclick="() => Navigation.NavigateTo("/")">
+            <button class="header-btn" @onclick='() => Navigation.NavigateTo("/")'>
                 <i class="bi bi-arrow-right"></i>
             </button>
             <div class="logo-text">تقویم محتوایی</div>
         </div>
         <div class="header-actions">
-            <button class="header-btn" @onclick="ShowAddEvent">
-                <i class="bi bi-plus-lg"></i>
+            <button class="header-btn" @onclick='ShowAddEvent">
+                <i class="bi bi-plus-lg'></i>
             </button>
         </div>
     </div>
@@ -20,12 +20,12 @@
 
 <div class="page-content">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-        <button class="btn btn-outline" style="padding: 8px 16px;" @onclick="PreviousMonth">
-            <i class="bi bi-chevron-right"></i>
+        <button class="btn btn-outline" style="padding: 8px 16px;" @onclick='PreviousMonth">
+            <i class="bi bi-chevron-right'></i>
         </button>
         <h3 style="font-size: 18px;">@currentMonthName @currentYear</h3>
-        <button class="btn btn-outline" style="padding: 8px 16px;" @onclick="NextMonth">
-            <i class="bi bi-chevron-left"></i>
+        <button class="btn btn-outline" style="padding: 8px 16px;" @onclick='NextMonth">
+            <i class="bi bi-chevron-left'></i>
         </button>
     </div>
 
@@ -37,13 +37,13 @@
         @foreach (var day in calendarDays)
         {
             <div class="calendar-day @(day.IsToday ? "today" : "") @(day.IsOtherMonth ? "other-month" : "") @(day.HasEvent ? "has-event" : "")"
-                 @onclick="() => SelectDay(day)">
+                 @onclick='() => SelectDay(day)">
                 @day.DayNumber
             </div>
         }
     </div>
 
-    <div class="section-title" style="padding: 0; margin-top: 20px;">
+    <div class="section-title' style="padding: 0; margin-top: 20px;">
         <h3>رویدادهای @selectedDate.ToString("yyyy/MM/dd")</h3>
     </div>
 
@@ -72,7 +72,7 @@
         <div class="card" style="width: 100%; max-width: 500px;">
             <div class="card-header">
                 <h3>افزودن رویداد</h3>
-                <button class="header-btn" @onclick="() => showAddEventForm = false" style="background: rgba(255,255,255,0.1);">
+                <button class="header-btn" @onclick='() => showAddEventForm = false" style="background: rgba(255,255,255,0.1);'>
                     <i class="bi bi-x-lg"></i>
                 </button>
             </div>
@@ -86,7 +86,7 @@
             </div>
             <div class="form-group">
                 <label>تاریخ</label>
-                <input type="date" class="form-control" @bind="eventDate" dir="ltr" />
+                <input type='date' class='form-control' value='@eventDate.ToString("yyyy-MM-dd")' @onchange='(e) => eventDate = DateTime.Parse(e.Value!.ToString())' dir='ltr' />
             </div>
             <div class="form-group">
                 <label>پلتفرم</label>
@@ -97,7 +97,7 @@
                     }
                 </select>
             </div>
-            <button class="btn btn-primary btn-full" @onclick="SaveEvent">ذخیره</button>
+            <button class="btn btn-primary btn-full" @onclick='SaveEvent">ذخیره</button>
         </div>
     </div>
 }
@@ -111,9 +111,9 @@
     private List<Shared.DTOs.ContentCalendarDto> dayEvents = new();
     private List<CalendarDay> calendarDays = new();
     private bool showAddEventForm = false;
-    private string eventTitle = "";
+    private string eventTitle = "';
     private string eventDescription = "";
-    private string eventDate = "";
+    private DateTime eventDate = DateTime.Today;
     private Shared.Enums.SocialPlatform eventPlatform = Shared.Enums.SocialPlatform.Instagram;
 
     private string currentMonthName => currentDate.ToString("MMMM", new System.Globalization.CultureInfo("fa-IR"));
@@ -190,7 +190,7 @@
         {
             Title = eventTitle,
             Description = eventDescription,
-            ScheduledDate = DateTime.Parse(eventDate),
+            ScheduledDate = eventDate,
             Platform = eventPlatform
         });
         showAddEventForm = false;

@@ -24,8 +24,8 @@ else
                     <i class="bi bi-bell-fill"></i>
                     <span class="notification-badge">2</span>
                 </button>
-                <button class="header-btn" @onclick="GoToProfile">
-                    <i class="bi bi-person-fill"></i>
+                <button class="header-btn" @onclick='GoToProfile">
+                    <i class="bi bi-person-fill'></i>
                 </button>
             </div>
         </div>
@@ -97,7 +97,7 @@ else
 
     @foreach (var freelancer in featuredFreelancers)
     {
-        <div class="freelancer-card" @onclick="() => Navigation.NavigateTo($"/freelancers/{freelancer.Id}")">
+        <div class="freelancer-card" @onclick='() => Navigation.NavigateTo($"/freelancers/{freelancer.Id}")'>
             <div class="freelancer-header">
                 <div class="freelancer-avatar">
                     @freelancer.FullName[0]
