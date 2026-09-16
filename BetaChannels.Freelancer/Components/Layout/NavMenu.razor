@@ -26,6 +26,8 @@
 
     private bool IsActive(string path)
     {
-        return Navigation.Uri.EndsWith(path.TrimStart('/'), StringComparison.OrdinalIgnoreCase);
+        var current = new Uri(Navigation.Uri).AbsolutePath.TrimEnd('/');
+        var target = path.TrimEnd('/');
+        return target == "" ? current == "" : current == target || current.StartsWith(target + "/");
     }
 }
