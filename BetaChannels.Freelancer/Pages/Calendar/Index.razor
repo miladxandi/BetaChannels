@@ -23,7 +23,7 @@
         <button class="btn btn-outline" style="padding: 8px 16px;" @onclick="PreviousMonth">
             <i class="bi bi-chevron-right"></i>
         </button>
-        <h3 style="font-size: 18px;">@currentMonthName @currentYear</h3>
+        <h3 style="font-size: 18px;">@currentMonthName @currentYear.ToPersianDigits()</h3>
         <button class="btn btn-outline" style="padding: 8px 16px;" @onclick="NextMonth">
             <i class="bi bi-chevron-left"></i>
         </button>
@@ -38,14 +38,21 @@
         {
             <div class="calendar-day @(day.IsToday ? "today" : "") @(day.IsOtherMonth ? "other-month" : "") @(day.HasEvent ? "has-event" : "")"
                  @onclick="() => SelectDay(day)">
-                @day.DayNumber
+                @day.DayNumber.ToPersianDigits()
             </div>
         }
     </div>
 
     <div class="section-title" style="padding: 0; margin-top: 20px;">
-        <h3>رویدادهای @selectedDate.ToString("yyyy/MM/dd")</h3>
+        <h3>رویدادهای @selectedDate.ToShamsiDateLong()</h3>
     </div>
+
+    @if (dayEvents.Count == 0)
+    {
+        <div style="text-align: center; padding: 30px; color: var(--text-secondary); font-size: 14px;">
+            رویدادی برای این روز ثبت نشده
+        </div>
+    }
 
     @foreach (var ev in dayEvents)
     {
@@ -85,8 +92,12 @@
                 <textarea class="form-control" @bind="eventDescription"></textarea>
             </div>
             <div class="form-group">
-                <label>تاریخ</label>
-                <input type='date' class='form-control' value='@eventDate.ToString("yyyy-MM-dd")' @onchange='(e) => eventDate = DateTime.Parse(e.Value!.ToString())' dir='ltr' />
+                <label>تاریخ (شمسی)</label>
+                <div style="display: flex; gap: 8px; direction: ltr;">
+                    <input type="number" class="form-control" placeholder="روز" @bind="eventShamsiDay" style="flex: 1; text-align: center;" min="1" max="31" />
+                    <input type="number" class="form-control" placeholder="ماه" @bind="eventShamsiMonth" style="flex: 1; text-align: center;" min="1" max="12" />
+                    <input type="number" class="form-control" placeholder="سال" @bind="eventShamsiYear" style="flex: 1.5; text-align: center;" />
+                </div>
             </div>
             <div class="form-group">
                 <label>پلتفرم</label>
@@ -105,6 +116,8 @@
 <NavMenu />
 
 @code {
+    private static readonly System.Globalization.PersianCalendar persianCalendar = new();
+
     private DateTime currentDate = DateTime.Now;
     private DateTime selectedDate = DateTime.Now;
     private List<Shared.DTOs.ContentCalendarDto> allEvents = new();
@@ -113,11 +126,13 @@
     private bool showAddEventForm = false;
     private string eventTitle = "";
     private string eventDescription = "";
-    private DateTime eventDate = DateTime.Today;
+    private int eventShamsiDay = DateTime.Now.GetShamsiDay();
+    private int eventShamsiMonth = DateTime.Now.GetShamsiMonth();
+    private int eventShamsiYear = DateTime.Now.GetShamsiYear();
     private Shared.Enums.SocialPlatform eventPlatform = Shared.Enums.SocialPlatform.Instagram;
 
-    private string currentMonthName => currentDate.ToString("MMMM", new System.Globalization.CultureInfo("fa-IR"));
-    private int currentYear => currentDate.Year;
+    private string currentMonthName => currentDate.GetShamsiMonthName();
+    private int currentYear => currentDate.GetShamsiYear();
 
     protected override async Task OnInitializedAsync()
     {
@@ -134,33 +149,54 @@
     private void BuildCalendarDays()
     {
         calendarDays.Clear();
-        var firstDay = new DateTime(currentDate.Year, currentDate.Month, 1);
-        var lastDay = firstDay.AddMonths(1).AddDays(-1);
-        var startOffset = ((int)firstDay.DayOfWeek + 1) % 7;
+
+        var shamsiYear = currentDate.GetShamsiYear();
+        var shamsiMonth = currentDate.GetShamsiMonth();
+
+        // First day of the Shamsi month
+        var firstDay = persianCalendar.ToDateTime(shamsiYear, shamsiMonth, 1, 0, 0, 0, 0);
+        var daysInMonth = persianCalendar.GetDaysInMonth(shamsiYear, shamsiMonth);
+
+        // Day of week for the first day (Saturday = 0 for our RTL week starting with شنبه)
+        var dayOfWeek = (int)firstDay.DayOfWeek;
+        // Convert: Saturday=0, Sunday=1, Monday=2, ..., Friday=6
+        var startOffset = (dayOfWeek + 1) % 7;
+
+        // Previous month days
+        var prevMonthDays = persianCalendar.GetDaysInMonth(
+            shamsiMonth == 1 ? shamsiYear - 1 : shamsiYear,
+            shamsiMonth == 1 ? 12 : shamsiMonth - 1);
 
         for (int i = startOffset - 1; i >= 0; i--)
         {
-            var d = firstDay.AddDays(-i - 1);
-            calendarDays.Add(new CalendarDay { DayNumber = d.Day, IsOtherMonth = true, Date = d });
+            var dayNum = prevMonthDays - i;
+            var month = shamsiMonth == 1 ? 12 : shamsiMonth - 1;
+            var year = shamsiMonth == 1 ? shamsiYear - 1 : shamsiYear;
+            var date = persianCalendar.ToDateTime(year, month, dayNum, 0, 0, 0, 0);
+            calendarDays.Add(new CalendarDay { DayNumber = dayNum, IsOtherMonth = true, Date = date });
         }
 
-        for (int i = 1; i <= lastDay.Day; i++)
+        // Current month days
+        for (int i = 1; i <= daysInMonth; i++)
         {
-            var d = new DateTime(currentDate.Year, currentDate.Month, i);
+            var date = persianCalendar.ToDateTime(shamsiYear, shamsiMonth, i, 0, 0, 0, 0);
             calendarDays.Add(new CalendarDay
             {
                 DayNumber = i,
-                IsToday = d.Date == DateTime.Today,
-                HasEvent = allEvents.Any(e => e.ScheduledDate.Date == d.Date),
-                Date = d
+                IsToday = date.Date == DateTime.Today,
+                HasEvent = allEvents.Any(e => e.ScheduledDate.Date == date.Date),
+                Date = date
             });
         }
 
+        // Next month days to fill 42 cells (6 rows)
         var remaining = 42 - calendarDays.Count;
         for (int i = 1; i <= remaining; i++)
         {
-            var d = lastDay.AddDays(i);
-            calendarDays.Add(new CalendarDay { DayNumber = d.Day, IsOtherMonth = true, Date = d });
+            var month = shamsiMonth == 12 ? 1 : shamsiMonth + 1;
+            var year = shamsiMonth == 12 ? shamsiYear + 1 : shamsiYear;
+            var date = persianCalendar.ToDateTime(year, month, i, 0, 0, 0, 0);
+            calendarDays.Add(new CalendarDay { DayNumber = i, IsOtherMonth = true, Date = date });
         }
     }
 
@@ -186,6 +222,16 @@
 
     private async Task SaveEvent()
     {
+        DateTime eventDate;
+        try
+        {
+            eventDate = persianCalendar.ToDateTime(eventShamsiYear, eventShamsiMonth, eventShamsiDay, 0, 0, 0, 0);
+        }
+        catch
+        {
+            return;
+        }
+
         await CalendarService.CreateEventAsync(Guid.Empty, new()
         {
             Title = eventTitle,

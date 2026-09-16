@@ -4,6 +4,7 @@
 @inject Shared.Interfaces.IFreelancerService FreelancerService
 @inject Shared.Interfaces.IServiceService ServiceService
 @inject Shared.Interfaces.IPaymentService PaymentService
+@inject Shared.Interfaces.IContentCalendarService CalendarService
 
 @if (!AppState.IsAuthenticated)
 {
@@ -23,17 +24,20 @@ else
             <div class="header-actions">
                 <button class="header-btn">
                     <i class="bi bi-bell-fill"></i>
-                    <span class="notification-badge">3</span>
+                    <span class="notification-badge">۳</span>
                 </button>
                 <button class="header-btn" @onclick="GoToProfile">
                     <i class="bi bi-person-fill"></i>
+                </button>
+                <button class="header-btn" @onclick="GoToSettings">
+                    <i class="bi bi-gear-fill"></i>
                 </button>
             </div>
         </div>
 
         <div class="welcome-card">
             <h2>سلام، @(AppState.UserFullName ?? "فریلنسر") 👋</h2>
-            <p>امروز یک قدم بزرگ‌تر برای رشد کسب‌وکارت بردار!</p>
+            <p>امروز @DateTime.Now.ToShamsiDateLong()</p>
         </div>
     </div>
 
@@ -45,20 +49,100 @@ else
         </div>
         <div class="stat-card">
             <div class="stat-icon">📁</div>
-            <div class="stat-value">@completedProjects</div>
+            <div class="stat-value">@completedProjects.ToPersianDigits()</div>
             <div class="stat-label">پروژه تکمیل</div>
         </div>
         <div class="stat-card">
             <div class="stat-icon">⭐</div>
-            <div class="stat-value">@rating</div>
+            <div class="stat-value">@rating.ToPersianDigits()</div>
             <div class="stat-label">امتیاز</div>
         </div>
         <div class="stat-card">
             <div class="stat-icon">📈</div>
-            <div class="stat-value">+28%</div>
+            <div class="stat-value">+۲۸٪</div>
             <div class="stat-label">رشد ماه قبل</div>
         </div>
     </div>
+
+    @* تقویم کاری *@
+    <div class="section-title">
+        <h3>تقویم کاری</h3>
+        <a href="/calendar">مشاهده همه</a>
+    </div>
+
+    @if (upcomingEvents.Count == 0)
+    {
+        <div class="card" style="margin: 0 20px 16px; text-align: center; padding: 24px;">
+            <p style="color: var(--text-secondary); font-size: 14px;">رویدادی در پیش نیست</p>
+        </div>
+    }
+    else
+    {
+        @foreach (var ev in upcomingEvents.Take(3))
+        {
+            <div class="card" style="margin: 0 20px 12px; padding: 16px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div style="flex: 1;">
+                        <h4 style="font-size: 15px; margin-bottom: 4px;">@ev.Title</h4>
+                        <p style="font-size: 13px; color: var(--text-secondary);">@ev.Description</p>
+                        <div style="display: flex; gap: 8px; margin-top: 8px; align-items: center;">
+                            <span style="background: rgba(255,107,53,0.15); color: var(--primary); padding: 3px 10px; border-radius: 12px; font-size: 11px;">
+                                @ev.Platform.ToPersianName()
+                            </span>
+                            <span style="font-size: 11px; color: var(--text-secondary);">
+                                @ev.ScheduledDate.ToShamsiDateLong()
+                            </span>
+                        </div>
+                    </div>
+                    <span style="background: @(ev.Status == ContentStatus.Published ? "rgba(76,175,80,0.15)" : ev.Status == ContentStatus.Scheduled ? "rgba(255,193,7,0.15)" : "rgba(176,176,176,0.15)"); color: @(ev.Status == ContentStatus.Published ? "var(--success)" : ev.Status == ContentStatus.Scheduled ? "var(--warning)" : "var(--text-secondary)"); padding: 4px 10px; border-radius: 20px; font-size: 11px;">
+                        @ev.Status.ToPersianName()
+                    </span>
+                </div>
+            </div>
+        }
+    }
+
+    @* پروژه‌های فعال *@
+    <div class="section-title">
+        <h3>پروژه‌های فعال</h3>
+        <a href="/services">مشاهده همه</a>
+    </div>
+
+    @if (activeProjects.Count == 0)
+    {
+        <div class="card" style="margin: 0 20px 16px; text-align: center; padding: 24px;">
+            <p style="color: var(--text-secondary); font-size: 14px;">پروژه فعالی ندارید</p>
+        </div>
+    }
+    else
+    {
+        @foreach (var project in activeProjects)
+        {
+            <div class="card" style="margin: 0 20px 12px; padding: 16px;">
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 8px;">
+                    <h4 style="font-size: 15px;">@project.Title</h4>
+                    <span style="background: rgba(76,175,80,0.15); color: var(--success); padding: 4px 12px; border-radius: 20px; font-size: 11px;">
+                        فعال
+                    </span>
+                </div>
+                <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 10px;">@project.Description</p>
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+                    <span style="font-size: 14px; font-weight: 700; color: var(--primary);">@project.Budget.FormatPrice()</span>
+                    <div style="display: flex; gap: 8px; align-items: center;">
+                        <span style="background: rgba(255,107,53,0.15); color: var(--primary); padding: 3px 10px; border-radius: 12px; font-size: 11px;">
+                            @project.Category.ToPersianName()
+                        </span>
+                        @if (project.Deadline.HasValue)
+                        {
+                            <span style="font-size: 11px; color: var(--text-secondary);">
+                                مهلت: @project.Deadline.Value.ToShamsiDate()
+                            </span>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    }
 
     <div class="section-title">
         <h3>خدمات من</h3>
@@ -122,18 +206,42 @@ else
     private string totalEarningsFormatted = "۰";
     private int completedProjects = 0;
     private double rating = 0;
+    private List<Shared.DTOs.ContentCalendarDto> upcomingEvents = new();
+    private List<ProjectItem> activeProjects = new();
 
     protected override async Task OnInitializedAsync()
     {
         if (AppState.IsAuthenticated && AppState.UserId.HasValue)
         {
             var earnings = await PaymentService.GetTotalEarningsAsync(AppState.UserId.Value);
-            totalEarningsFormatted = earnings.ToString("N0");
+            totalEarningsFormatted = earnings.ToPersianDigits();
             completedProjects = 12;
             rating = 4.8;
+
+            upcomingEvents = await CalendarService.GetCalendarAsync(AppState.UserId.Value);
+            upcomingEvents = upcomingEvents
+                .Where(e => e.ScheduledDate >= DateTime.Today)
+                .OrderBy(e => e.ScheduledDate)
+                .ToList();
+
+            activeProjects = new List<ProjectItem>
+            {
+                new() { Title = "فیلم‌برداری مراسم عروسی", Description = "فیلم‌برداری حرفه‌ای با دو دوربین", Budget = 15_000_000, Category = ServiceCategory.Videography, Deadline = DateTime.Now.AddDays(20) },
+                new() { Title = "مدیریت پیج اینستاگرام", Description = "تولید محتوا و رشد فالوور", Budget = 8_000_000, Category = ServiceCategory.InstagramAdmin, Deadline = DateTime.Now.AddDays(30) }
+            };
         }
     }
 
     private void GoToProfile() => Navigation.NavigateTo("/profile");
     private void GoToSubscription() => Navigation.NavigateTo("/subscription");
+    private void GoToSettings() => Navigation.NavigateTo("/settings");
+
+    private class ProjectItem
+    {
+        public string Title { get; set; } = "";
+        public string Description { get; set; } = "";
+        public decimal Budget { get; set; }
+        public ServiceCategory Category { get; set; }
+        public DateTime? Deadline { get; set; }
+    }
 }

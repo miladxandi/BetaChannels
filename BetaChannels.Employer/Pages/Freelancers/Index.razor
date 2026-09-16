@@ -68,12 +68,12 @@
                 <div class="freelancer-meta">
                     <div class="meta-item">
                         <span>⭐</span>
-                        <span class="value">@freelancer.Rating</span>
-                        <span>(@freelancer.TotalReviews)</span>
+                        <span class="value">@freelancer.Rating.ToPersianDigits()</span>
+                        <span>(@freelancer.TotalReviews.ToPersianDigits())</span>
                     </div>
                     <div class="meta-item">
                         <span>📁</span>
-                        <span class="value">@freelancer.CompletedProjects</span>
+                        <span class="value">@freelancer.CompletedProjects.ToPersianDigits()</span>
                         <span>پروژه</span>
                     </div>
                     <div class="meta-item">
