@@ -1,4 +1,4 @@
-name: Build Android APK
+name: Build Signed Android APK
 
 on:
   push:
@@ -7,9 +7,14 @@ on:
     branches: [ main, master ]
   workflow_dispatch:
 
+env:
+  KEYSTORE_PASSWORD: Milad&zandi&0937
+  KEY_ALIAS: miladxandi
+  KEY_PASSWORD: Milad&zandi&0937
+
 jobs:
   build-freelancer:
-    name: Build Freelancer APK
+    name: Build Freelancer Signed APK
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
@@ -25,26 +30,17 @@ jobs:
       - name: Restore NuGet Packages
         run: dotnet restore BetaChannels.Freelancer/BetaChannels.Freelancer.csproj
 
-      - name: Build Debug APK
-        run: dotnet build BetaChannels.Freelancer/BetaChannels.Freelancer.csproj -f net10.0-android -c Debug
+      - name: Build Release APK (Signed)
+        run: dotnet build BetaChannels.Freelancer/BetaChannels.Freelancer.csproj -f net10.0-android -c Release /p:AndroidKeyStore=true /p:AndroidSigningKeyStore=miladxandi.keystore /p:AndroidSigningStorePass="${{ env.KEYSTORE_PASSWORD }}" /p:AndroidSigningKeyAlias="${{ env.KEY_ALIAS }}" /p:AndroidSigningKeyPass="${{ env.KEY_PASSWORD }}"
 
-      - name: Build Release APK
-        run: dotnet build BetaChannels.Freelancer/BetaChannels.Freelancer.csproj -f net10.0-android -c Release
-
-      - name: Upload Debug APK
+      - name: Upload Signed APK
         uses: actions/upload-artifact@v4
         with:
-          name: Freelancer-Debug-APK
-          path: BetaChannels.Freelancer/bin/Debug/net10.0-android/*-Signed.apk
-
-      - name: Upload Release APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: Freelancer-Release-APK
+          name: BetaChannels-Freelancer-Signed-APK
           path: BetaChannels.Freelancer/bin/Release/net10.0-android/*-Signed.apk
 
   build-employer:
-    name: Build Employer APK
+    name: Build Employer Signed APK
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
@@ -60,20 +56,11 @@ jobs:
       - name: Restore NuGet Packages
         run: dotnet restore BetaChannels.Employer/BetaChannels.Employer.csproj
 
-      - name: Build Debug APK
-        run: dotnet build BetaChannels.Employer/BetaChannels.Employer.csproj -f net10.0-android -c Debug
+      - name: Build Release APK (Signed)
+        run: dotnet build BetaChannels.Employer/BetaChannels.Employer.csproj -f net10.0-android -c Release /p:AndroidKeyStore=true /p:AndroidSigningKeyStore=miladxandi.keystore /p:AndroidSigningStorePass="${{ env.KEYSTORE_PASSWORD }}" /p:AndroidSigningKeyAlias="${{ env.KEY_ALIAS }}" /p:AndroidSigningKeyPass="${{ env.KEY_PASSWORD }}"
 
-      - name: Build Release APK
-        run: dotnet build BetaChannels.Employer/BetaChannels.Employer.csproj -f net10.0-android -c Release
-
-      - name: Upload Debug APK
+      - name: Upload Signed APK
         uses: actions/upload-artifact@v4
         with:
-          name: Employer-Debug-APK
-          path: BetaChannels.Employer/bin/Debug/net10.0-android/*-Signed.apk
-
-      - name: Upload Release APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: Employer-Release-APK
+          name: BetaChannels-Employer-Signed-APK
           path: BetaChannels.Employer/bin/Release/net10.0-android/*-Signed.apk
