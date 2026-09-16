@@ -1,0 +1,139 @@
+@page "/"
+@inject AppState AppState
+@inject NavigationManager Navigation
+@inject Shared.Interfaces.IFreelancerService FreelancerService
+@inject Shared.Interfaces.IServiceService ServiceService
+@inject Shared.Interfaces.IPaymentService PaymentService
+
+@if (!AppState.IsAuthenticated)
+{
+    Navigation.NavigateTo("/login");
+}
+else
+{
+    <div class="app-header">
+        <div class="header-top">
+            <div class="app-logo">
+                <div class="logo-icon">B</div>
+                <div>
+                    <div class="logo-text">Beta Channels</div>
+                    <div style="font-size: 11px; opacity: 0.8;">پنل فریلنسر</div>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="header-btn">
+                    <i class="bi bi-bell-fill"></i>
+                    <span class="notification-badge">3</span>
+                </button>
+                <button class="header-btn" @onclick="GoToProfile">
+                    <i class="bi bi-person-fill"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="welcome-card">
+            <h2>سلام، @(AppState.UserFullName ?? "فریلنسر") 👋</h2>
+            <p>امروز یک قدم بزرگ‌تر برای رشد کسب‌وکارت بردار!</p>
+        </div>
+    </div>
+
+    <div class="stats-row">
+        <div class="stat-card">
+            <div class="stat-icon">📊</div>
+            <div class="stat-value">@totalEarningsFormatted</div>
+            <div class="stat-label">درآمد کل</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">📁</div>
+            <div class="stat-value">@completedProjects</div>
+            <div class="stat-label">پروژه تکمیل</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">⭐</div>
+            <div class="stat-value">@rating</div>
+            <div class="stat-label">امتیاز</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">📈</div>
+            <div class="stat-value">+28%</div>
+            <div class="stat-label">رشد ماه قبل</div>
+        </div>
+    </div>
+
+    <div class="section-title">
+        <h3>خدمات من</h3>
+        <a href="/services">مشاهده همه</a>
+    </div>
+
+    <div class="services-grid">
+        <a href="/services" class="service-card">
+            <div class="service-icon">🎬</div>
+            <h4>فیلم‌برداری</h4>
+        </a>
+        <a href="/services" class="service-card">
+            <div class="service-icon">✂️</div>
+            <h4>تدوین</h4>
+        </a>
+        <a href="/services" class="service-card">
+            <div class="service-icon">📱</div>
+            <h4>ادمین اینستاگرام</h4>
+        </a>
+        <a href="/services" class="service-card">
+            <div class="service-icon">✍️</div>
+            <h4>سناریو و مقاله</h4>
+        </a>
+        <a href="/services" class="service-card">
+            <div class="service-icon">🌐</div>
+            <h4>ساخت سایت و سئو</h4>
+        </a>
+        <a href="/services" class="service-card">
+            <div class="service-icon">📊</div>
+            <h4>مدیریت و رشد پیج</h4>
+        </a>
+    </div>
+
+    <div class="section-title">
+        <h3>عملکرد این ماه</h3>
+    </div>
+
+    <div class="chart-container">
+        <div class="chart-bars">
+            <div class="chart-bar" style="height: 60%;"></div>
+            <div class="chart-bar" style="height: 80%;"></div>
+            <div class="chart-bar" style="height: 45%;"></div>
+            <div class="chart-bar" style="height: 90%;"></div>
+            <div class="chart-bar" style="height: 70%;"></div>
+            <div class="chart-bar" style="height: 95%;"></div>
+            <div class="chart-bar" style="height: 85%;"></div>
+        </div>
+    </div>
+
+    <div style="padding: 0 20px; margin-bottom: 20px;">
+        <button class="btn btn-primary btn-full" @onclick="GoToSubscription">
+            <i class="bi bi-rocket-takeoff-fill"></i>
+            ارتقا به اشتراک ویژه
+        </button>
+    </div>
+
+    <Layout.NavMenu />
+}
+
+@code {
+    private string totalEarningsFormatted = "۰";
+    private int completedProjects = 0;
+    private double rating = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (AppState.IsAuthenticated && AppState.UserId.HasValue)
+        {
+            var earnings = await PaymentService.GetTotalEarningsAsync(AppState.UserId.Value);
+            totalEarningsFormatted = earnings.ToString("N0");
+            completedProjects = 12;
+            rating = 4.8;
+        }
+    }
+
+    private void GoToProfile() => Navigation.NavigateTo("/profile");
+    private void GoToSubscription() => Navigation.NavigateTo("/subscription");
+}

@@ -1,0 +1,92 @@
+@page "/register"
+@inject AppState AppState
+@inject NavigationManager Navigation
+
+<div class="auth-container">
+    <div class="auth-logo">
+        <div class="logo-icon">B</div>
+        <h1>Beta Channels</h1>
+        <p>ثبت‌نام فریلنسر</p>
+    </div>
+
+    <div class="auth-form">
+        <h2>ایجاد حساب جدید</h2>
+
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <div style="background: rgba(244,67,54,0.15); color: #F44336; padding: 12px; border-radius: 12px; margin-bottom: 16px; font-size: 14px;">
+                @errorMessage
+            </div>
+        }
+
+        <div class="form-group">
+            <label>نام و نام خانوادگی</label>
+            <input type="text" class="form-control" @bind="fullName" placeholder="نام کامل خود را وارد کنید" />
+        </div>
+
+        <div class="form-group">
+            <label>ایمیل</label>
+            <input type="email" class="form-control" @bind="email" placeholder="example@email.com" dir="ltr" />
+        </div>
+
+        <div class="form-group">
+            <label>شماره موبایل</label>
+            <input type="tel" class="form-control" @bind="phone" placeholder="09123456789" dir="ltr" />
+        </div>
+
+        <div class="form-group">
+            <label>رمز عبور</label>
+            <input type="password" class="form-control" @bind="password" placeholder="حداقل ۶ کاراکتر" />
+        </div>
+
+        <button class="btn btn-primary btn-full" @onclick="HandleRegister" disabled="@isLoading">
+            @if (isLoading)
+            {
+                <span>در حال ثبت‌نام...</span>
+            }
+            else
+            {
+                <span>ثبت‌نام</span>
+            }
+        </button>
+
+        <div class="auth-footer">
+            حساب دارید؟ <a href="/login">وارد شوید</a>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string fullName = "";
+    private string email = "";
+    private string phone = "";
+    private string password = "";
+    private string errorMessage = "";
+    private bool isLoading = false;
+
+    private async Task HandleRegister()
+    {
+        isLoading = true;
+        errorMessage = "";
+
+        var result = await AppState.RegisterAsync(new Shared.DTOs.RegisterDto
+        {
+            FullName = fullName,
+            Email = email,
+            Phone = phone,
+            Password = password,
+            Role = Shared.Enums.UserRole.Freelancer
+        });
+
+        isLoading = false;
+
+        if (result)
+        {
+            Navigation.NavigateTo("/");
+        }
+        else
+        {
+            errorMessage = "خطا در ثبت‌نام. لطفاً دوباره تلاش کنید.";
+        }
+    }
+}

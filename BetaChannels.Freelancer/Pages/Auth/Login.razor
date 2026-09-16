@@ -1,0 +1,77 @@
+@page "/login"
+@inject AppState AppState
+@inject NavigationManager Navigation
+
+<div class="auth-container">
+    <div class="auth-logo">
+        <div class="logo-icon">B</div>
+        <h1>Beta Channels</h1>
+        <p>پنل فریلنسر</p>
+    </div>
+
+    <div class="auth-form">
+        <h2>ورود به حساب</h2>
+        
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <div style="background: rgba(244,67,54,0.15); color: #F44336; padding: 12px; border-radius: 12px; margin-bottom: 16px; font-size: 14px;">
+                @errorMessage
+            </div>
+        }
+
+        <div class="form-group">
+            <label>ایمیل</label>
+            <input type="email" class="form-control" @bind="email" placeholder="example@email.com" dir="ltr" />
+        </div>
+
+        <div class="form-group">
+            <label>رمز عبور</label>
+            <input type="password" class="form-control" @bind="password" placeholder="رمز عبور خود را وارد کنید" />
+        </div>
+
+        <button class="btn btn-primary btn-full" @onclick="HandleLogin" disabled="@isLoading">
+            @if (isLoading)
+            {
+                <span>در حال ورود...</span>
+            }
+            else
+            {
+                <span>ورود</span>
+            }
+        </button>
+
+        <div class="auth-footer">
+            حساب ندارید؟ <a href="/register">ثبت‌نام کنید</a>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string email = "";
+    private string password = "";
+    private string errorMessage = "";
+    private bool isLoading = false;
+
+    private async Task HandleLogin()
+    {
+        isLoading = true;
+        errorMessage = "";
+
+        var result = await AppState.LoginAsync(new Shared.DTOs.LoginDto
+        {
+            Email = email,
+            Password = password
+        });
+
+        isLoading = false;
+
+        if (result)
+        {
+            Navigation.NavigateTo("/");
+        }
+        else
+        {
+            errorMessage = "ایمیل یا رمز عبور اشتباه است";
+        }
+    }
+}

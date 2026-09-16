@@ -1,0 +1,77 @@
+@page "/payments"
+@inject Shared.Interfaces.IPaymentService PaymentService
+@inject AppState AppState
+@inject NavigationManager Navigation
+
+<div class="app-header">
+    <div class="header-top">
+        <div class="app-logo">
+            <button class="header-btn" @onclick="() => Navigation.NavigateTo("/")">
+                <i class="bi bi-arrow-right"></i>
+            </button>
+            <div class="logo-text">پرداخت‌ها</div>
+        </div>
+    </div>
+</div>
+
+<div class="stats-row">
+    <div class="stat-card">
+        <div class="stat-icon">💰</div>
+        <div class="stat-value">@totalSpent</div>
+        <div class="stat-label">هزینه کل</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon">⏳</div>
+        <div class="stat-value">@pendingCount</div>
+        <div class="stat-label">در انتظار</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon">✅</div>
+        <div class="stat-value">@completedCount</div>
+        <div class="stat-label">تکمیل شده</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon"></div>
+        <div class="stat-value">@payments.Count</div>
+        <div class="stat-label">کل تراکنش</div>
+    </div>
+</div>
+
+<div class="payment-list">
+    @foreach (var payment in payments)
+    {
+        <div class="payment-item">
+            <div class="payment-info">
+                <h4>@payment.Description</h4>
+                <p>@payment.CreatedAt.ToString("yyyy/MM/dd")</p>
+                <span class="payment-status status-@payment.Status.ToString().ToLower()">
+                    @payment.Status.ToPersianName()
+                </span>
+            </div>
+            <div class="payment-amount">
+                <div class="amount">@payment.Amount.FormatPrice()</div>
+            </div>
+        </div>
+    }
+</div>
+
+<Layout.NavMenu />
+
+@code {
+    private List<Shared.DTOs.PaymentDto> payments = new();
+    private string totalSpent = "";
+    private int pendingCount = 0;
+    private int completedCount = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (AppState.UserId.HasValue)
+        {
+            payments = await PaymentService.GetPaymentsByUserAsync(AppState.UserId.Value);
+            var total = await PaymentService.GetTotalSpentAsync(AppState.UserId.Value);
+            totalSpent = total.ToString("N0");
+            pendingCount = payments.Count(p => p.Status == Shared.Enums.PaymentStatus.Pending);
+            completedCount = payments.Count(p => p.Status == Shared.Enums.PaymentStatus.Completed);
+        }
+    }
+}

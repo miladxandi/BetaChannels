@@ -1,0 +1,156 @@
+@page "/projects"
+@inject NavigationManager Navigation
+@inject AppState AppState
+
+<div class="app-header">
+    <div class="header-top">
+        <div class="app-logo">
+            <button class="header-btn" @onclick="() => Navigation.NavigateTo("/")">
+                <i class="bi bi-arrow-right"></i>
+            </button>
+            <div class="logo-text">پروژه‌های من</div>
+        </div>
+        <div class="header-actions">
+            <button class="header-btn" @onclick="ShowCreateForm">
+                <i class="bi bi-plus-lg"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="page-content">
+    @if (projects.Count == 0)
+    {
+        <div class="empty-state">
+            <i class="bi bi-folder"></i>
+            <h3>هنوز پروژه‌ای ایجاد نکردید</h3>
+            <p>اولین پروژه خود را ایجاد کنید و فریلنسر مناسب را پیدا کنید</p>
+            <button class="btn btn-primary" @onclick="ShowCreateForm" style="margin-top: 16px;">
+                <i class="bi bi-plus-lg"></i>
+                ایجاد پروژه جدید
+            </button>
+        </div>
+    }
+    else
+    {
+        @foreach (var project in projects)
+        {
+            <div class="project-card">
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 8px;">
+                    <h4>@project.Title</h4>
+                    <span style="background: @(project.IsOpen ? "rgba(76,175,80,0.15)" : "rgba(176,176,176,0.15)"); color: @(project.IsOpen ? "var(--success)" : "var(--text-secondary)"); padding: 4px 12px; border-radius: 20px; font-size: 11px;">
+                        @(project.IsOpen ? "باز" : "بسته")
+                    </span>
+                </div>
+                <p>@project.Description</p>
+                <div class="project-footer">
+                    <div>
+                        <span class="project-budget">@project.Budget.FormatPrice()</span>
+                        <span style="margin-right: 8px; font-size: 12px; color: var(--text-secondary);">
+                            @project.Category.ToPersianName()
+                        </span>
+                    </div>
+                    @if (project.Deadline.HasValue)
+                    {
+                        <span class="project-deadline">
+                             @(project.Deadline.Value - DateTime.UtcNow).Days روز باقیمانده
+                        </span>
+                    }
+                </div>
+            </div>
+        }
+    }
+</div>
+
+@if (showCreateForm)
+{
+    <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 20px;">
+        <div class="card" style="width: 100%; max-width: 500px; max-height: 80vh; overflow-y: auto;">
+            <div class="card-header">
+                <h3>ایجاد پروژه جدید</h3>
+                <button class="header-btn" @onclick="CloseForm" style="background: rgba(255,255,255,0.1);">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+
+            <div class="form-group">
+                <label>عنوان پروژه</label>
+                <input type="text" class="form-control" @bind="formTitle" placeholder="مثال: فیلم‌برداری مراسم عروسی" />
+            </div>
+
+            <div class="form-group">
+                <label>توضیحات</label>
+                <textarea class="form-control" @bind="formDescription" placeholder="توضیحات کامل پروژه..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>دسته‌بندی</label>
+                <select class="form-control" @bind="formCategory">
+                    @foreach (var cat in categories)
+                    {
+                        <option value="@cat">@cat.ToPersianName()</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>بودجه (تومان)</label>
+                <input type="number" class="form-control" @bind="formBudget" placeholder="0" dir="ltr" />
+            </div>
+
+            <div class="form-group">
+                <label>مهلت انجام (روز)</label>
+                <input type="number" class="form-control" @bind="formDeadline" placeholder="30" dir="ltr" />
+            </div>
+
+            <button class="btn btn-primary btn-full" @onclick="CreateProject">
+                ایجاد پروژه
+            </button>
+        </div>
+    </div>
+}
+
+<Layout.NavMenu />
+
+@code {
+    private List<Shared.Models.Project> projects = new()
+    {
+        new() { Title = "فیلم‌برداری مراسم عروسی", Description = "فیلم‌برداری حرفه‌ای مراسم عروسی با دو دوربین و تجهیزات کامل", Category = Shared.Enums.ServiceCategory.Videography, Budget = 15_000_000, IsOpen = true, Deadline = DateTime.UtcNow.AddDays(20) },
+        new() { Title = "مدیریت پیج اینستاگرام", Description = "مدیریت کامل پیج اینستاگرام شامل تولید محتوا، استوری و رشد فالوور", Category = Shared.Enums.ServiceCategory.InstagramAdmin, Budget = 8_000_000, IsOpen = true, Deadline = DateTime.UtcNow.AddDays(30) },
+        new() { Title = "طراحی سایت فروشگاهی", Description = "طراحی و راه‌اندازی سایت فروشگاهی با ووکامرس و درگاه پرداخت", Category = Shared.Enums.ServiceCategory.WebDesign, Budget = 25_000_000, IsOpen = false, Deadline = DateTime.UtcNow.AddDays(-5), CompletedAt = DateTime.UtcNow.AddDays(-5) }
+    };
+
+    private bool showCreateForm = false;
+    private string formTitle = "";
+    private string formDescription = "";
+    private Shared.Enums.ServiceCategory formCategory = Shared.Enums.ServiceCategory.Videography;
+    private decimal formBudget = 0;
+    private int formDeadline = 30;
+
+    private List<Shared.Enums.ServiceCategory> categories = Enum.GetValues<Shared.Enums.ServiceCategory>().ToList();
+
+    private void ShowCreateForm() => showCreateForm = true;
+
+    private void CloseForm()
+    {
+        showCreateForm = false;
+        formTitle = "";
+        formDescription = "";
+        formBudget = 0;
+        formDeadline = 30;
+    }
+
+    private void CreateProject()
+    {
+        projects.Insert(0, new Shared.Models.Project
+        {
+            Title = formTitle,
+            Description = formDescription,
+            Category = formCategory,
+            Budget = formBudget,
+            Deadline = DateTime.UtcNow.AddDays(formDeadline),
+            EmployerId = AppState.UserId ?? Guid.Empty
+        });
+        CloseForm();
+    }
+}

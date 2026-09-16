@@ -1,0 +1,215 @@
+@page "/services"
+@inject Shared.Interfaces.IServiceService ServiceService
+@inject NavigationManager Navigation
+
+<div class="app-header">
+    <div class="header-top">
+        <div class="app-logo">
+            <button class="header-btn" @onclick="() => Navigation.NavigateTo("/")">
+                <i class="bi bi-arrow-right"></i>
+            </button>
+            <div class="logo-text">خدمات من</div>
+        </div>
+        <div class="header-actions">
+            <button class="header-btn" @onclick="ShowCreateForm">
+                <i class="bi bi-plus-lg"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="page-content">
+    <div class="search-box">
+        <i class="bi bi-search"></i>
+        <input type="text" placeholder="جستجوی خدمات..." @bind="searchKeyword" @bind:event="oninput" />
+    </div>
+
+    <div class="filter-chips">
+        <div class="filter-chip @(selectedCategory == null ? "active" : "")" @onclick="() => selectedCategory = null">همه</div>
+        @foreach (var cat in categories)
+        {
+            <div class="filter-chip @(selectedCategory == cat ? "active" : "")" @onclick="() => selectedCategory = cat">
+                @cat.ToPersianName()
+            </div>
+        }
+    </div>
+
+    @if (services.Count == 0)
+    {
+        <div class="empty-state">
+            <i class="bi bi-briefcase"></i>
+            <h3>هنوز خدمتی اضافه نکردید</h3>
+            <p>اولین خدمت خود را اضافه کنید</p>
+            <button class="btn btn-primary" @onclick="ShowCreateForm" style="margin-top: 16px;">
+                <i class="bi bi-plus-lg"></i>
+                افزودن خدمت
+            </button>
+        </div>
+    }
+    else
+    {
+        @foreach (var service in filteredServices)
+        {
+            <div class="card">
+                <div class="card-header">
+                    <h3>@service.Title</h3>
+                    <span style="color: var(--primary); font-weight: 700;">@service.Price.FormatPrice()</span>
+                </div>
+                <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 12px;">@service.Description</p>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <span style="background: rgba(255,107,53,0.15); color: var(--primary); padding: 4px 12px; border-radius: 20px; font-size: 12px;">
+                            @service.Category.ToPersianName()
+                        </span>
+                        <span style="margin-right: 8px; font-size: 12px; color: var(--text-secondary);">
+                            ⏱ @service.DurationDays روز
+                        </span>
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <button class="btn btn-outline" style="padding: 8px 16px; font-size: 12px;" @onclick="() => EditService(service)">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                        <button class="btn" style="padding: 8px 16px; font-size: 12px; background: rgba(244,67,54,0.15); color: var(--danger);" @onclick="() => DeleteService(service.Id)">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+@if (showCreateForm)
+{
+    <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 20px;">
+        <div class="card" style="width: 100%; max-width: 500px; max-height: 80vh; overflow-y: auto;">
+            <div class="card-header">
+                <h3>@(editingService != null ? "ویرایش خدمت" : "افزودن خدمت جدید")</h3>
+                <button class="header-btn" @onclick="CloseForm" style="background: rgba(255,255,255,0.1);">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+
+            <div class="form-group">
+                <label>عنوان خدمت</label>
+                <input type="text" class="form-control" @bind="formTitle" placeholder="مثال: فیلم‌برداری مراسم" />
+            </div>
+
+            <div class="form-group">
+                <label>توضیحات</label>
+                <textarea class="form-control" @bind="formDescription" placeholder="توضیحات خدمت..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>دسته‌بندی</label>
+                <select class="form-control" @bind="formCategory">
+                    @foreach (var cat in categories)
+                    {
+                        <option value="@cat">@cat.ToPersianName()</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>قیمت (تومان)</label>
+                <input type="number" class="form-control" @bind="formPrice" placeholder="0" dir="ltr" />
+            </div>
+
+            <div class="form-group">
+                <label>مدت زمان (روز)</label>
+                <input type="number" class="form-control" @bind="formDuration" placeholder="1" dir="ltr" />
+            </div>
+
+            <button class="btn btn-primary btn-full" @onclick="SaveService">
+                @(editingService != null ? "ذخیره تغییرات" : "افزودن خدمت")
+            </button>
+        </div>
+    </div>
+}
+
+<Layout.NavMenu />
+
+@code {
+    [Inject] private Shared.Interfaces.IServiceService ServiceService { get; set; } = default!;
+
+    private List<Shared.DTOs.ServiceDto> services = new();
+    private string searchKeyword = "";
+    private Shared.Enums.ServiceCategory? selectedCategory = null;
+    private bool showCreateForm = false;
+    private Shared.DTOs.ServiceDto? editingService = null;
+
+    private string formTitle = "";
+    private string formDescription = "";
+    private Shared.Enums.ServiceCategory formCategory = Shared.Enums.ServiceCategory.Videography;
+    private decimal formPrice = 0;
+    private int formDuration = 1;
+
+    private List<Shared.Enums.ServiceCategory> categories = Enum.GetValues<Shared.Enums.ServiceCategory>().ToList();
+
+    private List<Shared.DTOs.ServiceDto> filteredServices => services
+        .Where(s => string.IsNullOrEmpty(searchKeyword) || s.Title.Contains(searchKeyword, StringComparison.OrdinalIgnoreCase))
+        .Where(s => selectedCategory == null || s.Category == selectedCategory)
+        .ToList();
+
+    protected override async Task OnInitializedAsync()
+    {
+        services = await ServiceService.GetFeaturedServicesAsync();
+    }
+
+    private void ShowCreateForm()
+    {
+        editingService = null;
+        formTitle = "";
+        formDescription = "";
+        formPrice = 0;
+        formDuration = 1;
+        showCreateForm = true;
+    }
+
+    private void EditService(Shared.DTOs.ServiceDto service)
+    {
+        editingService = service;
+        formTitle = service.Title;
+        formDescription = service.Description;
+        formCategory = service.Category;
+        formPrice = service.Price;
+        formDuration = service.DurationDays;
+        showCreateForm = true;
+    }
+
+    private void CloseForm()
+    {
+        showCreateForm = false;
+        editingService = null;
+    }
+
+    private async Task SaveService()
+    {
+        var dto = new Shared.DTOs.CreateServiceDto
+        {
+            Title = formTitle,
+            Description = formDescription,
+            Category = formCategory,
+            Price = formPrice,
+            DurationDays = formDuration
+        };
+
+        if (editingService != null)
+        {
+            await ServiceService.UpdateServiceAsync(editingService.Id, dto);
+        }
+        else
+        {
+            await ServiceService.CreateServiceAsync(Guid.Empty, dto);
+        }
+
+        services = await ServiceService.GetFeaturedServicesAsync();
+        CloseForm();
+    }
+
+    private async Task DeleteService(Guid id)
+    {
+        await ServiceService.DeleteServiceAsync(id);
+        services = await ServiceService.GetFeaturedServicesAsync();
+    }
+}

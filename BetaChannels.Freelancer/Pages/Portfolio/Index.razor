@@ -1,0 +1,101 @@
+@page "/portfolio"
+@inject Shared.Interfaces.IPortfolioService PortfolioService
+@inject NavigationManager Navigation
+
+<div class="app-header">
+    <div class="header-top">
+        <div class="app-logo">
+            <button class="header-btn" @onclick="() => Navigation.NavigateTo("/")">
+                <i class="bi bi-arrow-right"></i>
+            </button>
+            <div class="logo-text">نمونه کارها</div>
+        </div>
+        <div class="header-actions">
+            <button class="header-btn" @onclick="ShowAddForm">
+                <i class="bi bi-plus-lg"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="portfolio-grid">
+    @foreach (var item in portfolioItems)
+    {
+        <div class="portfolio-item">
+            <div class="portfolio-thumbnail">
+                <i class="bi bi-play-circle-fill"></i>
+            </div>
+            <div class="portfolio-info">
+                <h4>@item.Title</h4>
+                <p>@item.Description</p>
+                <div class="portfolio-stats">
+                    <span>❤️ @item.Likes</span>
+                    <span>👁 @item.Views</span>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@if (showAddForm)
+{
+    <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 20px;">
+        <div class="card" style="width: 100%; max-width: 500px;">
+            <div class="card-header">
+                <h3>افزودن نمونه کار</h3>
+                <button class="header-btn" @onclick="() => showAddForm = false" style="background: rgba(255,255,255,0.1);">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+            <div class="form-group">
+                <label>عنوان</label>
+                <input type="text" class="form-control" @bind="newTitle" />
+            </div>
+            <div class="form-group">
+                <label>توضیحات</label>
+                <textarea class="form-control" @bind="newDescription"></textarea>
+            </div>
+            <div class="form-group">
+                <label>دسته‌بندی</label>
+                <select class="form-control" @bind="newCategory">
+                    @foreach (var cat in Enum.GetValues<Shared.Enums.ServiceCategory>())
+                    {
+                        <option value="@cat">@cat.ToPersianName()</option>
+                    }
+                </select>
+            </div>
+            <button class="btn btn-primary btn-full" @onclick="AddPortfolioItem">افزودن</button>
+        </div>
+    </div>
+}
+
+<Layout.NavMenu />
+
+@code {
+    private List<Shared.DTOs.PortfolioItemDto> portfolioItems = new();
+    private bool showAddForm = false;
+    private string newTitle = "";
+    private string newDescription = "";
+    private Shared.Enums.ServiceCategory newCategory = Shared.Enums.ServiceCategory.Videography;
+
+    protected override async Task OnInitializedAsync()
+    {
+        portfolioItems = await PortfolioService.GetPortfolioByFreelancerAsync(Guid.Empty);
+    }
+
+    private void ShowAddForm() => showAddForm = true;
+
+    private async Task AddPortfolioItem()
+    {
+        await PortfolioService.CreatePortfolioItemAsync(Guid.Empty, new()
+        {
+            Title = newTitle,
+            Description = newDescription,
+            Category = newCategory
+        });
+        portfolioItems = await PortfolioService.GetPortfolioByFreelancerAsync(Guid.Empty);
+        showAddForm = false;
+        newTitle = "";
+        newDescription = "";
+    }
+}

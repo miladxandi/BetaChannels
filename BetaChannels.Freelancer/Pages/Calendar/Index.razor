@@ -1,0 +1,210 @@
+@page "/calendar"
+@inject Shared.Interfaces.IContentCalendarService CalendarService
+@inject NavigationManager Navigation
+
+<div class="app-header">
+    <div class="header-top">
+        <div class="app-logo">
+            <button class="header-btn" @onclick="() => Navigation.NavigateTo("/")">
+                <i class="bi bi-arrow-right"></i>
+            </button>
+            <div class="logo-text">تقویم محتوایی</div>
+        </div>
+        <div class="header-actions">
+            <button class="header-btn" @onclick="ShowAddEvent">
+                <i class="bi bi-plus-lg"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="page-content">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <button class="btn btn-outline" style="padding: 8px 16px;" @onclick="PreviousMonth">
+            <i class="bi bi-chevron-right"></i>
+        </button>
+        <h3 style="font-size: 18px;">@currentMonthName @currentYear</h3>
+        <button class="btn btn-outline" style="padding: 8px 16px;" @onclick="NextMonth">
+            <i class="bi bi-chevron-left"></i>
+        </button>
+    </div>
+
+    <div class="calendar-header">
+        <span>ش</span><span>ی</span><span>د</span><span>س</span><span>چ</span><span>پ</span><span>ج</span>
+    </div>
+
+    <div class="calendar-grid">
+        @foreach (var day in calendarDays)
+        {
+            <div class="calendar-day @(day.IsToday ? "today" : "") @(day.IsOtherMonth ? "other-month" : "") @(day.HasEvent ? "has-event" : "")"
+                 @onclick="() => SelectDay(day)">
+                @day.DayNumber
+            </div>
+        }
+    </div>
+
+    <div class="section-title" style="padding: 0; margin-top: 20px;">
+        <h3>رویدادهای @selectedDate.ToString("yyyy/MM/dd")</h3>
+    </div>
+
+    @foreach (var ev in dayEvents)
+    {
+        <div class="card" style="padding: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: start;">
+                <div>
+                    <h4 style="font-size: 15px; margin-bottom: 4px;">@ev.Title</h4>
+                    <p style="font-size: 13px; color: var(--text-secondary);">@ev.Description</p>
+                    <span style="background: rgba(255,107,53,0.15); color: var(--primary); padding: 3px 10px; border-radius: 12px; font-size: 11px; margin-top: 8px; display: inline-block;">
+                        @ev.Platform.ToPersianName()
+                    </span>
+                    <span style="margin-right: 8px; font-size: 11px; color: var(--text-secondary);">
+                        @ev.Status.ToPersianName()
+                    </span>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@if (showAddEventForm)
+{
+    <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 20px;">
+        <div class="card" style="width: 100%; max-width: 500px;">
+            <div class="card-header">
+                <h3>افزودن رویداد</h3>
+                <button class="header-btn" @onclick="() => showAddEventForm = false" style="background: rgba(255,255,255,0.1);">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+            <div class="form-group">
+                <label>عنوان</label>
+                <input type="text" class="form-control" @bind="eventTitle" />
+            </div>
+            <div class="form-group">
+                <label>توضیحات</label>
+                <textarea class="form-control" @bind="eventDescription"></textarea>
+            </div>
+            <div class="form-group">
+                <label>تاریخ</label>
+                <input type="date" class="form-control" @bind="eventDate" dir="ltr" />
+            </div>
+            <div class="form-group">
+                <label>پلتفرم</label>
+                <select class="form-control" @bind="eventPlatform">
+                    @foreach (var p in Enum.GetValues<Shared.Enums.SocialPlatform>())
+                    {
+                        <option value="@p">@p.ToPersianName()</option>
+                    }
+                </select>
+            </div>
+            <button class="btn btn-primary btn-full" @onclick="SaveEvent">ذخیره</button>
+        </div>
+    </div>
+}
+
+<Layout.NavMenu />
+
+@code {
+    private DateTime currentDate = DateTime.Now;
+    private DateTime selectedDate = DateTime.Now;
+    private List<Shared.DTOs.ContentCalendarDto> allEvents = new();
+    private List<Shared.DTOs.ContentCalendarDto> dayEvents = new();
+    private List<CalendarDay> calendarDays = new();
+    private bool showAddEventForm = false;
+    private string eventTitle = "";
+    private string eventDescription = "";
+    private string eventDate = "";
+    private Shared.Enums.SocialPlatform eventPlatform = Shared.Enums.SocialPlatform.Instagram;
+
+    private string currentMonthName => currentDate.ToString("MMMM", new System.Globalization.CultureInfo("fa-IR"));
+    private int currentYear => currentDate.Year;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadCalendar();
+    }
+
+    private async Task LoadCalendar()
+    {
+        allEvents = await CalendarService.GetCalendarAsync(Guid.Empty, currentDate);
+        BuildCalendarDays();
+        SelectDay(calendarDays.FirstOrDefault(d => d.IsToday) ?? calendarDays.First());
+    }
+
+    private void BuildCalendarDays()
+    {
+        calendarDays.Clear();
+        var firstDay = new DateTime(currentDate.Year, currentDate.Month, 1);
+        var lastDay = firstDay.AddMonths(1).AddDays(-1);
+        var startOffset = ((int)firstDay.DayOfWeek + 1) % 7;
+
+        for (int i = startOffset - 1; i >= 0; i--)
+        {
+            var d = firstDay.AddDays(-i - 1);
+            calendarDays.Add(new CalendarDay { DayNumber = d.Day, IsOtherMonth = true, Date = d });
+        }
+
+        for (int i = 1; i <= lastDay.Day; i++)
+        {
+            var d = new DateTime(currentDate.Year, currentDate.Month, i);
+            calendarDays.Add(new CalendarDay
+            {
+                DayNumber = i,
+                IsToday = d.Date == DateTime.Today,
+                HasEvent = allEvents.Any(e => e.ScheduledDate.Date == d.Date),
+                Date = d
+            });
+        }
+
+        var remaining = 42 - calendarDays.Count;
+        for (int i = 1; i <= remaining; i++)
+        {
+            var d = lastDay.AddDays(i);
+            calendarDays.Add(new CalendarDay { DayNumber = d.Day, IsOtherMonth = true, Date = d });
+        }
+    }
+
+    private void SelectDay(CalendarDay day)
+    {
+        selectedDate = day.Date;
+        dayEvents = allEvents.Where(e => e.ScheduledDate.Date == day.Date.Date).ToList();
+    }
+
+    private void PreviousMonth()
+    {
+        currentDate = currentDate.AddMonths(-1);
+        BuildCalendarDays();
+    }
+
+    private void NextMonth()
+    {
+        currentDate = currentDate.AddMonths(1);
+        BuildCalendarDays();
+    }
+
+    private void ShowAddEvent() => showAddEventForm = true;
+
+    private async Task SaveEvent()
+    {
+        await CalendarService.CreateEventAsync(Guid.Empty, new()
+        {
+            Title = eventTitle,
+            Description = eventDescription,
+            ScheduledDate = DateTime.Parse(eventDate),
+            Platform = eventPlatform
+        });
+        showAddEventForm = false;
+        eventTitle = "";
+        eventDescription = "";
+        await LoadCalendar();
+    }
+
+    private class CalendarDay
+    {
+        public int DayNumber { get; set; }
+        public bool IsToday { get; set; }
+        public bool IsOtherMonth { get; set; }
+        public bool HasEvent { get; set; }
+        public DateTime Date { get; set; }
+    }
+}

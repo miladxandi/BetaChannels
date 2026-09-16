@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="BetaChannels.Employer/BetaChannels.Employer.csproj" />
+  <Project Path="BetaChannels.Freelancer/BetaChannels.Freelancer.csproj" />
+  <Project Path="BetaChannels.Shared/BetaChannels.Shared.csproj" />
+</Solution>

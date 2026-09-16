@@ -1,0 +1,142 @@
+@page "/freelancers"
+@page "/freelancers/{Id:guid}"
+@inject Shared.Interfaces.IFreelancerService FreelancerService
+@inject NavigationManager Navigation
+
+<div class="app-header">
+    <div class="header-top">
+        <div class="app-logo">
+            <button class="header-btn" @onclick="() => Navigation.NavigateTo("/")">
+                <i class="bi bi-arrow-right"></i>
+            </button>
+            <div class="logo-text">جستجوی فریلنسر</div>
+        </div>
+    </div>
+</div>
+
+<div class="page-content">
+    <div class="search-box">
+        <i class="bi bi-search"></i>
+        <input type="text" placeholder="جستجوی فریلنسر..." @bind="searchKeyword" @bind:event="oninput" />
+    </div>
+
+    <div class="filter-chips">
+        <div class="filter-chip @(selectedCategory == null ? "active" : "")" @onclick="() => { selectedCategory = null; Search(); }">همه</div>
+        @foreach (var cat in categories)
+        {
+            <div class="filter-chip @(selectedCategory == cat ? "active" : "")" @onclick="() => { selectedCategory = cat; Search(); }">
+                @cat.ToPersianName()
+            </div>
+        }
+    </div>
+
+    <div class="filter-chips">
+        <div class="filter-chip @(selectedStatus == null ? "active" : "")" @onclick="() => { selectedStatus = null; Search(); }">همه وضعیت‌ها</div>
+        @foreach (var status in statuses)
+        {
+            <div class="filter-chip @(selectedStatus == status ? "active" : "")" @onclick="() => { selectedStatus = status; Search(); }">
+                @status.ToPersianName()
+            </div>
+        }
+    </div>
+
+    @if (freelancers.Count == 0)
+    {
+        <div class="empty-state">
+            <i class="bi bi-people"></i>
+            <h3>فریلنسری یافت نشد</h3>
+            <p>فیلترهای جستجو را تغییر دهید</p>
+        </div>
+    }
+    else
+    {
+        @foreach (var freelancer in freelancers)
+        {
+            <div class="freelancer-card" @onclick="() => ViewProfile(freelancer.Id)">
+                <div class="freelancer-header">
+                    <div class="freelancer-avatar">
+                        @freelancer.FullName[0]
+                    </div>
+                    <div class="freelancer-info" style="flex: 1;">
+                        <h3>@freelancer.FullName</h3>
+                        <p>@freelancer.Bio</p>
+                    </div>
+                    <span class="status-badge status-@freelancer.Status.ToString().ToLower()">
+                        @freelancer.Status.ToPersianName()
+                    </span>
+                </div>
+                <div class="freelancer-meta">
+                    <div class="meta-item">
+                        <span>⭐</span>
+                        <span class="value">@freelancer.Rating</span>
+                        <span>(@freelancer.TotalReviews)</span>
+                    </div>
+                    <div class="meta-item">
+                        <span>📁</span>
+                        <span class="value">@freelancer.CompletedProjects</span>
+                        <span>پروژه</span>
+                    </div>
+                    <div class="meta-item">
+                        <span></span>
+                        <span class="value">@freelancer.HourlyRate.FormatPrice()</span>
+                    </div>
+                </div>
+                <div class="freelancer-skills">
+                    @foreach (var skill in freelancer.Skills.Take(4))
+                    {
+                        <span class="skill-tag">@skill.ToPersianName()</span>
+                    }
+                </div>
+                <div style="margin-top: 12px; display: flex; gap: 8px;">
+                    <button class="btn btn-primary" style="flex: 1; padding: 10px;" @onclick:stopPropagation="true" @onclick="() => HireFreelancer(freelancer.Id)">
+                        <i class="bi bi-hand-index-thumb-fill"></i>
+                        استخدام
+                    </button>
+                    <button class="btn btn-outline" style="padding: 10px 16px;" @onclick:stopPropagation="true" @onclick="() => ViewProfile(freelancer.Id)">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+<Layout.NavMenu />
+
+@code {
+    [Parameter] public Guid? Id { get; set; }
+
+    private List<Shared.DTOs.FreelancerProfileDto> freelancers = new();
+    private string searchKeyword = "";
+    private Shared.Enums.ServiceCategory? selectedCategory = null;
+    private Shared.Enums.FreelancerStatus? selectedStatus = null;
+
+    private List<Shared.Enums.ServiceCategory> categories = Enum.GetValues<Shared.Enums.ServiceCategory>().ToList();
+    private List<Shared.Enums.FreelancerStatus> statuses = Enum.GetValues<Shared.Enums.FreelancerStatus>().ToList();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Search();
+    }
+
+    private async Task Search()
+    {
+        var searchDto = new Shared.DTOs.FreelancerSearchDto
+        {
+            Keyword = string.IsNullOrEmpty(searchKeyword) ? null : searchKeyword,
+            Category = selectedCategory,
+            Status = selectedStatus
+        };
+        freelancers = await FreelancerService.SearchFreelancersAsync(searchDto);
+    }
+
+    private void ViewProfile(Guid id)
+    {
+        Navigation.NavigateTo($"/freelancers/{id}");
+    }
+
+    private void HireFreelancer(Guid id)
+    {
+        Navigation.NavigateTo($"/projects/new?freelancer={id}");
+    }
+}

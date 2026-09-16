@@ -1,0 +1,81 @@
+@page "/subscription"
+@inject Shared.Interfaces.ISubscriptionService SubscriptionService
+@inject NavigationManager Navigation
+
+<div class="app-header">
+    <div class="header-top">
+        <div class="app-logo">
+            <button class="header-btn" @onclick="() => Navigation.NavigateTo("/")">
+                <i class="bi bi-arrow-right"></i>
+            </button>
+            <div class="logo-text">اشتراک ویژه</div>
+        </div>
+    </div>
+</div>
+
+<div class="page-content">
+    @if (activeSubscription != null && activeSubscription.IsActive)
+    {
+        <div class="card" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h3 style="color: white; margin-bottom: 4px;">اشتراک فعال: @activeSubscription.Type.ToPersianName()</h3>
+                    <p style="color: rgba(255,255,255,0.8); font-size: 13px;">
+                        اعتبار تا @activeSubscription.EndDate.ToString("yyyy/MM/dd")
+                    </p>
+                </div>
+                <div style="background: rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 12px; color: white; font-weight: 700;">
+                    فعال ✓
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="section-title" style="padding: 0; margin-top: 20px;">
+        <h3>پلن‌های اشتراک</h3>
+    </div>
+</div>
+
+<div class="subscription-cards">
+    @foreach (var plan in plans)
+    {
+        <div class="subscription-card @(plan.IsPopular ? "popular" : "")">
+            @if (plan.IsPopular)
+            {
+                <div class="popular-badge">محبوب‌ترین</div>
+            }
+            <h3>@plan.Name</h3>
+            <div class="subscription-price">
+                @plan.Price.FormatPrice()
+                <span>/ ماهانه</span>
+            </div>
+            <ul class="feature-list">
+                @foreach (var feature in plan.Features)
+                {
+                    <li>@feature</li>
+                }
+            </ul>
+            <button class="btn @(plan.IsPopular ? "btn-primary" : "btn-outline") btn-full" @onclick="() => Subscribe(plan.Type)">
+                @(activeSubscription?.Type == plan.Type ? "اشتراک فعلی" : "انتخاب پلن")
+            </button>
+        </div>
+    }
+</div>
+
+<Layout.NavMenu />
+
+@code {
+    private List<Shared.DTOs.SubscriptionPlanDto> plans = new();
+    private Shared.DTOs.SubscriptionDto? activeSubscription;
+
+    protected override async Task OnInitializedAsync()
+    {
+        plans = await SubscriptionService.GetAvailablePlansAsync();
+        activeSubscription = await SubscriptionService.GetActiveSubscriptionAsync(Guid.Empty);
+    }
+
+    private async Task Subscribe(Shared.Enums.SubscriptionType type)
+    {
+        activeSubscription = await SubscriptionService.SubscribeAsync(Guid.Empty, type);
+    }
+}

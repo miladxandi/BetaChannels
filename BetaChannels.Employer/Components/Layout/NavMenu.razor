@@ -1,0 +1,31 @@
+<nav class="bottom-nav">
+    <a href="/" class="nav-item @(IsActive("/") ? "active" : "")">
+        <i class="bi bi-house-fill"></i>
+        <span>خانه</span>
+    </a>
+    <a href="/freelancers" class="nav-item @(IsActive("/freelancers") ? "active" : "")">
+        <i class="bi bi-people-fill"></i>
+        <span>فریلنسرها</span>
+    </a>
+    <a href="/projects" class="nav-item @(IsActive("/projects") ? "active" : "")">
+        <i class="bi bi-folder-fill"></i>
+        <span>پروژه‌ها</span>
+    </a>
+    <a href="/payments" class="nav-item @(IsActive("/payments") ? "active" : "")">
+        <i class="bi bi-wallet2"></i>
+        <span>پرداخت</span>
+    </a>
+    <a href="/settings" class="nav-item @(IsActive("/settings") ? "active" : "")">
+        <i class="bi bi-gear-fill"></i>
+        <span>تنظیمات</span>
+    </a>
+</nav>
+
+@code {
+    [Inject] private NavigationManager Navigation { get; set; } = default!;
+
+    private bool IsActive(string path)
+    {
+        return Navigation.Uri.EndsWith(path.TrimStart('/'), StringComparison.OrdinalIgnoreCase);
+    }
+}
