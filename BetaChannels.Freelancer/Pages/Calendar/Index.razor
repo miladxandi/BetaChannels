@@ -11,7 +11,7 @@
             <div class="logo-text">تقویم محتوایی</div>
         </div>
         <div class="header-actions">
-            <button class="header-btn" @onclick='ShowAddEvent">
+            <button class="header-btn" @onclick="ShowAddEvent">
                 <i class="bi bi-plus-lg'></i>
             </button>
         </div>
@@ -20,11 +20,11 @@
 
 <div class="page-content">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-        <button class="btn btn-outline" style="padding: 8px 16px;" @onclick='PreviousMonth">
+        <button class="btn btn-outline" style="padding: 8px 16px;" @onclick="PreviousMonth">
             <i class="bi bi-chevron-right'></i>
         </button>
         <h3 style="font-size: 18px;">@currentMonthName @currentYear</h3>
-        <button class="btn btn-outline" style="padding: 8px 16px;" @onclick='NextMonth">
+        <button class="btn btn-outline" style="padding: 8px 16px;" @onclick="NextMonth">
             <i class="bi bi-chevron-left'></i>
         </button>
     </div>
@@ -37,7 +37,7 @@
         @foreach (var day in calendarDays)
         {
             <div class="calendar-day @(day.IsToday ? "today" : "") @(day.IsOtherMonth ? "other-month" : "") @(day.HasEvent ? "has-event" : "")"
-                 @onclick='() => SelectDay(day)">
+                 @onclick="() => SelectDay(day)">
                 @day.DayNumber
             </div>
         }
@@ -72,7 +72,7 @@
         <div class="card" style="width: 100%; max-width: 500px;">
             <div class="card-header">
                 <h3>افزودن رویداد</h3>
-                <button class="header-btn" @onclick='() => showAddEventForm = false" style="background: rgba(255,255,255,0.1);'>
+                <button class="header-btn" @onclick="() => showAddEventForm = false" style="background: rgba(255,255,255,0.1);">
                     <i class="bi bi-x-lg"></i>
                 </button>
             </div>
@@ -97,7 +97,7 @@
                     }
                 </select>
             </div>
-            <button class="btn btn-primary btn-full" @onclick='SaveEvent">ذخیره</button>
+            <button class="btn btn-primary btn-full" @onclick="SaveEvent">ذخیره</button>
         </div>
     </div>
 }

@@ -21,20 +21,20 @@
     </div>
 
     <div class="filter-chips">
-        <div class="filter-chip @(selectedCategory == null ? "active" : "")" @onclick='() => { selectedCategory = null; Search(); }">همه</div>
+        <div class="filter-chip @(selectedCategory == null ? "active" : "")" @onclick="() => { selectedCategory = null; Search(); }">همه</div>
         @foreach (var cat in categories)
         {
-            <div class="filter-chip @(selectedCategory == cat ? 'active" : "")" @onclick='() => { selectedCategory = cat; Search(); }">
+            <div class="filter-chip @(selectedCategory == cat ? "active" : "")" @onclick="() => { selectedCategory = cat; Search(); }">
                 @cat.ToPersianName()
             </div>
         }
     </div>
 
     <div class="filter-chips'>
-        <div class="filter-chip @(selectedStatus == null ? "active" : "")" @onclick='() => { selectedStatus = null; Search(); }">همه وضعیت‌ها</div>
+        <div class="filter-chip @(selectedStatus == null ? "active" : "")" @onclick="() => { selectedStatus = null; Search(); }">همه وضعیت‌ها</div>
         @foreach (var status in statuses)
         {
-            <div class="filter-chip @(selectedStatus == status ? 'active" : "")" @onclick='() => { selectedStatus = status; Search(); }">
+            <div class="filter-chip @(selectedStatus == status ? "active" : "")" @onclick="() => { selectedStatus = status; Search(); }">
                 @status.ToPersianName()
             </div>
         }
@@ -52,7 +52,7 @@
     {
         @foreach (var freelancer in freelancers)
         {
-            <div class="freelancer-card" @onclick='() => ViewProfile(freelancer.Id)">
+            <div class="freelancer-card" @onclick="() => ViewProfile(freelancer.Id)">
                 <div class="freelancer-header'>
                     <div class="freelancer-avatar">
                         @freelancer.FullName[0]
@@ -88,11 +88,11 @@
                     }
                 </div>
                 <div style="margin-top: 12px; display: flex; gap: 8px;">
-                    <button class="btn btn-primary" style="flex: 1; padding: 10px;" @onclick:stopPropagation="true" @onclick='() => HireFreelancer(freelancer.Id)">
+                    <button class="btn btn-primary" style="flex: 1; padding: 10px;" @onclick:stopPropagation="true" @onclick="() => HireFreelancer(freelancer.Id)">
                         <i class="bi bi-hand-index-thumb-fill'></i>
                         استخدام
                     </button>
-                    <button class="btn btn-outline" style="padding: 10px 16px;" @onclick:stopPropagation="true" @onclick='() => ViewProfile(freelancer.Id)">
+                    <button class="btn btn-outline" style="padding: 10px 16px;" @onclick:stopPropagation="true" @onclick="() => ViewProfile(freelancer.Id)">
                         <i class="bi bi-eye'></i>
                     </button>
                 </div>

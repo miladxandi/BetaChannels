@@ -55,7 +55,7 @@
                     <li>@feature</li>
                 }
             </ul>
-            <button class="btn @(plan.IsPopular ? "btn-primary" : "btn-outline") btn-full" @onclick='() => Subscribe(plan.Type)">
+            <button class="btn @(plan.IsPopular ? "btn-primary" : "btn-outline") btn-full" @onclick="() => Subscribe(plan.Type)">
                 @(activeSubscription?.Type == plan.Type ? "اشتراک فعلی' : "انتخاب پلن")
             </button>
         </div>

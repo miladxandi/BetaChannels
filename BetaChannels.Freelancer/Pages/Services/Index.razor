@@ -10,7 +10,7 @@
             <div class="logo-text">خدمات من</div>
         </div>
         <div class="header-actions">
-            <button class="header-btn" @onclick='ShowCreateForm">
+            <button class="header-btn" @onclick="ShowCreateForm">
                 <i class="bi bi-plus-lg'></i>
             </button>
         </div>
@@ -24,10 +24,10 @@
     </div>
 
     <div class="filter-chips">
-        <div class="filter-chip @(selectedCategory == null ? "active" : "")" @onclick='() => selectedCategory = null">همه</div>
+        <div class="filter-chip @(selectedCategory == null ? "active" : "")" @onclick="() => selectedCategory = null">همه</div>
         @foreach (var cat in categories)
         {
-            <div class="filter-chip @(selectedCategory == cat ? 'active" : "")" @onclick='() => selectedCategory = cat">
+            <div class="filter-chip @(selectedCategory == cat ? "active" : "")" @onclick="() => selectedCategory = cat">
                 @cat.ToPersianName()
             </div>
         }
@@ -39,7 +39,7 @@
             <i class="bi bi-briefcase"></i>
             <h3>هنوز خدمتی اضافه نکردید</h3>
             <p>اولین خدمت خود را اضافه کنید</p>
-            <button class="btn btn-primary" @onclick='ShowCreateForm" style="margin-top: 16px;'>
+            <button class="btn btn-primary" @onclick="ShowCreateForm" style="margin-top: 16px;">
                 <i class="bi bi-plus-lg"></i>
                 افزودن خدمت
             </button>
@@ -65,10 +65,10 @@
                         </span>
                     </div>
                     <div style="display: flex; gap: 8px;">
-                        <button class="btn btn-outline" style="padding: 8px 16px; font-size: 12px;" @onclick='() => EditService(service)">
+                        <button class="btn btn-outline" style="padding: 8px 16px; font-size: 12px;" @onclick="() => EditService(service)">
                             <i class="bi bi-pencil'></i>
                         </button>
-                        <button class="btn" style="padding: 8px 16px; font-size: 12px; background: rgba(244,67,54,0.15); color: var(--danger);" @onclick='() => DeleteService(service.Id)">
+                        <button class="btn" style="padding: 8px 16px; font-size: 12px; background: rgba(244,67,54,0.15); color: var(--danger);" @onclick="() => DeleteService(service.Id)">
                             <i class="bi bi-trash'></i>
                         </button>
                     </div>
@@ -84,7 +84,7 @@
         <div class="card" style="width: 100%; max-width: 500px; max-height: 80vh; overflow-y: auto;">
             <div class="card-header">
                 <h3>@(editingService != null ? "ویرایش خدمت" : "افزودن خدمت جدید")</h3>
-                <button class="header-btn" @onclick='CloseForm" style="background: rgba(255,255,255,0.1);'>
+                <button class="header-btn" @onclick="CloseForm" style="background: rgba(255,255,255,0.1);">
                     <i class="bi bi-x-lg"></i>
                 </button>
             </div>
@@ -119,7 +119,7 @@
                 <input type="number" class="form-control" @bind="formDuration" placeholder="1" dir="ltr" />
             </div>
 
-            <button class="btn btn-primary btn-full" @onclick='SaveService">
+            <button class="btn btn-primary btn-full" @onclick="SaveService">
                 @(editingService != null ? "ذخیره تغییرات' : "افزودن خدمت")
             </button>
         </div>
