@@ -16,7 +16,7 @@ env:
 jobs:
   build-freelancer:
     name: Build Freelancer Signed APK
-    runs-on: windows-latest
+    runs-on: Lithunia
     steps:
       - uses: actions/checkout@v4
 
