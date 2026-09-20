@@ -26,7 +26,7 @@ jobs:
 #          dotnet-version: '10.0.x'
 
       - name: Install MAUI Workload
-        run: dotnet workload install maui-android
+        run: dotnet workload install maui-android maui-ios maui-windows
 
       - name: Restore NuGet Packages
         run: dotnet restore BetaChannels.Freelancer/BetaChannels.Freelancer.csproj
@@ -52,7 +52,7 @@ jobs:
 #          dotnet-version: '10.0.x'
 
       - name: Install MAUI Workload
-        run: dotnet workload install maui-android
+        run: dotnet workload install maui-android maui-ios maui-windows
 
       - name: Restore NuGet Packages
         run: dotnet restore BetaChannels.Employer/BetaChannels.Employer.csproj
