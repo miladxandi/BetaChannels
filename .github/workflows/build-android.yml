@@ -31,6 +31,9 @@ jobs:
       - name: Restore NuGet Packages
         run: dotnet restore BetaChannels.Freelancer/BetaChannels.Freelancer.csproj -p:TargetFramework=net10.0-android
 
+      - name: Source .bashrc
+        run: source /home/github/.bashrc
+        
       - name: Build Release APK (Signed)
         run: dotnet build BetaChannels.Freelancer/BetaChannels.Freelancer.csproj --no-restore -p:TargetFramework=net10.0-android -f net10.0-android -c Release /p:AndroidKeyStore=true /p:AndroidSigningKeyStore=miladxandi.keystore /p:AndroidSigningStorePass="${{ env.KEYSTORE_PASSWORD }}" /p:AndroidSigningKeyAlias="${{ env.KEY_ALIAS }}" /p:AndroidSigningKeyPass="${{ env.KEY_PASSWORD }}"
 
@@ -57,6 +60,9 @@ jobs:
       - name: Restore NuGet Packages
         run: dotnet restore BetaChannels.Employer/BetaChannels.Employer.csproj -p:TargetFramework=net10.0-android
 
+      - name: Source .bashrc
+        run: source /home/github/.bashrc
+        
       - name: Build Release APK (Signed)
         run: dotnet build BetaChannels.Employer/BetaChannels.Employer.csproj --no-restore -p:TargetFramework=net10.0-android -f net10.0-android -c Release /p:AndroidKeyStore=true /p:AndroidSigningKeyStore=miladxandi.keystore /p:AndroidSigningStorePass="${{ env.KEYSTORE_PASSWORD }}" /p:AndroidSigningKeyAlias="${{ env.KEY_ALIAS }}" /p:AndroidSigningKeyPass="${{ env.KEY_PASSWORD }}"
 
