@@ -42,7 +42,7 @@ jobs:
 
   build-employer:
     name: Build Employer Signed APK
-    runs-on: windows-latest
+    runs-on: Lithunia
     steps:
       - uses: actions/checkout@v4
 
@@ -70,7 +70,7 @@ jobs:
     name: Attach APKs to Release
     needs: [build-freelancer, build-employer]
     if: startsWith(github.ref, 'refs/tags/v')
-    runs-on: windows-latest
+    runs-on: Lithunia
     permissions:
       contents: write
     steps:
