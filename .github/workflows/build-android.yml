@@ -32,6 +32,7 @@ jobs:
       - name: Build Release APK (Signed)
         run: |
           dotnet publish BetaChannels.Freelancer/BetaChannels.Freelancer.csproj \
+            -p:TargetFramework=net10.0-android \
             -f net10.0-android \
             -c Release \
             /p:AndroidKeyStore=true \
@@ -67,6 +68,7 @@ jobs:
       - name: Build Release APK (Signed)
         run: |
           dotnet publish BetaChannels.Employer/BetaChannels.Employer.csproj \
+            -p:TargetFramework=net10.0-android \
             -f net10.0-android \
             -c Release \
             /p:AndroidKeyStore=true \
