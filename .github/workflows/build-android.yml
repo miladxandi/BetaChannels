@@ -24,10 +24,10 @@ jobs:
         run: dotnet workload install maui-android
 
       - name: Restore NuGet Packages
-        run: 
+        run: |
           dotnet restore BetaChannels.Shared/BetaChannels.Shared.csproj
           dotnet restore BetaChannels.Freelancer/BetaChannels.Freelancer.csproj -p:TargetFramework=net10.0-android
-
+        
       - name: Source .bashrc
         run: source /home/github/.bashrc
 
@@ -64,10 +64,10 @@ jobs:
         run: dotnet workload install maui-android
 
       - name: Restore NuGet Packages
-        run: 
+        run: |
           dotnet restore BetaChannels.Shared/BetaChannels.Shared.csproj
           dotnet restore BetaChannels.Employer/BetaChannels.Employer.csproj -p:TargetFramework=net10.0-android
-
+          
       - name: Source .bashrc
         run: source /home/github/.bashrc
 
