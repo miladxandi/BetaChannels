@@ -32,8 +32,10 @@ jobs:
       - name: Build Release APK (Signed)
         run: |
           dotnet publish BetaChannels.Freelancer/BetaChannels.Freelancer.csproj \
+            -p:TargetFramework=net10.0-android \
             -f net10.0-android \
             -c Release \
+            --no-restore \
             /p:AndroidKeyStore=true \
             /p:AndroidSigningKeyStore=miladxandi.keystore \
             /p:AndroidSigningStorePass="${{ env.KEYSTORE_PASSWORD }}" \
@@ -67,8 +69,10 @@ jobs:
       - name: Build Release APK (Signed)
         run: |
           dotnet publish BetaChannels.Employer/BetaChannels.Employer.csproj \
+            -p:TargetFramework=net10.0-android \
             -f net10.0-android \
             -c Release \
+            --no-restore \
             /p:AndroidKeyStore=true \
             /p:AndroidSigningKeyStore=miladxandi.keystore \
             /p:AndroidSigningStorePass="${{ env.KEYSTORE_PASSWORD }}" \
