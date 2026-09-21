@@ -35,7 +35,7 @@ jobs:
         run: source /home/github/.bashrc
         
       - name: Build Release APK (Signed)
-        run: dotnet build BetaChannels.Freelancer/BetaChannels.Freelancer.csproj --no-restore -t:InstallAndroidDependencies -p:TargetFramework=net10.0-android -f net10.0-android -c Release /p:AndroidKeyStore=true /p:AndroidSdkDirectory=/var/github/android /p:AndroidSigningKeyStore=miladxandi.keystore /p:AndroidSigningStorePass="${{ env.KEYSTORE_PASSWORD }}" /p:AndroidSigningKeyAlias="${{ env.KEY_ALIAS }}" /p:AndroidSigningKeyPass="${{ env.KEY_PASSWORD }}"
+        run: dotnet build BetaChannels.Freelancer/BetaChannels.Freelancer.csproj --no-restore -t:InstallAndroidDependencies -p:TargetFramework=net10.0-android -f net10.0-android -c Release /p:AndroidKeyStore=true /p:AcceptAndroidSdkLicenses=True /p:AndroidSdkDirectory=/var/github/android /p:AndroidSigningKeyStore=miladxandi.keystore /p:AndroidSigningStorePass="${{ env.KEYSTORE_PASSWORD }}" /p:AndroidSigningKeyAlias="${{ env.KEY_ALIAS }}" /p:AndroidSigningKeyPass="${{ env.KEY_PASSWORD }}"
 
       - name: Upload Signed APK
         uses: actions/upload-artifact@v4
@@ -64,7 +64,7 @@ jobs:
         run: source /home/github/.bashrc
         
       - name: Build Release APK (Signed)
-        run: dotnet build BetaChannels.Employer/BetaChannels.Employer.csproj --no-restore -t:InstallAndroidDependencies -p:TargetFramework=net10.0-android -f net10.0-android -c Release /p:AndroidKeyStore=true /p:AndroidSdkDirectory=/var/github/android /p:AndroidSigningKeyStore=miladxandi.keystore /p:AndroidSigningStorePass="${{ env.KEYSTORE_PASSWORD }}" /p:AndroidSigningKeyAlias="${{ env.KEY_ALIAS }}" /p:AndroidSigningKeyPass="${{ env.KEY_PASSWORD }}"
+        run: dotnet build BetaChannels.Employer/BetaChannels.Employer.csproj --no-restore -t:InstallAndroidDependencies -p:TargetFramework=net10.0-android -f net10.0-android -c Release /p:AndroidKeyStore=true /p:AcceptAndroidSdkLicenses=True /p:AndroidSdkDirectory=/var/github/android /p:AndroidSigningKeyStore=miladxandi.keystore /p:AndroidSigningStorePass="${{ env.KEYSTORE_PASSWORD }}" /p:AndroidSigningKeyAlias="${{ env.KEY_ALIAS }}" /p:AndroidSigningKeyPass="${{ env.KEY_PASSWORD }}"
 
       - name: Upload Signed APK
         uses: actions/upload-artifact@v4
