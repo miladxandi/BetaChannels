@@ -24,17 +24,14 @@ jobs:
         run: dotnet workload install maui-android
 
       - name: Restore NuGet Packages
-        run: |
-          dotnet restore BetaChannels.Shared/BetaChannels.Shared.csproj
-          dotnet restore BetaChannels.Freelancer/BetaChannels.Freelancer.csproj -p:TargetFramework=net10.0-android
-        
+        run: dotnet restore BetaChannels.Freelancer/BetaChannels.Freelancer.csproj
+
       - name: Source .bashrc
         run: source /home/github/.bashrc
 
-      - name: Build Release APK (Signed)
+      - name: Publish Release APK (Signed)
         run: |
           dotnet publish BetaChannels.Freelancer/BetaChannels.Freelancer.csproj \
-            -p:TargetFramework=net10.0-android \
             -f net10.0-android \
             -c Release \
             --no-restore \
@@ -45,8 +42,8 @@ jobs:
             /p:AndroidSigningKeyAlias="${{ env.KEY_ALIAS }}" \
             /p:AndroidSigningKeyPass="${{ env.KEY_PASSWORD }}"
 
-      - name: Find APK output
-        run: find BetaChannels.Freelancer/bin -name "*.apk" -o -name "*-Signed.apk" 2>/dev/null
+      - name: Find APK
+        run: find BetaChannels.Freelancer/bin -name "*.apk" 2>/dev/null
 
       - name: Upload Signed APK
         uses: actions/upload-artifact@v4
@@ -64,17 +61,14 @@ jobs:
         run: dotnet workload install maui-android
 
       - name: Restore NuGet Packages
-        run: |
-          dotnet restore BetaChannels.Shared/BetaChannels.Shared.csproj
-          dotnet restore BetaChannels.Employer/BetaChannels.Employer.csproj -p:TargetFramework=net10.0-android
-          
+        run: dotnet restore BetaChannels.Employer/BetaChannels.Employer.csproj
+
       - name: Source .bashrc
         run: source /home/github/.bashrc
 
-      - name: Build Release APK (Signed)
+      - name: Publish Release APK (Signed)
         run: |
           dotnet publish BetaChannels.Employer/BetaChannels.Employer.csproj \
-            -p:TargetFramework=net10.0-android \
             -f net10.0-android \
             -c Release \
             --no-restore \
@@ -85,8 +79,8 @@ jobs:
             /p:AndroidSigningKeyAlias="${{ env.KEY_ALIAS }}" \
             /p:AndroidSigningKeyPass="${{ env.KEY_PASSWORD }}"
 
-      - name: Find APK output
-        run: find BetaChannels.Employer/bin -name "*.apk" -o -name "*-Signed.apk" 2>/dev/null
+      - name: Find APK
+        run: find BetaChannels.Employer/bin -name "*.apk" 2>/dev/null
 
       - name: Upload Signed APK
         uses: actions/upload-artifact@v4
