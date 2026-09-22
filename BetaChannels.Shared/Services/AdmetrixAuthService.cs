@@ -9,11 +9,12 @@ namespace BetaChannels.Shared.Services;
 /// <summary>
 /// سرویس احراز هویت واقعی — متصل به بک‌اند ادمتریکس
 /// از شماره موبایل + OTP استفاده می‌کند.
-/// توکن JWT در SecureStorage ذخیره می‌شود.
+/// توکن JWT از طریق ITokenStorage ذخیره می‌شود.
 /// </summary>
 public class AdmetrixAuthService : IAuthService
 {
     private readonly HttpClient _httpClient;
+    private readonly ITokenStorage _tokenStorage;
     private Guid? _currentUserId;
     private bool _isAuthenticated;
     private string? _token;
@@ -27,9 +28,10 @@ public class AdmetrixAuthService : IAuthService
         PropertyNameCaseInsensitive = true,
     };
 
-    public AdmetrixAuthService(HttpClient httpClient)
+    public AdmetrixAuthService(HttpClient httpClient, ITokenStorage tokenStorage)
     {
         _httpClient = httpClient;
+        _tokenStorage = tokenStorage;
     }
 
     /// <summary>
@@ -37,8 +39,8 @@ public class AdmetrixAuthService : IAuthService
     /// </summary>
     public async Task InitializeAsync()
     {
-        _token = await SecureStorage.GetAsync(TokenKey);
-        var userIdStr = await SecureStorage.GetAsync(UserIdKey);
+        _token = await _tokenStorage.GetAsync(TokenKey);
+        var userIdStr = await _tokenStorage.GetAsync(UserIdKey);
 
         if (!string.IsNullOrEmpty(_token) && Guid.TryParse(userIdStr, out var userId))
         {
@@ -49,24 +51,23 @@ public class AdmetrixAuthService : IAuthService
         }
     }
 
-    public async Task<AuthResultDto> LoginAsync(LoginDto dto)
+    public Task<AuthResultDto> LoginAsync(LoginDto dto)
     {
         // برای سازگاری با رابط قدیمی — از OTP استفاده می‌کنیم
-        // (در اپ جدید مستقیماً از RequestPhoneOtpAsync / VerifyPhoneOtpAsync استفاده شود)
-        return new AuthResultDto
+        return Task.FromResult(new AuthResultDto
         {
             Success = false,
             ErrorMessage = "لطفاً از ورود با شماره موبایل استفاده کنید",
-        };
+        });
     }
 
-    public async Task<AuthResultDto> RegisterAsync(RegisterDto dto)
+    public Task<AuthResultDto> RegisterAsync(RegisterDto dto)
     {
-        return new AuthResultDto
+        return Task.FromResult(new AuthResultDto
         {
             Success = false,
             ErrorMessage = "لطفاً از ثبت‌نام با شماره موبایل استفاده کنید",
-        };
+        });
     }
 
     public async Task<OtpRequestResultDto> RequestPhoneOtpAsync(string phone)
@@ -129,9 +130,9 @@ public class AdmetrixAuthService : IAuthService
             _currentUserId = result.UserId;
             _isAuthenticated = true;
 
-            await SecureStorage.SetAsync(TokenKey, _token);
+            await _tokenStorage.SetAsync(TokenKey, _token);
             if (result.UserId.HasValue)
-                await SecureStorage.SetAsync(UserIdKey, result.UserId.Value.ToString());
+                await _tokenStorage.SetAsync(UserIdKey, result.UserId.Value.ToString());
 
             // تنظیم هدر Authorization برای درخواست‌های بعدی
             _httpClient.DefaultRequestHeaders.Authorization =
@@ -155,8 +156,8 @@ public class AdmetrixAuthService : IAuthService
         _currentUserId = null;
         _isAuthenticated = false;
 
-        SecureStorage.Remove(TokenKey);
-        SecureStorage.Remove(UserIdKey);
+        _tokenStorage.Remove(TokenKey);
+        _tokenStorage.Remove(UserIdKey);
 
         _httpClient.DefaultRequestHeaders.Authorization = null;
 
@@ -172,8 +173,7 @@ public class AdmetrixAuthService : IAuthService
     {
         if (_isAuthenticated) return true;
 
-        // بررسی از SecureStorage
-        _token = await SecureStorage.GetAsync(TokenKey);
+        _token = await _tokenStorage.GetAsync(TokenKey);
         return !string.IsNullOrEmpty(_token);
     }
 
@@ -181,7 +181,7 @@ public class AdmetrixAuthService : IAuthService
     {
         if (_currentUserId.HasValue) return _currentUserId;
 
-        var userIdStr = await SecureStorage.GetAsync(UserIdKey);
+        var userIdStr = await _tokenStorage.GetAsync(UserIdKey);
         if (Guid.TryParse(userIdStr, out var userId))
             return userId;
 
@@ -191,7 +191,7 @@ public class AdmetrixAuthService : IAuthService
     public async Task<string?> GetStoredTokenAsync()
     {
         if (!string.IsNullOrEmpty(_token)) return _token;
-        return await SecureStorage.GetAsync(TokenKey);
+        return await _tokenStorage.GetAsync(TokenKey);
     }
 
     /// <summary>
@@ -203,8 +203,8 @@ public class AdmetrixAuthService : IAuthService
         _currentUserId = userId;
         _isAuthenticated = true;
 
-        await SecureStorage.SetAsync(TokenKey, token);
-        await SecureStorage.SetAsync(UserIdKey, userId.ToString());
+        await _tokenStorage.SetAsync(TokenKey, token);
+        await _tokenStorage.SetAsync(UserIdKey, userId.ToString());
 
         _httpClient.DefaultRequestHeaders.Authorization =
             new AuthenticationHeaderValue("Bearer", token);

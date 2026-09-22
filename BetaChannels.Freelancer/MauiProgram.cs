@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using BetaChannels.Freelancer.Services;
 using BetaChannels.Shared.Interfaces;
@@ -34,8 +35,12 @@ public static class MauiProgram
         };
         apiClient.DefaultRequestHeaders.Add("Accept", "application/json");
 
+        // سرویس ذخیره‌سازی امن توکن (MAUI SecureStorage)
+        builder.Services.AddSingleton<ITokenStorage, MauiTokenStorage>();
+
         // سرویس‌های واقعی
-        builder.Services.AddSingleton<IAuthService>(new AdmetrixAuthService(apiClient));
+        builder.Services.AddSingleton<IAuthService>(sp =>
+            new AdmetrixAuthService(apiClient, sp.GetRequiredService<ITokenStorage>()));
         builder.Services.AddSingleton<IDivarService>(new DivarService(apiClient));
 
         // سایر سرویس‌ها (هنوز Mock)
