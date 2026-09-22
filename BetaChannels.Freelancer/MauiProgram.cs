@@ -7,6 +7,9 @@ namespace BetaChannels.Freelancer;
 
 public static class MauiProgram
 {
+    // آدرس بک‌اند ادمتریکس — در تولید تغییر کند
+    private const string ApiBaseUrl = "https://admetrix.ir";
+
     public static MauiApp CreateMauiApp()
     {
         var builder = MauiApp.CreateBuilder();
@@ -24,8 +27,18 @@ public static class MauiProgram
         builder.Logging.AddDebug();
 #endif
 
-        // Register shared services
-        builder.Services.AddSingleton<IAuthService, MockAuthService>();
+        // HttpClient برای اتصال به بک‌اند ادمتریکس
+        var apiClient = new HttpClient
+        {
+            BaseAddress = new Uri(ApiBaseUrl),
+        };
+        apiClient.DefaultRequestHeaders.Add("Accept", "application/json");
+
+        // سرویس‌های واقعی
+        builder.Services.AddSingleton<IAuthService>(new AdmetrixAuthService(apiClient));
+        builder.Services.AddSingleton<IDivarService>(new DivarService(apiClient));
+
+        // سایر سرویس‌ها (هنوز Mock)
         builder.Services.AddSingleton<IFreelancerService, MockFreelancerService>();
         builder.Services.AddSingleton<IServiceService, MockServiceService>();
         builder.Services.AddSingleton<IPortfolioService, MockPortfolioService>();

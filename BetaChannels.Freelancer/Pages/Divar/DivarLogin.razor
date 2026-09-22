@@ -1,0 +1,124 @@
+@page "/divar"
+@inject IAuthService AuthService
+@inject IDivarService DivarService
+@inject AppState AppState
+@inject NavigationManager Navigation
+
+<div class="auth-container">
+    <div class="auth-logo">
+        <div class="logo-icon">B</div>
+        <h1>اتصال حساب دیوار</h1>
+    </div>
+
+    <div class="auth-form">
+        @if (isLoading)
+        {
+            <div style="text-align: center; padding: 40px;">
+                <div>در حال بارگذاری...</div>
+            </div>
+        }
+        else if (isConnected)
+        {
+            <div style="text-align: center; padding: 20px;">
+                <div style="font-size: 48px; margin-bottom: 16px;">✅</div>
+                <h2 style="margin-bottom: 12px;">حساب دیوار متصل است</h2>
+                <p style="color: rgba(255,255,255,0.6); margin-bottom: 24px;">
+                    حساب دیوار شما با موفقیت به بتا چنل متصل شده است.
+                    اکنون می‌توانید آمار آگهی‌های خود را مشاهده کنید.
+                </p>
+                <button class="btn btn-primary btn-full" @onclick="GoToAnalytics">
+                    مشاهده آمار آگهی‌ها
+                </button>
+                <button class="btn btn-outline btn-full" style="margin-top: 12px;" @onclick="Reconnect">
+                    اتصال مجدد
+                </button>
+            </div>
+        }
+        else
+        {
+            <div style="text-align: center; padding: 20px;">
+                <div style="font-size: 48px; margin-bottom: 16px;">🔗</div>
+                <h2 style="margin-bottom: 12px;">اتصال به دیوار</h2>
+                <p style="color: rgba(255,255,255,0.6); margin-bottom: 24px;">
+                    برای مشاهده آمار آگهی‌ها و مدیریت خدمات در بتا چنل،
+                    حساب دیوار خود را متصل کنید.
+                </p>
+
+                @if (!string.IsNullOrEmpty(errorMessage))
+                {
+                    <div style="background: rgba(244,67,54,0.15); color: #F44336; padding: 12px; border-radius: 12px; margin-bottom: 16px; font-size: 14px;">
+                        @errorMessage
+                    </div>
+                }
+
+                <button class="btn btn-primary btn-full" @onclick="ConnectDivar" disabled="@isConnecting">
+                    @if (isConnecting)
+                    {
+                        <span>در حال اتصال...</span>
+                    }
+                    else
+                    {
+                        <span>اتصال حساب دیوار</span>
+                    }
+                </button>
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    private bool isLoading = true;
+    private bool isConnected;
+    private bool isConnecting;
+    private string? errorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!await AuthService.IsAuthenticatedAsync())
+        {
+            Navigation.NavigateTo("/login");
+            return;
+        }
+
+        isConnected = false;
+        isLoading = false;
+    }
+
+    private async Task ConnectDivar()
+    {
+        isConnecting = true;
+        errorMessage = null;
+
+        try
+        {
+            var result = await DivarService.GetAuthUrlAsync();
+            if (result.Success && !string.IsNullOrEmpty(result.AuthUrl))
+            {
+                await Launcher.OpenAsync(result.AuthUrl);
+            }
+            else
+            {
+                errorMessage = result.ErrorMessage ?? "دریافت لینک اتصال ناموفق بود";
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"خطا: {ex.Message}";
+        }
+        finally
+        {
+            isConnecting = false;
+        }
+    }
+
+    private void GoToAnalytics()
+    {
+        Navigation.NavigateTo("/divar/analytics");
+    }
+
+    private async Task Reconnect()
+    {
+        isConnected = false;
+        await ConnectDivar();
+    }
+}
