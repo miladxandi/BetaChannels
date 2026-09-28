@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BetaChannels.Employer.Pages.ContentSeoPage"
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False"
+             FlowDirection="RightToLeft">
+
+    <Grid>
+        <BoxView HeightRequest="180" VerticalOptions="Start" HorizontalOptions="Fill">
+            <BoxView.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#30FF6B35" Offset="0" />
+                    <GradientStop Color="Transparent" Offset="1" />
+                </LinearGradientBrush>
+            </BoxView.Background>
+        </BoxView>
+
+        <ScrollView>
+            <VerticalStackLayout Padding="16,0,16,20" Spacing="16">
+
+                <!-- Header -->
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12" Padding="0,16,0,8">
+                    <Border WidthRequest="44" HeightRequest="44" StrokeShape="{RoundRectangle CornerRadius=12}"
+                            BackgroundColor="{StaticResource Surface}" Stroke="{StaticResource BorderColor}">
+                        <Label FontFamily="TablerIcons" Text="&#xea64;" FontSize="20"
+                               TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                        <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnBackTapped" /></Border.GestureRecognizers>
+                    </Border>
+                    <Label Grid.Column="1" Text="محتوای صنفی و سئو" FontSize="20" FontFamily="VazirmatnBold"
+                           TextColor="{StaticResource TextPrimary}" VerticalOptions="Center" />
+                </Grid>
+
+                <!-- Category Chips -->
+                <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
+                    <HorizontalStackLayout Spacing="8">
+                        <Border x:Name="ChipArticles" Style="{StaticResource FilterChipActive}">
+                            <Label Text="مقاله" FontSize="13" FontFamily="VazirmatnBold" TextColor="White" />
+                            <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnChipArticles" /></Border.GestureRecognizers>
+                        </Border>
+                        <Border x:Name="ChipWebsite" Style="{StaticResource FilterChip}">
+                            <Label Text="ساخت سایت" FontSize="13" FontFamily="VazirmatnBold" TextColor="{StaticResource TextSecondary}" />
+                            <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnChipWebsite" /></Border.GestureRecognizers>
+                        </Border>
+                        <Border x:Name="ChipSeo" Style="{StaticResource FilterChip}">
+                            <Label Text="سئو" FontSize="13" FontFamily="VazirmatnBold" TextColor="{StaticResource TextSecondary}" />
+                            <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnChipSeo" /></Border.GestureRecognizers>
+                        </Border>
+                        <Border x:Name="ChipReport" Style="{StaticResource FilterChip}">
+                            <Label Text="گزارش عملکرد" FontSize="13" FontFamily="VazirmatnBold" TextColor="{StaticResource TextSecondary}" />
+                            <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnChipReport" /></Border.GestureRecognizers>
+                        </Border>
+                    </HorizontalStackLayout>
+                </ScrollView>
+
+                <!-- Articles Section -->
+                <VerticalStackLayout x:Name="ArticlesSection" Spacing="12">
+                    <Border Style="{StaticResource CardFrame}">
+                        <VerticalStackLayout Spacing="12">
+                            <Label Text="مقالات تخصصی" Style="{StaticResource SubheadingLabel}" />
+                            <Border Style="{StaticResource SmallCardFrame}" Padding="14">
+                                <VerticalStackLayout Spacing="6">
+                                    <Label Text="۱۰ راهکار طلایی برای افزایش فالوور اینستاگرام" FontSize="14" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" />
+                                    <Label Text="در این مقاله به بررسی روش‌های مؤثر برای افزایش فالوور واقعی و تعامل بیشتر می‌پردازیم..." FontSize="12" Style="{StaticResource CaptionLabel}" />
+                                    <HorizontalStackLayout Spacing="8">
+                                        <Border BackgroundColor="#1FFF6B35" StrokeShape="{RoundRectangle CornerRadius=8}" Padding="8,3">
+                                            <Label Text="اینستاگرام" FontSize="10" TextColor="{StaticResource Primary}" />
+                                        </Border>
+                                        <Label Text="۵ دقیقه مطالعه" FontSize="10" Style="{StaticResource CaptionLabel}" VerticalOptions="Center" />
+                                    </HorizontalStackLayout>
+                                </VerticalStackLayout>
+                            </Border>
+                            <Border Style="{StaticResource SmallCardFrame}" Padding="14">
+                                <VerticalStackLayout Spacing="6">
+                                    <Label Text="بهترین زمان انتشار محتوا در شبکه‌های اجتماعی" FontSize="14" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" />
+                                    <Label Text="تحلیل داده‌ها نشان می‌دهد که زمان انتشار تأثیر مستقیمی بر میزان بازدید دارد..." FontSize="12" Style="{StaticResource CaptionLabel}" />
+                                    <HorizontalStackLayout Spacing="8">
+                                        <Border BackgroundColor="#1F4CAF50" StrokeShape="{RoundRectangle CornerRadius=8}" Padding="8,3">
+                                            <Label Text="بازاریابی" FontSize="10" TextColor="{StaticResource Success}" />
+                                        </Border>
+                                        <Label Text="۸ دقیقه مطالعه" FontSize="10" Style="{StaticResource CaptionLabel}" VerticalOptions="Center" />
+                                    </HorizontalStackLayout>
+                                </VerticalStackLayout>
+                            </Border>
+                            <Border Style="{StaticResource SmallCardFrame}" Padding="14">
+                                <VerticalStackLayout Spacing="6">
+                                    <Label Text="چگونه محتوای وایرال بسازیم؟" FontSize="14" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" />
+                                    <Label Text="رازهای ساخت محتوای وایرال که هر کسب‌وکاری باید بداند..." FontSize="12" Style="{StaticResource CaptionLabel}" />
+                                    <HorizontalStackLayout Spacing="8">
+                                        <Border BackgroundColor="#1F2196F3" StrokeShape="{RoundRectangle CornerRadius=8}" Padding="8,3">
+                                            <Label Text="محتوا" FontSize="10" TextColor="#2196F3" />
+                                        </Border>
+                                        <Label Text="۶ دقیقه مطالعه" FontSize="10" Style="{StaticResource CaptionLabel}" VerticalOptions="Center" />
+                                    </HorizontalStackLayout>
+                                </VerticalStackLayout>
+                            </Border>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- Website Section (hidden) -->
+                <VerticalStackLayout x:Name="WebsiteSection" Spacing="12" IsVisible="False">
+                    <Border Style="{StaticResource CardFrame}">
+                        <VerticalStackLayout Spacing="14">
+                            <HorizontalStackLayout Spacing="10">
+                                <Label FontFamily="TablerIcons" Text="&#x101c7;" FontSize="24" TextColor="{StaticResource Primary}" />
+                                <Label Text="ساخت وب‌سایت حرفه‌ای" Style="{StaticResource SubheadingLabel}" />
+                            </HorizontalStackLayout>
+                            <Label Text="وب‌سایت اختصاصی با طراحی مدرن و بهینه‌سازی شده برای موتورهای جستجو" FontSize="13" Style="{StaticResource SecondaryLabel}" />
+                            <VerticalStackLayout Spacing="8">
+                                <HorizontalStackLayout Spacing="8">
+                                    <Label FontFamily="TablerIcons" Text="&#xeb32;" FontSize="16" TextColor="{StaticResource Success}" />
+                                    <Label Text="طراحی ریسپانسیو" FontSize="13" TextColor="{StaticResource TextPrimary}" />
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout Spacing="8">
+                                    <Label FontFamily="TablerIcons" Text="&#xeb32;" FontSize="16" TextColor="{StaticResource Success}" />
+                                    <Label Text="پنل مدیریت آسان" FontSize="13" TextColor="{StaticResource TextPrimary}" />
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout Spacing="8">
+                                    <Label FontFamily="TablerIcons" Text="&#xeb32;" FontSize="16" TextColor="{StaticResource Success}" />
+                                    <Label Text="اتصال به درگاه پرداخت" FontSize="13" TextColor="{StaticResource TextPrimary}" />
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout Spacing="8">
+                                    <Label FontFamily="TablerIcons" Text="&#xeb32;" FontSize="16" TextColor="{StaticResource Success}" />
+                                    <Label Text="پشتیبانی ۲۴/۷" FontSize="13" TextColor="{StaticResource TextPrimary}" />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                            <BoxView Style="{StaticResource Divider}" />
+                            <Grid ColumnDefinitions="*,Auto">
+                                <VerticalStackLayout Spacing="2">
+                                    <Label Text="شروع قیمت از" FontSize="12" Style="{StaticResource CaptionLabel}" />
+                                    <Label Text="۲,۹۰۰,۰۰۰ تومان" FontSize="18" FontFamily="VazirmatnBold" TextColor="{StaticResource Primary}" />
+                                </VerticalStackLayout>
+                                <Button Grid.Column="1" Text="سفارش" Style="{StaticResource PrimaryButton}" HeightRequest="40" Padding="20,0" Clicked="OnOrderContentClicked" />
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- SEO Section (hidden) -->
+                <VerticalStackLayout x:Name="SeoSection" Spacing="12" IsVisible="False">
+                    <Border Style="{StaticResource CardFrame}">
+                        <VerticalStackLayout Spacing="14">
+                            <HorizontalStackLayout Spacing="10">
+                                <Label FontFamily="TablerIcons" Text="&#xeb1c;" FontSize="24" TextColor="{StaticResource Primary}" />
+                                <Label Text="سئو من" Style="{StaticResource SubheadingLabel}" />
+                            </HorizontalStackLayout>
+                            <Label Text="بهینه‌سازی سایت شما برای موتورهای جستجو و افزایش رتبه در نتایج گوگل" FontSize="13" Style="{StaticResource SecondaryLabel}" />
+                            <VerticalStackLayout Spacing="8">
+                                <HorizontalStackLayout Spacing="8">
+                                    <Label FontFamily="TablerIcons" Text="&#xeb32;" FontSize="16" TextColor="{StaticResource Success}" />
+                                    <Label Text="تحلیل کلمات کلیدی" FontSize="13" TextColor="{StaticResource TextPrimary}" />
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout Spacing="8">
+                                    <Label FontFamily="TablerIcons" Text="&#xeb32;" FontSize="16" TextColor="{StaticResource Success}" />
+                                    <Label Text="بهینه‌سازی محتوای موجود" FontSize="13" TextColor="{StaticResource TextPrimary}" />
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout Spacing="8">
+                                    <Label FontFamily="TablerIcons" Text="&#xeb32;" FontSize="16" TextColor="{StaticResource Success}" />
+                                    <Label Text="لینک‌سازی داخلی و خارجی" FontSize="13" TextColor="{StaticResource TextPrimary}" />
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout Spacing="8">
+                                    <Label FontFamily="TablerIcons" Text="&#xeb32;" FontSize="16" TextColor="{StaticResource Success}" />
+                                    <Label Text="گزارش ماهانه رتبه" FontSize="13" TextColor="{StaticResource TextPrimary}" />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                            <BoxView Style="{StaticResource Divider}" />
+                            <Grid ColumnDefinitions="*,Auto">
+                                <VerticalStackLayout Spacing="2">
+                                    <Label Text="شروع قیمت از" FontSize="12" Style="{StaticResource CaptionLabel}" />
+                                    <Label Text="۱,۵۰۰,۰۰۰ تومان/ماه" FontSize="18" FontFamily="VazirmatnBold" TextColor="{StaticResource Primary}" />
+                                </VerticalStackLayout>
+                                <Button Grid.Column="1" Text="شروع" Style="{StaticResource PrimaryButton}" HeightRequest="40" Padding="20,0" Clicked="OnStartSeoClicked" />
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- Report Section (hidden) -->
+                <VerticalStackLayout x:Name="ReportSection" Spacing="12" IsVisible="False">
+                    <Border Style="{StaticResource CardFrame}">
+                        <VerticalStackLayout Spacing="14">
+                            <HorizontalStackLayout Spacing="10">
+                                <Label FontFamily="TablerIcons" Text="&#xea59;" FontSize="20" TextColor="{StaticResource Primary}" />
+                                <Label Text="گزارش عملکرد سایت" Style="{StaticResource SubheadingLabel}" />
+                            </HorizontalStackLayout>
+                            <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                                <Border Style="{StaticResource StatCard}">
+                                    <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                                        <Label Text="۱۲,۴۵۰" FontSize="18" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                                        <Label Text="بازدید ماهانه" FontSize="11" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                                    </VerticalStackLayout>
+                                </Border>
+                                <Border Style="{StaticResource StatCard}">
+                                    <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                                        <Label Text="۳:۲۰" FontSize="18" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                                        <Label Text="میانگین زمان" FontSize="11" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                                    </VerticalStackLayout>
+                                </Border>
+                                <Border Style="{StaticResource StatCard}">
+                                    <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                                        <Label Text="۴۵٪" FontSize="18" FontFamily="VazirmatnBold" TextColor="{StaticResource Success}" HorizontalOptions="Center" />
+                                        <Label Text="نرخ تبدیل" FontSize="11" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                                    </VerticalStackLayout>
+                                </Border>
+                                <Border Style="{StaticResource StatCard}">
+                                    <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                                        <Label Text="۲۸٪" FontSize="18" FontFamily="VazirmatnBold" TextColor="{StaticResource Warning}" HorizontalOptions="Center" />
+                                        <Label Text="Bounce Rate" FontSize="11" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                                    </VerticalStackLayout>
+                                </Border>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

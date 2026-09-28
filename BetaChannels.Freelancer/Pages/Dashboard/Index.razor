@@ -8,7 +8,9 @@
 
 @if (!AppState.IsAuthenticated)
 {
-    Navigation.NavigateTo("/login");
+    <div style="display: flex; justify-content: center; align-items: center; min-height: 100vh;">
+        <div class="loading-logo" style="width: 60px; height: 60px; font-size: 30px; border-radius: 16px;">B</div>
+    </div>
 }
 else
 {
@@ -211,7 +213,15 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        if (AppState.IsAuthenticated && AppState.UserId.HasValue)
+        await AppState.InitializeAsync();
+
+        if (!AppState.IsAuthenticated)
+        {
+            Navigation.NavigateTo("/login");
+            return;
+        }
+
+        if (AppState.UserId.HasValue)
         {
             var earnings = await PaymentService.GetTotalEarningsAsync(AppState.UserId.Value);
             totalEarningsFormatted = earnings.ToPersianDigits();

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BetaChannels.Employer.Pages.AdChannelsPage"
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False"
+             FlowDirection="RightToLeft">
+
+    <Grid>
+        <BoxView HeightRequest="180" VerticalOptions="Start" HorizontalOptions="Fill">
+            <BoxView.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#30FF6B35" Offset="0" />
+                    <GradientStop Color="Transparent" Offset="1" />
+                </LinearGradientBrush>
+            </BoxView.Background>
+        </BoxView>
+
+        <ScrollView>
+            <VerticalStackLayout Padding="16,0,16,20" Spacing="16">
+
+                <!-- Header -->
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12" Padding="0,16,0,8">
+                    <Border WidthRequest="44" HeightRequest="44" StrokeShape="{RoundRectangle CornerRadius=12}"
+                            BackgroundColor="{StaticResource Surface}" Stroke="{StaticResource BorderColor}">
+                        <Label FontFamily="TablerIcons" Text="&#xea64;" FontSize="20"
+                               TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                        <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnBackTapped" /></Border.GestureRecognizers>
+                    </Border>
+                    <Label Grid.Column="1" Text="کانال‌های تبلیغاتی" FontSize="20" FontFamily="VazirmatnBold"
+                           TextColor="{StaticResource TextPrimary}" VerticalOptions="Center" />
+                </Grid>
+
+                <!-- Profession Selector -->
+                <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
+                    <HorizontalStackLayout Spacing="8">
+                        <Border Style="{StaticResource FilterChipActive}">
+                            <Label Text="همه" FontSize="13" FontFamily="VazirmatnBold" TextColor="White" />
+                        </Border>
+                        <Border Style="{StaticResource FilterChip}">
+                            <Label Text="اینستاگرام" FontSize="13" FontFamily="VazirmatnBold" TextColor="{StaticResource TextSecondary}" />
+                        </Border>
+                        <Border Style="{StaticResource FilterChip}">
+                            <Label Text="گوگل" FontSize="13" FontFamily="VazirmatnBold" TextColor="{StaticResource TextSecondary}" />
+                        </Border>
+                        <Border Style="{StaticResource FilterChip}">
+                            <Label Text="تلگرام" FontSize="13" FontFamily="VazirmatnBold" TextColor="{StaticResource TextSecondary}" />
+                        </Border>
+                        <Border Style="{StaticResource FilterChip}">
+                            <Label Text="بله" FontSize="13" FontFamily="VazirmatnBold" TextColor="{StaticResource TextSecondary}" />
+                        </Border>
+                    </HorizontalStackLayout>
+                </ScrollView>
+
+                <!-- Channel Cards -->
+                <Border Style="{StaticResource CardFrame}">
+                    <VerticalStackLayout Spacing="12">
+                        <!-- Instagram Ads -->
+                        <Border Style="{StaticResource SmallCardFrame}" Padding="14">
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                <Border Grid.Column="0" WidthRequest="52" HeightRequest="52" StrokeShape="{RoundRectangle CornerRadius=14}">
+                                    <Border.Background>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                            <GradientStop Color="#833AB4" Offset="0" />
+                                            <GradientStop Color="#FD1D1D" Offset="0.5" />
+                                            <GradientStop Color="#FCB045" Offset="1" />
+                                        </LinearGradientBrush>
+                                    </Border.Background>
+                                    <Label FontFamily="TablerIconsFilled" Text="&#xfa4a;" FontSize="26" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
+                                    <Label Text="تبلیغ در اینستاگرام" FontSize="14" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" />
+                                    <Label Text="دسترسی به ۲.۵ میلیون کاربر" FontSize="12" Style="{StaticResource CaptionLabel}" />
+                                    <Label Text="از ۲۹۹,۰۰۰ تومان" FontSize="12" FontFamily="VazirmatnBold" TextColor="{StaticResource Primary}" />
+                                </VerticalStackLayout>
+                                <Border Grid.Column="2" BackgroundColor="{StaticResource Primary}" StrokeShape="{RoundRectangle CornerRadius=10}" Padding="14,8" VerticalOptions="Center">
+                                    <Label Text="انتخاب" FontSize="12" FontFamily="VazirmatnBold" TextColor="White" VerticalOptions="Center" />
+                                    <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnChannelSelected" /></Border.GestureRecognizers>
+                                </Border>
+                            </Grid>
+                        </Border>
+
+                        <!-- Google Ads -->
+                        <Border Style="{StaticResource SmallCardFrame}" Padding="14">
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                <Border Grid.Column="0" WidthRequest="52" HeightRequest="52" StrokeShape="{RoundRectangle CornerRadius=14}"
+                                        BackgroundColor="#4285F4">
+                                    <Label FontFamily="TablerIconsFilled" Text="&#x101c7;" FontSize="26" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
+                                    <Label Text="تبلیغ گوگل (Google Ads)" FontSize="14" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" />
+                                    <Label Text="نمایش در نتایج جستجوی گوگل" FontSize="12" Style="{StaticResource CaptionLabel}" />
+                                    <Label Text="از ۴۹۹,۰۰۰ تومان" FontSize="12" FontFamily="VazirmatnBold" TextColor="{StaticResource Primary}" />
+                                </VerticalStackLayout>
+                                <Border Grid.Column="2" BackgroundColor="{StaticResource SurfaceLight}" StrokeShape="{RoundRectangle CornerRadius=10}" Padding="14,8" VerticalOptions="Center"
+                                        Stroke="{StaticResource Primary}" StrokeThickness="1.5">
+                                    <Label Text="انتخاب" FontSize="12" FontFamily="VazirmatnBold" TextColor="{StaticResource Primary}" VerticalOptions="Center" />
+                                    <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnChannelSelected" /></Border.GestureRecognizers>
+                                </Border>
+                            </Grid>
+                        </Border>
+
+                        <!-- Bale Ads -->
+                        <Border Style="{StaticResource SmallCardFrame}" Padding="14">
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                <Border Grid.Column="0" WidthRequest="52" HeightRequest="52" StrokeShape="{RoundRectangle CornerRadius=14}"
+                                        BackgroundColor="#00e09e">
+                                    <Label FontFamily="TablerIconsFilled" Text="&#xf6a6;" FontSize="26" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
+                                    <Label Text="تبلیغ در بله" FontSize="14" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" />
+                                    <Label Text="دسترسی به ۸۰۰ هزار کاربر" FontSize="12" Style="{StaticResource CaptionLabel}" />
+                                    <Label Text="از ۱۹۹,۰۰۰ تومان" FontSize="12" FontFamily="VazirmatnBold" TextColor="{StaticResource Primary}" />
+                                </VerticalStackLayout>
+                                <Border Grid.Column="2" BackgroundColor="{StaticResource SurfaceLight}" StrokeShape="{RoundRectangle CornerRadius=10}" Padding="14,8" VerticalOptions="Center"
+                                        Stroke="{StaticResource Primary}" StrokeThickness="1.5">
+                                    <Label Text="انتخاب" FontSize="12" FontFamily="VazirmatnBold" TextColor="{StaticResource Primary}" VerticalOptions="Center" />
+                                    <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnChannelSelected" /></Border.GestureRecognizers>
+                                </Border>
+                            </Grid>
+                        </Border>
+
+                        <!-- Telegram Ads -->
+                        <Border Style="{StaticResource SmallCardFrame}" Padding="14">
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                <Border Grid.Column="0" WidthRequest="52" HeightRequest="52" StrokeShape="{RoundRectangle CornerRadius=14}"
+                                        BackgroundColor="#0088cc">
+                                    <Label FontFamily="TablerIconsFilled" Text="&#x101ca;" FontSize="26" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
+                                    <Label Text="تبلیغ در تلگرام" FontSize="14" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" />
+                                    <Label Text="کانال‌های پربازدید فارسی" FontSize="12" Style="{StaticResource CaptionLabel}" />
+                                    <Label Text="از ۱۴۹,۰۰۰ تومان" FontSize="12" FontFamily="VazirmatnBold" TextColor="{StaticResource Primary}" />
+                                </VerticalStackLayout>
+                                <Border Grid.Column="2" BackgroundColor="{StaticResource SurfaceLight}" StrokeShape="{RoundRectangle CornerRadius=10}" Padding="14,8" VerticalOptions="Center"
+                                        Stroke="{StaticResource Primary}" StrokeThickness="1.5">
+                                    <Label Text="انتخاب" FontSize="12" FontFamily="VazirmatnBold" TextColor="{StaticResource Primary}" VerticalOptions="Center" />
+                                    <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnChannelSelected" /></Border.GestureRecognizers>
+                                </Border>
+                            </Grid>
+                        </Border>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Selected Channels Summary -->
+                <Border Style="{StaticResource CardFrame}">
+                    <VerticalStackLayout Spacing="12">
+                        <HorizontalStackLayout Spacing="10">
+                            <Label FontFamily="TablerIcons" Text="&#xeb21;" FontSize="20" TextColor="{StaticResource Primary}" />
+                            <Label Text="کانال‌های انتخاب شده" Style="{StaticResource SubheadingLabel}" />
+                        </HorizontalStackLayout>
+                        <Label Text="هنوز کانالی انتخاب نشده" FontSize="13" Style="{StaticResource SecondaryLabel}" HorizontalOptions="Center" />
+                        <Button Text="شروع تبلیغ" Style="{StaticResource FullWidthButton}" Clicked="OnStartAdClicked" />
+                    </VerticalStackLayout>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

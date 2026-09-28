@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BetaChannels.Employer.Pages.Auth.RegisterPage"
+             NavigationPage.HasNavigationBar="False">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30,60,30,30" Spacing="0">
+
+            <!-- Logo Section -->
+            <VerticalStackLayout HorizontalOptions="Center" Spacing="15" Margin="0,0,0,40">
+                <Border WidthRequest="80" HeightRequest="80"
+                       StrokeShape="{RoundRectangle CornerRadius=24}"
+                       BackgroundColor="{StaticResource Primary}"
+                       HorizontalOptions="Center">
+                    <Label Text="B" FontSize="40" FontFamily="VazirmatnBold"
+                           TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                </Border>
+                <Label Text="Beta Channels" Style="{StaticResource HeadingLabel}"
+                       FontSize="28" HorizontalOptions="Center" />
+                <Label Text="ثبت‌نام کارفرما" Style="{StaticResource SecondaryLabel}"
+                       HorizontalOptions="Center" />
+            </VerticalStackLayout>
+
+            <!-- Form Card -->
+            <Border Style="{StaticResource CardFrame}">
+                <VerticalStackLayout Spacing="0">
+                    <Label Text="ایجاد حساب جدید" Style="{StaticResource HeadingLabel}" Margin="0,0,0,25" />
+
+                    <!-- Error Message -->
+                    <Border x:Name="ErrorBox" Style="{StaticResource ErrorBox}" IsVisible="False" Padding="12">
+                        <Label x:Name="ErrorLabel" TextColor="{StaticResource Danger}" FontSize="14" FontFamily="Vazirmatn" />
+                    </Border>
+
+                    <!-- Step 1: Phone Input -->
+                    <VerticalStackLayout x:Name="PhoneStep" Spacing="0">
+                        <VerticalStackLayout Spacing="8" Margin="0,0,0,16">
+                            <Label Text="شماره موبایل" Style="{StaticResource SecondaryLabel}" FontSize="14" />
+                            <Entry x:Name="PhoneEntry" Style="{StaticResource FormEntry}"
+                                   Placeholder="09123456789" Keyboard="Telephone"
+                                   FlowDirection="LeftToRight" />
+                        </VerticalStackLayout>
+
+                        <Button x:Name="SendOtpButton" Text="ارسال کد تأیید"
+                                Style="{StaticResource FullWidthButton}"
+                                Clicked="OnSendOtpClicked" />
+                    </VerticalStackLayout>
+
+                    <!-- Step 2: OTP + Profile Input -->
+                    <VerticalStackLayout x:Name="OtpStep" IsVisible="False" Spacing="0">
+                        <VerticalStackLayout Spacing="8" Margin="0,0,0,16">
+                            <Label Text="نام و نام خانوادگی" Style="{StaticResource SecondaryLabel}" FontSize="14" />
+                            <Entry x:Name="FullNameEntry" Style="{StaticResource FormEntry}"
+                                   Placeholder="نام کامل خود را وارد کنید" />
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="8" Margin="0,0,0,16">
+                            <Label Text="نام شرکت (اختیاری)" Style="{StaticResource SecondaryLabel}" FontSize="14" />
+                            <Entry x:Name="CompanyEntry" Style="{StaticResource FormEntry}"
+                                   Placeholder="نام شرکت یا برند" />
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="8" Margin="0,0,0,16">
+                            <Label Text="کد تأیید" Style="{StaticResource SecondaryLabel}" FontSize="14" />
+                            <Entry x:Name="OtpEntry" Style="{StaticResource FormEntry}"
+                                   Placeholder="کد ۶ رقمی" Keyboard="Telephone"
+                                   MaxLength="6" FlowDirection="LeftToRight" />
+                        </VerticalStackLayout>
+
+                        <Label x:Name="ResendTimerLabel" Style="{StaticResource SecondaryLabel}"
+                               FontSize="13" HorizontalOptions="Center" Margin="0,0,0,16" IsVisible="False" />
+
+                        <Button x:Name="ResendButton" Text="ارسال مجدد کد"
+                                Style="{StaticResource OutlineButton}"
+                                HorizontalOptions="Fill"
+                                Clicked="OnResendClicked" IsVisible="False" Margin="0,0,0,12" />
+
+                        <Button x:Name="VerifyButton" Text="ثبت‌نام و ورود"
+                                Style="{StaticResource FullWidthButton}"
+                                Clicked="OnVerifyClicked" />
+
+                        <Button Text="تغییر شماره" Style="{StaticResource OutlineButton}"
+                                HorizontalOptions="Fill" Margin="0,10,0,0"
+                                Clicked="OnChangePhoneClicked" />
+                    </VerticalStackLayout>
+
+                    <!-- Footer -->
+                    <HorizontalStackLayout HorizontalOptions="Center" Spacing="6" Margin="0,20,0,0">
+                        <Label Text="حساب دارید؟" Style="{StaticResource SecondaryLabel}" FontSize="14" />
+                        <Label Text="وارد شوید" TextColor="{StaticResource Primary}" FontSize="14"
+                               FontFamily="VazirmatnBold">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnLoginTapped" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

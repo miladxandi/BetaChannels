@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:pages="clr-namespace:BetaChannels.Employer.Pages"
+       xmlns:auth="clr-namespace:BetaChannels.Employer.Pages.Auth"
+       xmlns:divar="clr-namespace:BetaChannels.Employer.Pages.Divar"
+       x:Class="BetaChannels.Employer.AppShell"
+       FlyoutBehavior="Disabled"
+       Shell.BackgroundColor="{StaticResource Background}"
+       Shell.ForegroundColor="{StaticResource TextPrimary}"
+       Shell.TabBarBackgroundColor="{StaticResource Surface}"
+       Shell.TabBarForegroundColor="{StaticResource Primary}"
+       Shell.TabBarUnselectedColor="{StaticResource TextSecondary}"
+       Shell.TabBarTitleColor="{StaticResource TextPrimary}"
+       Shell.FlyoutBackgroundColor="{StaticResource Surface}">
+
+    <!-- Main TabBar with auth pages as first tabs (tab bar hidden via Shell.TabBarIsVisible) -->
+    <TabBar Route="main">
+        <Tab Title="ورود" IsVisible="False">
+            <ShellContent Route="login" ContentTemplate="{DataTemplate auth:LoginPage}" />
+        </Tab>
+        <Tab Title="ثبت‌نام" IsVisible="False">
+            <ShellContent Route="register" ContentTemplate="{DataTemplate auth:RegisterPage}" />
+        </Tab>
+        <Tab Title="خانه" Icon="home.svg">
+            <ShellContent Route="dashboard" ContentTemplate="{DataTemplate pages:DashboardPage}" />
+        </Tab>
+        <Tab Title="گزارش‌ها" Icon="chart.svg">
+            <ShellContent Route="divar" ContentTemplate="{DataTemplate divar:DivarAnalyticsPage}" />
+        </Tab>
+        <Tab Title="پیام‌ها" Icon="messages.svg">
+            <ShellContent Route="messages" ContentTemplate="{DataTemplate pages:MessagesPlaceholderPage}" />
+        </Tab>
+        <Tab Title="تنظیمات" Icon="settings.svg">
+            <ShellContent Route="settings" ContentTemplate="{DataTemplate pages:SettingsPlaceholderPage}" />
+        </Tab>
+    </TabBar>
+
+    <!-- Other Routes -->
+    <ShellContent Route="freelancers" ContentTemplate="{DataTemplate pages:FreelancersPage}" />
+    <ShellContent Route="projects" ContentTemplate="{DataTemplate pages:ProjectsPage}" />
+    <ShellContent Route="payments" ContentTemplate="{DataTemplate pages:PaymentsPage}" />
+    <ShellContent Route="divar/login" ContentTemplate="{DataTemplate divar:DivarLoginPage}" />
+
+    <!-- Feature Pages -->
+    <ShellContent Route="growth" ContentTemplate="{DataTemplate pages:GrowthManagementPage}" />
+    <ShellContent Route="content-seo" ContentTemplate="{DataTemplate pages:ContentSeoPage}" />
+    <ShellContent Route="networks" ContentTemplate="{DataTemplate pages:BetaNetworksPage}" />
+    <ShellContent Route="ad-channels" ContentTemplate="{DataTemplate pages:AdChannelsPage}" />
+    <ShellContent Route="accounting" ContentTemplate="{DataTemplate pages:AccountingPage}" />
+    <ShellContent Route="ideas" ContentTemplate="{DataTemplate pages:MillionIdeasPage}" />
+    <ShellContent Route="smart-bot" ContentTemplate="{DataTemplate pages:SmartBotPage}" />
+    <ShellContent Route="publish" ContentTemplate="{DataTemplate pages:PublishPage}" />
+    <ShellContent Route="competitors" ContentTemplate="{DataTemplate pages:CompetitorAnalysisPage}" />
+
+</Shell>

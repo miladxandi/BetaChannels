@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:BetaChannels.Employer.Converters">
+
+    <!-- Converters -->
+    <converters:FirstCharConverter x:Key="FirstCharConverter" />
+    <converters:StatusNameConverter x:Key="StatusNameConverter" />
+    <converters:StatusColorConverter x:Key="StatusColorConverter" />
+    <converters:StatusTextColorConverter x:Key="StatusTextColorConverter" />
+    <converters:PriceConverter x:Key="PriceConverter" />
+    <converters:SkillNameConverter x:Key="SkillNameConverter" />
+    <converters:BoolToOpenColorConverter x:Key="BoolToOpenColorConverter" />
+    <converters:BoolToOpenTextConverter x:Key="BoolToOpenTextConverter" />
+    <converters:BoolToOpenTextColorConverter x:Key="BoolToOpenTextColorConverter" />
+    <converters:PaymentStatusNameConverter x:Key="PaymentStatusNameConverter" />
+    <converters:PaymentStatusColorConverter x:Key="PaymentStatusColorConverter" />
+    <converters:PaymentStatusTextColorConverter x:Key="PaymentStatusTextColorConverter" />
+
+    <!-- Color Resources (from CSS variables) -->
+    <Color x:Key="Primary">#E9B654</Color>
+    <Color x:Key="PrimaryDark">#A85F2C</Color>
+    <Color x:Key="PrimaryLight">#F7D98A</Color>
+    <Color x:Key="PrimaryGlow">#55E9B654</Color>
+    <Color x:Key="Background">#140D0A</Color>
+    <Color x:Key="Surface">#21140E</Color>
+    <Color x:Key="SurfaceLight">#302016</Color>
+    <Color x:Key="SurfaceCard">#28190F</Color>
+    <Color x:Key="TextPrimary">#FFF4DD</Color>
+    <Color x:Key="TextSecondary">#C2A783</Color>
+    <Color x:Key="Success">#48C9A0</Color>
+    <Color x:Key="Warning">#F2C968</Color>
+    <Color x:Key="Danger">#E47762</Color>
+    <Color x:Key="BorderColor">#3DCEA66D</Color>
+    <Color x:Key="BorderHighlight">#66E9B654</Color>
+
+    <!-- Global Styles -->
+    <Style TargetType="Page" ApplyToDerivedTypes="True">
+        <Setter Property="BackgroundColor" Value="{StaticResource Background}" />
+    </Style>
+
+    <Style TargetType="NavigationPage">
+        <Setter Property="BarBackgroundColor" Value="{StaticResource Background}" />
+        <Setter Property="BarTextColor" Value="{StaticResource TextPrimary}" />
+    </Style>
+
+    <!-- Label Styles -->
+    <Style x:Key="HeadingLabel" TargetType="Label">
+        <Setter Property="FontSize" Value="22" />
+        <Setter Property="FontFamily" Value="VazirmatnBold" />
+        <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+    </Style>
+
+    <Style x:Key="SubheadingLabel" TargetType="Label">
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="FontFamily" Value="VazirmatnBold" />
+        <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+    </Style>
+
+    <Style x:Key="BodyLabel" TargetType="Label">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontFamily" Value="Vazirmatn" />
+        <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+    </Style>
+
+    <Style x:Key="SecondaryLabel" TargetType="Label">
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontFamily" Value="Vazirmatn" />
+        <Setter Property="TextColor" Value="{StaticResource TextSecondary}" />
+    </Style>
+
+    <Style x:Key="CaptionLabel" TargetType="Label">
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="FontFamily" Value="Vazirmatn" />
+        <Setter Property="TextColor" Value="{StaticResource TextSecondary}" />
+    </Style>
+
+    <!-- Button Styles -->
+    <Style x:Key="PrimaryButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="FontFamily" Value="VazirmatnBold" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="CornerRadius" Value="12" />
+        <Setter Property="HeightRequest" Value="48" />
+        <Setter Property="Padding" Value="24,0" />
+    </Style>
+
+    <Style x:Key="OutlineButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="{StaticResource Primary}" />
+        <Setter Property="FontFamily" Value="VazirmatnBold" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="CornerRadius" Value="12" />
+        <Setter Property="HeightRequest" Value="48" />
+        <Setter Property="Padding" Value="24,0" />
+        <Setter Property="BorderColor" Value="{StaticResource Primary}" />
+        <Setter Property="BorderWidth" Value="2" />
+    </Style>
+
+    <Style x:Key="FullWidthButton" TargetType="Button" BasedOn="{StaticResource PrimaryButton}">
+        <Setter Property="HorizontalOptions" Value="Fill" />
+    </Style>
+
+    <!-- Entry Styles -->
+    <Style x:Key="FormEntry" TargetType="Entry">
+        <Setter Property="BackgroundColor" Value="{StaticResource SurfaceLight}" />
+        <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+        <Setter Property="PlaceholderColor" Value="{StaticResource TextSecondary}" />
+        <Setter Property="FontFamily" Value="Vazirmatn" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="HeightRequest" Value="48" />
+    </Style>
+
+    <Style x:Key="FormEditor" TargetType="Editor">
+        <Setter Property="BackgroundColor" Value="{StaticResource SurfaceLight}" />
+        <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+        <Setter Property="PlaceholderColor" Value="{StaticResource TextSecondary}" />
+        <Setter Property="FontFamily" Value="Vazirmatn" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="AutoSize" Value="TextChanges" />
+    </Style>
+
+    <!-- Card Border Style -->
+    <Style x:Key="CardFrame" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{StaticResource Surface}" />
+        <Setter Property="Stroke" Value="{StaticResource BorderColor}" />
+        <Setter Property="StrokeShape" Value="{RoundRectangle CornerRadius=20}" />
+        <Setter Property="Padding" Value="20" />
+    </Style>
+
+    <Style x:Key="SmallCardFrame" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{StaticResource Surface}" />
+        <Setter Property="Stroke" Value="{StaticResource BorderColor}" />
+        <Setter Property="StrokeShape" Value="{RoundRectangle CornerRadius=16}" />
+        <Setter Property="Padding" Value="16" />
+    </Style>
+
+    <!-- Stat Card Style -->
+    <Style x:Key="StatCard" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{StaticResource SurfaceLight}" />
+        <Setter Property="Stroke" Value="{StaticResource BorderColor}" />
+        <Setter Property="StrokeShape" Value="{RoundRectangle CornerRadius=14}" />
+        <Setter Property="Padding" Value="12,8" />
+        <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+    </Style>
+
+    <!-- Badge Styles -->
+    <Style x:Key="StatusBadge" TargetType="Border">
+        <Setter Property="StrokeShape" Value="{RoundRectangle CornerRadius=20}" />
+        <Setter Property="Padding" Value="12,4" />
+    </Style>
+
+    <!-- Skill Tag Style -->
+    <Style x:Key="SkillTag" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="#2B48C9A0" />
+        <Setter Property="StrokeShape" Value="{RoundRectangle CornerRadius=20}" />
+        <Setter Property="Padding" Value="12,4" />
+    </Style>
+
+    <!-- Filter Chip Style -->
+    <Style x:Key="FilterChip" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{StaticResource Surface}" />
+        <Setter Property="Stroke" Value="{StaticResource BorderColor}" />
+        <Setter Property="StrokeShape" Value="{RoundRectangle CornerRadius=20}" />
+        <Setter Property="Padding" Value="16,8" />
+    </Style>
+
+    <Style x:Key="FilterChipActive" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+        <Setter Property="StrokeShape" Value="{RoundRectangle CornerRadius=20}" />
+        <Setter Property="Padding" Value="16,8" />
+    </Style>
+
+    <!-- Error Box Style -->
+    <Style x:Key="ErrorBox" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="#26F44336" />
+        <Setter Property="StrokeShape" Value="{RoundRectangle CornerRadius=12}" />
+        <Setter Property="Padding" Value="12" />
+    </Style>
+
+    <!-- Divider -->
+    <Style x:Key="Divider" TargetType="BoxView">
+        <Setter Property="HeightRequest" Value="1" />
+        <Setter Property="Color" Value="{StaticResource BorderColor}" />
+        <Setter Property="Margin" Value="0,16" />
+    </Style>
+
+</ResourceDictionary>

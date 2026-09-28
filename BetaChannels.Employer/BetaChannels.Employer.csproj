@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Razor">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net10.0-android;net10.0-ios;net10.0-maccatalyst</TargetFrameworks>
     <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net10.0-windows10.0.19041.0</TargetFrameworks>
@@ -8,7 +8,6 @@
     <SingleProject>true</SingleProject>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <EnableDefaultCssItems>false</EnableDefaultCssItems>
     <MauiVersion>10.0.0</MauiVersion>
     <ApplicationId>ir.admetrix.betachannels.employer</ApplicationId>
     <ApplicationTitle>Beta Channels Employer</ApplicationTitle>
@@ -20,6 +19,7 @@
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
     <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+    <WindowsPackageType>None</WindowsPackageType>
   </PropertyGroup>
 
   <ItemGroup>
@@ -31,8 +31,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Maui.Controls" Version="10.0.101" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="10.0.101" />
+    <MauiFont Include="Resources\Fonts\*.ttf" />
+    <MauiFont Include="Resources\Fonts\*.woff2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Maui.Controls" Version="10.0.110" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.12" />
+    <PackageReference Include="Sentry.Maui" Version="6.11.1" />
   </ItemGroup>
 </Project>

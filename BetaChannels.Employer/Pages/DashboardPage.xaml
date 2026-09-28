@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BetaChannels.Employer.Pages.DashboardPage"
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False"
+             FlowDirection="RightToLeft">
+
+    <Grid>
+        <!-- Background Glow Effects -->
+        <BoxView HeightRequest="200" VerticalOptions="Start" HorizontalOptions="Fill">
+            <BoxView.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#40FF6B35" Offset="0" />
+                    <GradientStop Color="Transparent" Offset="1" />
+                </LinearGradientBrush>
+            </BoxView.Background>
+        </BoxView>
+        <BoxView HeightRequest="150" VerticalOptions="End" HorizontalOptions="Fill">
+            <BoxView.Background>
+                <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
+                    <GradientStop Color="#30FF6B35" Offset="0" />
+                    <GradientStop Color="Transparent" Offset="1" />
+                </LinearGradientBrush>
+            </BoxView.Background>
+        </BoxView>
+
+        <!-- Main Content -->
+        <ScrollView x:Name="MainContent">
+            <VerticalStackLayout Padding="0,0,0,10" Spacing="0">
+
+                <!-- Top Bar -->
+                <Grid Padding="20,16" ColumnDefinitions="*,Auto">
+                    <Button Grid.Column="1" FontFamily="TablerIcons" Text="&#xeaeb;" FontSize="22" WidthRequest="44" HeightRequest="44"
+                            CornerRadius="12" BackgroundColor="{StaticResource Surface}"
+                            TextColor="{StaticResource TextPrimary}"
+                            Clicked="OnHamburgerClicked" />
+                </Grid>
+
+                <!-- Hero Banner -->
+                <Border Margin="16,0,16,20" Padding="28,24"
+                       StrokeShape="{RoundRectangle CornerRadius=20}"
+                       BackgroundColor="{StaticResource SurfaceCard}">
+                    <Border.Stroke>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#FF6B35" Offset="0" />
+                            <GradientStop Color="#FF4500" Offset="0.5" />
+                            <GradientStop Color="#FF6B35" Offset="1" />
+                        </LinearGradientBrush>
+                    </Border.Stroke>
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16">
+                        <VerticalStackLayout Spacing="8" VerticalOptions="Center">
+                            <Label FontSize="24" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="رشد " />
+                                        <Span Text="انفجاری" TextColor="{StaticResource Primary}" />
+                                        <Span Text=" کسب‌وکار شما" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label Text="با ابزارهای هوشمند و یکپارچه" Style="{StaticResource SecondaryLabel}" FontSize="14" />
+                        </VerticalStackLayout>
+                        <Label Grid.Column="1" FontFamily="TablerIcons"
+                               Text="&#xec45;" FontSize="80"
+                               TextColor="{StaticResource Primary}" VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+
+                <!-- Feature Grid 3x3 -->
+                <Grid Padding="16,0" ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="12" RowSpacing="12">
+                    <!-- Row 1: مدیریت رشد پیج, ایده میلیونی, ساخت سایت -->
+                    <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource SmallCardFrame}" Padding="16,12">
+                        <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                            <Border WidthRequest="56" HeightRequest="56" StrokeShape="{RoundRectangle CornerRadius=16}"
+                                    HorizontalOptions="Center" Margin="0,0,0,8">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                        <GradientStop Color="#FF8C42" Offset="0" />
+                                        <GradientStop Color="#FF4500" Offset="1" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Label FontFamily="TablerIcons"
+                                       Text="&#xebf2;" FontSize="28"
+                                       TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <Label Text="مدیریت رشد پیج" FontSize="12" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                            <Label Text="کارفرما / فریلنسر" FontSize="10" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                            <Label Text="›" FontSize="16" TextColor="{StaticResource TextSecondary}" HorizontalOptions="Center" Margin="0,4,0,0" />
+                        </VerticalStackLayout>
+                        <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnGrowthTapped" /></Border.GestureRecognizers>
+                    </Border>
+                    <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource SmallCardFrame}" Padding="16,12">
+                        <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                            <Border WidthRequest="56" HeightRequest="56" StrokeShape="{RoundRectangle CornerRadius=16}"
+                                    HorizontalOptions="Center" Margin="0,0,0,8">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                        <GradientStop Color="#FF8C42" Offset="0" />
+                                        <GradientStop Color="#FF4500" Offset="1" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Label FontFamily="TablerIconsFilled"
+                                       Text="&#xf66a;" FontSize="28"
+                                       TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <Label Text="ایده میلیونی" FontSize="12" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                            <Label Text="ایده پردازی حرفه‌ای" FontSize="10" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                            <Label Text="›" FontSize="16" TextColor="{StaticResource TextSecondary}" HorizontalOptions="Center" Margin="0,4,0,0" />
+                        </VerticalStackLayout>
+                        <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnIdeasTapped" /></Border.GestureRecognizers>
+                    </Border>
+                    <Border Grid.Row="0" Grid.Column="2" Style="{StaticResource SmallCardFrame}" Padding="16,12">
+                        <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                            <Border WidthRequest="56" HeightRequest="56" StrokeShape="{RoundRectangle CornerRadius=16}"
+                                    HorizontalOptions="Center" Margin="0,0,0,8">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                        <GradientStop Color="#FF8C42" Offset="0" />
+                                        <GradientStop Color="#FF4500" Offset="1" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Label FontFamily="TablerIconsFilled"
+                                       Text="&#x101c7;" FontSize="28"
+                                       TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <Label Text="ساخت سایت" FontSize="12" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                            <Label Text="و سئو" FontSize="10" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                            <Label Text="›" FontSize="16" TextColor="{StaticResource TextSecondary}" HorizontalOptions="Center" Margin="0,4,0,0" />
+                        </VerticalStackLayout>
+                        <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnContentSeoTapped" /></Border.GestureRecognizers>
+                    </Border>
+                    <!-- Row 2: دیوار, برگزاری کمپین, رشد اجتماعی -->
+                    <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource SmallCardFrame}" Padding="16,12">
+                        <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                            <Border WidthRequest="56" HeightRequest="56" StrokeShape="{RoundRectangle CornerRadius=14}"
+                                    BackgroundColor="#E53935" HorizontalOptions="Center" Margin="0,0,0,8">
+                                <Label Text="دیوار" FontSize="13" FontFamily="VazirmatnBold" TextColor="White"
+                                       HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <Label Text="دیوار" FontSize="12" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                            <Label Text="پردازش دیوار" FontSize="10" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                            <Label Text="›" FontSize="16" TextColor="{StaticResource TextSecondary}" HorizontalOptions="Center" Margin="0,4,0,0" />
+                        </VerticalStackLayout>
+                        <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnDivarTapped" /></Border.GestureRecognizers>
+                    </Border>
+                    <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource SmallCardFrame}" Padding="16,12">
+                        <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                            <Border WidthRequest="56" HeightRequest="56" StrokeShape="{RoundRectangle CornerRadius=16}"
+                                    HorizontalOptions="Center" Margin="0,0,0,8">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                        <GradientStop Color="#FF8C42" Offset="0" />
+                                        <GradientStop Color="#FF4500" Offset="1" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Label FontFamily="TablerIcons"
+                                       Text="&#xea59;" FontSize="28"
+                                       TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <Label Text="برگزاری کمپین" FontSize="12" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                            <Label Text="تبلیغاتی" FontSize="10" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                            <Label Text="›" FontSize="16" TextColor="{StaticResource TextSecondary}" HorizontalOptions="Center" Margin="0,4,0,0" />
+                        </VerticalStackLayout>
+                        <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnAdChannelsTapped" /></Border.GestureRecognizers>
+                    </Border>
+                    <Border Grid.Row="1" Grid.Column="2" Style="{StaticResource SmallCardFrame}" Padding="16,12">
+                        <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                            <Border WidthRequest="56" HeightRequest="56" StrokeShape="{RoundRectangle CornerRadius=16}"
+                                    HorizontalOptions="Center" Margin="0,0,0,8">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                        <GradientStop Color="#FF8C42" Offset="0" />
+                                        <GradientStop Color="#FF4500" Offset="1" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Label FontFamily="TablerIcons"
+                                       Text="&#xec45;" FontSize="28"
+                                       TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <Label Text="رشد اجتماعی" FontSize="12" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                            <Label Text="فروش" FontSize="10" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                            <Label Text="›" FontSize="16" TextColor="{StaticResource TextSecondary}" HorizontalOptions="Center" Margin="0,4,0,0" />
+                        </VerticalStackLayout>
+                        <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnNetworksTapped" /></Border.GestureRecognizers>
+                    </Border>
+                    <!-- Row 3: گزارش فروش, تحلیل رقبا, پاسخ هوشمند -->
+                    <Border Grid.Row="2" Grid.Column="0" Style="{StaticResource SmallCardFrame}" Padding="16,12">
+                        <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                            <Border WidthRequest="56" HeightRequest="56" StrokeShape="{RoundRectangle CornerRadius=16}"
+                                    HorizontalOptions="Center" Margin="0,0,0,8">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                        <GradientStop Color="#FF8C42" Offset="0" />
+                                        <GradientStop Color="#FF4500" Offset="1" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Label FontFamily="TablerIcons"
+                                       Text="&#xea59;" FontSize="28"
+                                       TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <Label Text="گزارش فروش" FontSize="12" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                            <Label Text="›" FontSize="16" TextColor="{StaticResource TextSecondary}" HorizontalOptions="Center" Margin="0,4,0,0" />
+                        </VerticalStackLayout>
+                        <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnAccountingTapped" /></Border.GestureRecognizers>
+                    </Border>
+                    <Border Grid.Row="2" Grid.Column="1" Style="{StaticResource SmallCardFrame}" Padding="16,12">
+                        <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                            <Border WidthRequest="56" HeightRequest="56" StrokeShape="{RoundRectangle CornerRadius=16}"
+                                    HorizontalOptions="Center" Margin="0,0,0,8">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                        <GradientStop Color="#FF8C42" Offset="0" />
+                                        <GradientStop Color="#FF4500" Offset="1" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Label FontFamily="TablerIcons"
+                                       Text="&#xeb35;" FontSize="28"
+                                       TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <Label Text="تحلیل رقبا" FontSize="12" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                            <Label Text="بهبود عملکرد" FontSize="10" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                            <Label Text="›" FontSize="16" TextColor="{StaticResource TextSecondary}" HorizontalOptions="Center" Margin="0,4,0,0" />
+                        </VerticalStackLayout>
+                        <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnCompetitorsTapped" /></Border.GestureRecognizers>
+                    </Border>
+                    <Border Grid.Row="2" Grid.Column="2" Style="{StaticResource SmallCardFrame}" Padding="16,12">
+                        <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                            <Border WidthRequest="56" HeightRequest="56" StrokeShape="{RoundRectangle CornerRadius=16}"
+                                    HorizontalOptions="Center" Margin="0,0,0,8">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                        <GradientStop Color="#FF8C42" Offset="0" />
+                                        <GradientStop Color="#FF4500" Offset="1" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Label FontFamily="TablerIconsFilled"
+                                       Text="&#xfecf;" FontSize="28"
+                                       TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <Label Text="پاسخ هوشمند" FontSize="12" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                            <Label Text="شبکه‌های اجتماعی" FontSize="10" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                            <Label Text="›" FontSize="16" TextColor="{StaticResource TextSecondary}" HorizontalOptions="Center" Margin="0,4,0,0" />
+                        </VerticalStackLayout>
+                        <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnSmartBotTapped" /></Border.GestureRecognizers>
+                    </Border>
+                </Grid>
+
+                <!-- Performance Section -->
+                <Border Margin="16,20" Padding="20" Style="{StaticResource CardFrame}">
+                    <VerticalStackLayout Spacing="18">
+                        <HorizontalStackLayout Spacing="10">
+                            <Label FontFamily="TablerIcons"
+                                   Text="&#xea59;" FontSize="22"
+                                   TextColor="{StaticResource Primary}" />
+                            <Label Text="عملکرد این ماه" Style="{StaticResource SubheadingLabel}" />
+                        </HorizontalStackLayout>
+                        <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="10">
+                            <Border Grid.Column="0" Style="{StaticResource StatCard}">
+                                <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                                    <Border WidthRequest="40" HeightRequest="40" StrokeShape="{RoundRectangle CornerRadius=12}"
+                                            HorizontalOptions="Center" Margin="0,0,0,4">
+                                        <Border.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                <GradientStop Color="#FF8C42" Offset="0" />
+                                                <GradientStop Color="#FF4500" Offset="1" />
+                                            </LinearGradientBrush>
+                                        </Border.Background>
+                                        <Label FontFamily="TablerIcons"
+                                               Text="&#xebf2;" FontSize="20"
+                                               TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                                    </Border>
+                                    <Label Text="۶۸۳" FontSize="18" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                                    <Label Text="بازدید" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <Border Grid.Column="1" Style="{StaticResource StatCard}">
+                                <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                                    <Border WidthRequest="40" HeightRequest="40" StrokeShape="{RoundRectangle CornerRadius=12}"
+                                            HorizontalOptions="Center" Margin="0,0,0,4">
+                                        <Border.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                <GradientStop Color="#FF8C42" Offset="0" />
+                                                <GradientStop Color="#FF4500" Offset="1" />
+                                            </LinearGradientBrush>
+                                        </Border.Background>
+                                        <Label FontFamily="TablerIconsFilled"
+                                               Text="&#xfc3f;" FontSize="20"
+                                               TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                                    </Border>
+                                    <Label Text="۶" FontSize="18" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                                    <Label Text="مشتری" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <Border Grid.Column="2" Style="{StaticResource StatCard}">
+                                <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                                    <Border WidthRequest="40" HeightRequest="40" StrokeShape="{RoundRectangle CornerRadius=12}"
+                                            HorizontalOptions="Center" Margin="0,0,0,4">
+                                        <Border.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                <GradientStop Color="#FF8C42" Offset="0" />
+                                                <GradientStop Color="#FF4500" Offset="1" />
+                                            </LinearGradientBrush>
+                                        </Border.Background>
+                                        <Label FontFamily="TablerIconsFilled"
+                                               Text="&#xfe80;" FontSize="20"
+                                               TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                                    </Border>
+                                    <Label Text="۳۸,۸۸۸" FontSize="18" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                                    <Label Text="فروش" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <Border Grid.Column="3" Style="{StaticResource StatCard}">
+                                <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                                    <Border WidthRequest="40" HeightRequest="40" StrokeShape="{RoundRectangle CornerRadius=12}"
+                                            HorizontalOptions="Center" Margin="0,0,0,4">
+                                        <Border.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                <GradientStop Color="#FF8C42" Offset="0" />
+                                                <GradientStop Color="#FF4500" Offset="1" />
+                                            </LinearGradientBrush>
+                                        </Border.Background>
+                                        <Label FontFamily="TablerIcons"
+                                               Text="&#xeb43;" FontSize="20"
+                                               TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                                    </Border>
+                                    <Label Text="۸۸٪+" FontSize="18" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                                    <Label Text="تغییرات ماه قبل" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                            </Border>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- CTA Banner -->
+                <Border Margin="16,0,16,20" Padding="20,16"
+                       StrokeShape="{RoundRectangle CornerRadius=16}">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop Color="#FF6B35" Offset="0" />
+                            <GradientStop Color="#FF4500" Offset="1" />
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16">
+                        <HorizontalStackLayout Grid.Column="0" Spacing="14" VerticalOptions="Center">
+                            <Label FontFamily="TablerIcons"
+                                   Text="&#xeb35;" FontSize="28"
+                                   TextColor="White" VerticalOptions="Center" />
+                            <Label Text="با ما کلیک کسب‌وکار رو&#10;به سطح بعدی برسون!" FontSize="14" FontFamily="VazirmatnBold"
+                                   TextColor="White" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                        <Border Grid.Column="1" BackgroundColor="#1a1a2e"
+                               StrokeShape="{RoundRectangle CornerRadius=12}" Padding="16,10"
+                               Stroke="#FF6B35" StrokeThickness="1.5" VerticalOptions="Center">
+                            <HorizontalStackLayout Spacing="6">
+                                <Label Text="شروع کنید" FontSize="13" FontFamily="VazirmatnBold" TextColor="{StaticResource Primary}" />
+                                <Label Text="›" FontSize="16" TextColor="{StaticResource Primary}" />
+                            </HorizontalStackLayout>
+                        </Border>
+                    </Grid>
+                    <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnProjectsTapped" /></Border.GestureRecognizers>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Side Drawer Overlay -->
+        <Grid x:Name="DrawerOverlay" BackgroundColor="#99000000" IsVisible="False"
+              HorizontalOptions="Fill" VerticalOptions="Fill" ZIndex="10">
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnOverlayTapped" />
+            </Grid.GestureRecognizers>
+        </Grid>
+
+        <!-- Side Drawer -->
+        <Border x:Name="SideDrawer" StrokeShape="{RoundRectangle CornerRadius=0}" Padding="0"
+               BackgroundColor="{StaticResource Surface}"
+               HorizontalOptions="End" VerticalOptions="Fill"
+               WidthRequest="280" TranslationX="280" ZIndex="11">
+            <VerticalStackLayout Padding="20" Spacing="0">
+                <!-- Drawer Header -->
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12" Margin="0,0,0,20">
+                    <Border Grid.Column="0" WidthRequest="48" HeightRequest="48"
+                           StrokeShape="{RoundRectangle CornerRadius=14}"
+                           BackgroundColor="{StaticResource Primary}">
+                        <Label x:Name="DrawerAvatar" Text="ک" FontSize="20" FontFamily="VazirmatnBold"
+                               TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                        <Label x:Name="DrawerName" Text="کارفرما" FontSize="15" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" />
+                        <Label Text="پنل کارفرما" FontSize="12" Style="{StaticResource CaptionLabel}" />
+                    </VerticalStackLayout>
+                </Grid>
+
+                <BoxView Style="{StaticResource Divider}" />
+
+                <!-- Menu Items -->
+                <VerticalStackLayout Spacing="4">
+                    <Grid Padding="14,12" ColumnDefinitions="Auto,*" ColumnSpacing="14">
+                        <Label Grid.Column="0" FontFamily="TablerIconsFilled"
+                               Text="&#xfe2b;" FontSize="18"
+                               TextColor="{StaticResource Primary}" />
+                        <Label Grid.Column="1" Text="خانه" FontSize="14" TextColor="{StaticResource Primary}" FontFamily="VazirmatnBold" VerticalOptions="Center" />
+                        <Grid.GestureRecognizers><TapGestureRecognizer Tapped="OnDrawerHomeTapped" /></Grid.GestureRecognizers>
+                    </Grid>
+                    <Grid Padding="14,12" ColumnDefinitions="Auto,*" ColumnSpacing="14">
+                        <Label Grid.Column="0" FontFamily="TablerIcons"
+                               Text="&#xebf2;" FontSize="18"
+                               TextColor="{StaticResource TextSecondary}" />
+                        <Label Grid.Column="1" Text="فریلنسرها" FontSize="14" TextColor="{StaticResource TextSecondary}" VerticalOptions="Center" />
+                        <Grid.GestureRecognizers><TapGestureRecognizer Tapped="OnDrawerFreelancersTapped" /></Grid.GestureRecognizers>
+                    </Grid>
+                    <Grid Padding="14,12" ColumnDefinitions="Auto,*" ColumnSpacing="14">
+                        <Label Grid.Column="0" FontFamily="TablerIconsFilled"
+                               Text="&#xf749;" FontSize="18"
+                               TextColor="{StaticResource TextSecondary}" />
+                        <Label Grid.Column="1" Text="پروژه‌ها" FontSize="14" TextColor="{StaticResource TextSecondary}" VerticalOptions="Center" />
+                        <Grid.GestureRecognizers><TapGestureRecognizer Tapped="OnDrawerProjectsTapped" /></Grid.GestureRecognizers>
+                    </Grid>
+                    <Grid Padding="14,12" ColumnDefinitions="Auto,*" ColumnSpacing="14">
+                        <Label Grid.Column="0" FontFamily="TablerIconsFilled"
+                               Text="&#xfe80;" FontSize="18"
+                               TextColor="{StaticResource TextSecondary}" />
+                        <Label Grid.Column="1" Text="پرداخت‌ها" FontSize="14" TextColor="{StaticResource TextSecondary}" VerticalOptions="Center" />
+                        <Grid.GestureRecognizers><TapGestureRecognizer Tapped="OnDrawerPaymentsTapped" /></Grid.GestureRecognizers>
+                    </Grid>
+                    <Grid Padding="14,12" ColumnDefinitions="Auto,*" ColumnSpacing="14">
+                        <Label Grid.Column="0" FontFamily="TablerIcons"
+                               Text="&#xea59;" FontSize="18"
+                               TextColor="{StaticResource TextSecondary}" />
+                        <Label Grid.Column="1" Text="تحلیل دیوار" FontSize="14" TextColor="{StaticResource TextSecondary}" VerticalOptions="Center" />
+                        <Grid.GestureRecognizers><TapGestureRecognizer Tapped="OnDrawerDivarTapped" /></Grid.GestureRecognizers>
+                    </Grid>
+                </VerticalStackLayout>
+
+                <BoxView Style="{StaticResource Divider}" />
+
+                <!-- Bottom Menu -->
+                <VerticalStackLayout Spacing="4">
+                    <Grid Padding="14,12" ColumnDefinitions="Auto,*" ColumnSpacing="14">
+                        <Label Grid.Column="0" FontFamily="TablerIconsFilled"
+                               Text="&#xf69e;" FontSize="18"
+                               TextColor="{StaticResource TextSecondary}" />
+                        <Label Grid.Column="1" Text="تنظیمات" FontSize="14" TextColor="{StaticResource TextSecondary}" VerticalOptions="Center" />
+                        <Grid.GestureRecognizers><TapGestureRecognizer Tapped="OnDrawerSettingsTapped" /></Grid.GestureRecognizers>
+                    </Grid>
+                    <Grid Padding="14,12" ColumnDefinitions="Auto,*" ColumnSpacing="14">
+                        <Label Grid.Column="0" FontFamily="TablerIconsFilled"
+                               Text="&#xfa87;" FontSize="18"
+                               TextColor="{StaticResource TextSecondary}" />
+                        <Label Grid.Column="1" Text="راهنما" FontSize="14" TextColor="{StaticResource TextSecondary}" VerticalOptions="Center" />
+                        <Grid.GestureRecognizers><TapGestureRecognizer Tapped="OnDrawerHelpTapped" /></Grid.GestureRecognizers>
+                    </Grid>
+                    <Grid Padding="14,12" ColumnDefinitions="Auto,*" ColumnSpacing="14">
+                        <Label Grid.Column="0" FontFamily="TablerIcons"
+                               Text="&#xeba8;" FontSize="18"
+                               TextColor="{StaticResource Danger}" />
+                        <Label Grid.Column="1" Text="خروج" FontSize="14" TextColor="{StaticResource Danger}" VerticalOptions="Center" />
+                        <Grid.GestureRecognizers><TapGestureRecognizer Tapped="OnLogoutTapped" /></Grid.GestureRecognizers>
+                    </Grid>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+</ContentPage>

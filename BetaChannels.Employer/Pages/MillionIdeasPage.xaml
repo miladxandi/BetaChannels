@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BetaChannels.Employer.Pages.MillionIdeasPage"
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False"
+             FlowDirection="RightToLeft">
+
+    <Grid>
+        <BoxView HeightRequest="180" VerticalOptions="Start" HorizontalOptions="Fill">
+            <BoxView.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#30FF6B35" Offset="0" />
+                    <GradientStop Color="Transparent" Offset="1" />
+                </LinearGradientBrush>
+            </BoxView.Background>
+        </BoxView>
+
+        <ScrollView>
+            <VerticalStackLayout Padding="16,0,16,20" Spacing="16">
+
+                <!-- Header -->
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12" Padding="0,16,0,8">
+                    <Border WidthRequest="44" HeightRequest="44" StrokeShape="{RoundRectangle CornerRadius=12}"
+                            BackgroundColor="{StaticResource Surface}" Stroke="{StaticResource BorderColor}">
+                        <Label FontFamily="TablerIcons" Text="&#xea64;" FontSize="20"
+                               TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                        <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnBackTapped" /></Border.GestureRecognizers>
+                    </Border>
+                    <Label Grid.Column="1" Text="ایده‌های میلیونی" FontSize="20" FontFamily="VazirmatnBold"
+                           TextColor="{StaticResource TextPrimary}" VerticalOptions="Center" />
+                </Grid>
+
+                <!-- Profession Filter Chips -->
+                <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
+                    <HorizontalStackLayout Spacing="8">
+                        <Border Style="{StaticResource FilterChipActive}">
+                            <Label Text="همه" FontSize="13" FontFamily="VazirmatnBold" TextColor="White" />
+                        </Border>
+                        <Border Style="{StaticResource FilterChip}">
+                            <Label Text="فناوری" FontSize="13" FontFamily="VazirmatnBold" TextColor="{StaticResource TextSecondary}" />
+                        </Border>
+                        <Border Style="{StaticResource FilterChip}">
+                            <Label Text="خوراکی" FontSize="13" FontFamily="VazirmatnBold" TextColor="{StaticResource TextSecondary}" />
+                        </Border>
+                        <Border Style="{StaticResource FilterChip}">
+                            <Label Text="پوشاک" FontSize="13" FontFamily="VazirmatnBold" TextColor="{StaticResource TextSecondary}" />
+                        </Border>
+                        <Border Style="{StaticResource FilterChip}">
+                            <Label Text="خدمات" FontSize="13" FontFamily="VazirmatnBold" TextColor="{StaticResource TextSecondary}" />
+                        </Border>
+                    </HorizontalStackLayout>
+                </ScrollView>
+
+                <!-- Sort Options -->
+                <HorizontalStackLayout Spacing="12">
+                    <Label Text="مرتب‌سازی:" FontSize="12" Style="{StaticResource CaptionLabel}" VerticalOptions="Center" />
+                    <Label Text="جدیدترین" FontSize="12" FontFamily="VazirmatnBold" TextColor="{StaticResource Primary}" VerticalOptions="Center" />
+                    <Label Text="|" FontSize="12" TextColor="{StaticResource TextSecondary}" />
+                    <Label Text="محبوب‌ترین" FontSize="12" TextColor="{StaticResource TextSecondary}" VerticalOptions="Center" />
+                    <Label Text="|" FontSize="12" TextColor="{StaticResource TextSecondary}" />
+                    <Label Text="بیشترین درآمد" FontSize="12" TextColor="{StaticResource TextSecondary}" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+
+                <!-- Idea Cards -->
+                <Border Style="{StaticResource CardFrame}">
+                    <VerticalStackLayout Spacing="14">
+                        <!-- Idea 1 -->
+                        <Border Style="{StaticResource SmallCardFrame}" Padding="16">
+                            <VerticalStackLayout Spacing="10">
+                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                    <Border Grid.Column="0" WidthRequest="48" HeightRequest="48" StrokeShape="{RoundRectangle CornerRadius=14}">
+                                        <Border.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                <GradientStop Color="#FF8C42" Offset="0" />
+                                                <GradientStop Color="#FF4500" Offset="1" />
+                                            </LinearGradientBrush>
+                                        </Border.Background>
+                                        <Label FontFamily="TablerIconsFilled" Text="&#xf66a;" FontSize="24" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                                    </Border>
+                                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                        <Label Text="فروشگاه آنلاین محصولات ارگانیک" FontSize="14" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" />
+                                        <Label Text="درآمد تخمینی: ۵۰M+/ماه" FontSize="12" FontFamily="VazirmatnBold" TextColor="{StaticResource Success}" />
+                                    </VerticalStackLayout>
+                                </Grid>
+                                <Label Text="راه‌اندازی فروشگاه آنلاین برای فروش محصولات ارگانیک و سالم با تمرکز بر بسته‌بندی زیبا و ارسال سریع به سراسر کشور." FontSize="12" Style="{StaticResource SecondaryLabel}" />
+                                <HorizontalStackLayout Spacing="8">
+                                    <Border BackgroundColor="#1FFF6B35" StrokeShape="{RoundRectangle CornerRadius=8}" Padding="8,3">
+                                        <Label Text="فناوری" FontSize="10" TextColor="{StaticResource Primary}" />
+                                    </Border>
+                                    <Border BackgroundColor="#1F4CAF50" StrokeShape="{RoundRectangle CornerRadius=8}" Padding="8,3">
+                                        <Label Text="سرمایه: متوسط" FontSize="10" TextColor="#2196F3" />
+                                    </Border>
+                                    <Border BackgroundColor="#1F4CAF50" StrokeShape="{RoundRectangle CornerRadius=8}" Padding="8,3">
+                                        <Label Text="سختی: متوسط" FontSize="10" TextColor="{StaticResource Success}" />
+                                    </Border>
+                                </HorizontalStackLayout>
+                                <Button Text="مشاهده جزئیات" Style="{StaticResource OutlineButton}" HeightRequest="36" FontSize="12" Padding="16,0" CommandParameter="فروشگاه آنلاین محصولات ارگانیک" Clicked="OnIdeaDetailsClicked" />
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <!-- Idea 2 -->
+                        <Border Style="{StaticResource SmallCardFrame}" Padding="16">
+                            <VerticalStackLayout Spacing="10">
+                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                    <Border Grid.Column="0" WidthRequest="48" HeightRequest="48" StrokeShape="{RoundRectangle CornerRadius=14}">
+                                        <Border.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                <GradientStop Color="#4CAF50" Offset="0" />
+                                                <GradientStop Color="#2E7D32" Offset="1" />
+                                            </LinearGradientBrush>
+                                        </Border.Background>
+                                        <Label FontFamily="TablerIconsFilled" Text="&#xeb25;" FontSize="24" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                                    </Border>
+                                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                        <Label Text="اپلیکیشن مشاوره آنلاین" FontSize="14" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" />
+                                        <Label Text="درآمد تخمینی: ۸۰M+/ماه" FontSize="12" FontFamily="VazirmatnBold" TextColor="{StaticResource Success}" />
+                                    </VerticalStackLayout>
+                                </Grid>
+                                <Label Text="طراحی اپلیکیشن مشاوره آنلاین در حوزه‌های مختلف از جمله پزشکی، حقوقی و روانشناسی با امکان پرداخت امن." FontSize="12" Style="{StaticResource SecondaryLabel}" />
+                                <HorizontalStackLayout Spacing="8">
+                                    <Border BackgroundColor="#1F2196F3" StrokeShape="{RoundRectangle CornerRadius=8}" Padding="8,3">
+                                        <Label Text="خدمات" FontSize="10" TextColor="#2196F3" />
+                                    </Border>
+                                    <Border BackgroundColor="#1FFF6B35" StrokeShape="{RoundRectangle CornerRadius=8}" Padding="8,3">
+                                        <Label Text="سرمایه: بالا" FontSize="10" TextColor="{StaticResource Primary}" />
+                                    </Border>
+                                    <Border BackgroundColor="#1FF44336" StrokeShape="{RoundRectangle CornerRadius=8}" Padding="8,3">
+                                        <Label Text="سختی: زیاد" FontSize="10" TextColor="{StaticResource Danger}" />
+                                    </Border>
+                                </HorizontalStackLayout>
+                                <Button Text="مشاهده جزئیات" Style="{StaticResource OutlineButton}" HeightRequest="36" FontSize="12" Padding="16,0" CommandParameter="اپلیکیشن مشاوره آنلاین" Clicked="OnIdeaDetailsClicked" />
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <!-- Idea 3 -->
+                        <Border Style="{StaticResource SmallCardFrame}" Padding="16">
+                            <VerticalStackLayout Spacing="10">
+                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                    <Border Grid.Column="0" WidthRequest="48" HeightRequest="48" StrokeShape="{RoundRectangle CornerRadius=14}">
+                                        <Border.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                <GradientStop Color="#2196F3" Offset="0" />
+                                                <GradientStop Color="#1565C0" Offset="1" />
+                                            </LinearGradientBrush>
+                                        </Border.Background>
+                                        <Label FontFamily="TablerIconsFilled" Text="&#xf6a6;" FontSize="24" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                                    </Border>
+                                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                        <Label Text="آکادمی آموزش آنلاین" FontSize="14" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" />
+                                        <Label Text="درآمد تخمینی: ۳۰M+/ماه" FontSize="12" FontFamily="VazirmatnBold" TextColor="{StaticResource Success}" />
+                                    </VerticalStackLayout>
+                                </Grid>
+                                <Label Text="ایجاد پلتفرم آموزش آنلاین با دوره‌های تخصصی در حوزه‌های مختلف و امکان صدور گواهینامه." FontSize="12" Style="{StaticResource SecondaryLabel}" />
+                                <HorizontalStackLayout Spacing="8">
+                                    <Border BackgroundColor="#1F4CAF50" StrokeShape="{RoundRectangle CornerRadius=8}" Padding="8,3">
+                                        <Label Text="فناوری" FontSize="10" TextColor="{StaticResource Success}" />
+                                    </Border>
+                                    <Border BackgroundColor="#1F4CAF50" StrokeShape="{RoundRectangle CornerRadius=8}" Padding="8,3">
+                                        <Label Text="سرمایه: کم" FontSize="10" TextColor="{StaticResource Success}" />
+                                    </Border>
+                                    <Border BackgroundColor="#1F4CAF50" StrokeShape="{RoundRectangle CornerRadius=8}" Padding="8,3">
+                                        <Label Text="سختی: آسان" FontSize="10" TextColor="{StaticResource Success}" />
+                                    </Border>
+                                </HorizontalStackLayout>
+                                <Button Text="مشاهده جزئیات" Style="{StaticResource OutlineButton}" HeightRequest="36" FontSize="12" Padding="16,0" CommandParameter="آکادمی آموزش آنلاین" Clicked="OnIdeaDetailsClicked" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </VerticalStackLayout>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

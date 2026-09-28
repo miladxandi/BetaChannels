@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BetaChannels.Employer.Pages.MessagesPlaceholderPage"
+             Shell.NavBarIsVisible="False"
+             FlowDirection="RightToLeft">
+    <Grid RowDefinitions="Auto,*,Auto" Padding="18,8,18,16" RowSpacing="12">
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*" ColumnSpacing="12" Padding="0,8">
+            <Button Text="‹" FontSize="28" WidthRequest="44" HeightRequest="44" CornerRadius="14"
+                    BackgroundColor="{StaticResource SurfaceLight}" TextColor="{StaticResource TextPrimary}"
+                    Clicked="OnBackClicked" />
+            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                <Label Text="پیام‌ها" Style="{StaticResource HeadingLabel}" />
+                <Label Text="گفت‌وگوهای شما" Style="{StaticResource CaptionLabel}" />
+            </VerticalStackLayout>
+        </Grid>
+
+        <ScrollView x:Name="ChatScroll" Grid.Row="1" VerticalOptions="Fill">
+            <VerticalStackLayout x:Name="MessageStack" Spacing="12" Padding="0,4,0,12">
+                <Border Style="{StaticResource CardFrame}" Padding="14">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                        <Border WidthRequest="44" HeightRequest="44" StrokeShape="{RoundRectangle CornerRadius=14}" BackgroundColor="#3048C9A0">
+                            <Label Text="&#xfecf;" FontFamily="TablerIconsFilled" FontSize="22" TextColor="{StaticResource Success}" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="3">
+                            <Label Text="تیم پشتیبانی" Style="{StaticResource SubheadingLabel}" />
+                            <Label Text="پاسخ‌گوی شما برای راهنمایی و پیگیری" Style="{StaticResource CaptionLabel}" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+                <Label Text="امروز" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" Margin="0,6" />
+                <Border BackgroundColor="{StaticResource SurfaceLight}" Stroke="{StaticResource BorderColor}"
+                        StrokeShape="{RoundRectangle CornerRadius=18}" Padding="14" HorizontalOptions="Start" MaximumWidthRequest="320">
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="سلام! برای راهنمایی درباره پروژه‌ها، پرداخت‌ها یا امکانات پنل، پیام‌تان را همین‌جا بنویسید." Style="{StaticResource BodyLabel}" />
+                        <Label Text="پشتیبانی · ۱۰:۲۴" Style="{StaticResource CaptionLabel}" HorizontalOptions="End" />
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Border Grid.Row="2" BackgroundColor="{StaticResource Surface}" Stroke="{StaticResource BorderColor}"
+                StrokeShape="{RoundRectangle CornerRadius=18}" Padding="8">
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                <Entry x:Name="MessageEntry" Placeholder="پیام خود را بنویسید..." Style="{StaticResource FormEntry}"
+                       BackgroundColor="Transparent" ReturnType="Send" Completed="OnSendClicked" />
+                <Button Grid.Column="1" Text="ارسال" Style="{StaticResource PrimaryButton}" HeightRequest="44"
+                        Padding="16,0" Clicked="OnSendClicked" />
+            </Grid>
+        </Border>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BetaChannels.Employer.Pages.CompetitorAnalysisPage"
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False"
+             FlowDirection="RightToLeft">
+
+    <Grid>
+        <BoxView HeightRequest="180" VerticalOptions="Start" HorizontalOptions="Fill">
+            <BoxView.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#30FF6B35" Offset="0" />
+                    <GradientStop Color="Transparent" Offset="1" />
+                </LinearGradientBrush>
+            </BoxView.Background>
+        </BoxView>
+
+        <ScrollView>
+            <VerticalStackLayout Padding="16,0,16,20" Spacing="16">
+
+                <!-- Header -->
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12" Padding="0,16,0,8">
+                    <Border WidthRequest="44" HeightRequest="44" StrokeShape="{RoundRectangle CornerRadius=12}"
+                            BackgroundColor="{StaticResource Surface}" Stroke="{StaticResource BorderColor}">
+                        <Label FontFamily="TablerIcons" Text="&#xea64;" FontSize="20"
+                               TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                        <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnBackTapped" /></Border.GestureRecognizers>
+                    </Border>
+                    <Label Grid.Column="1" Text="تحلیل رقبا" FontSize="20" FontFamily="VazirmatnBold"
+                           TextColor="{StaticResource TextPrimary}" VerticalOptions="Center" />
+                </Grid>
+
+                <!-- Add Competitor Search Bar -->
+                <Border Style="{StaticResource CardFrame}" Padding="12">
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                        <Label Grid.Column="0" FontFamily="TablerIcons" Text="&#xeb1c;" FontSize="20"
+                               TextColor="{StaticResource TextSecondary}" VerticalOptions="Center" />
+                        <Entry Grid.Column="1" Placeholder="نام کاربری رقیب را وارد کنید..." Style="{StaticResource FormEntry}"
+                               BackgroundColor="Transparent" />
+                        <Border Grid.Column="2" BackgroundColor="{StaticResource Primary}" StrokeShape="{RoundRectangle CornerRadius=10}" Padding="12,8">
+                            <Label Text="افزودن" FontSize="12" FontFamily="VazirmatnBold" TextColor="White" VerticalOptions="Center" />
+                            <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnAddCompetitorTapped" /></Border.GestureRecognizers>
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <!-- Competitor Cards -->
+                <Border Style="{StaticResource CardFrame}">
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="رقبای شما" Style="{StaticResource SubheadingLabel}" />
+                        <Border Style="{StaticResource SmallCardFrame}" Padding="14">
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                <Border Grid.Column="0" WidthRequest="48" HeightRequest="48" StrokeShape="{RoundRectangle CornerRadius=14}" BackgroundColor="#E1306C">
+                                    <Label Text="ر" FontSize="18" FontFamily="VazirmatnBold" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                    <Label Text="@rival_brand" FontSize="14" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" />
+                                    <Label Text="۴۵.۲K فالوور" FontSize="11" Style="{StaticResource CaptionLabel}" />
+                                </VerticalStackLayout>
+                                <Label Grid.Column="2" FontFamily="TablerIcons" Text="&#xea61;" FontSize="18" TextColor="{StaticResource Primary}" VerticalOptions="Center" />
+                            </Grid>
+                            <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnCompetitorSelected" /></Border.GestureRecognizers>
+                        </Border>
+                        <Border Style="{StaticResource SmallCardFrame}" Padding="14">
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                <Border Grid.Column="0" WidthRequest="48" HeightRequest="48" StrokeShape="{RoundRectangle CornerRadius=14}" BackgroundColor="#4CAF50">
+                                    <Label Text="ن" FontSize="18" FontFamily="VazirmatnBold" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                    <Label Text="@newcomer_shop" FontSize="14" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" />
+                                    <Label Text="۲۸.۷K فالوور" FontSize="11" Style="{StaticResource CaptionLabel}" />
+                                </VerticalStackLayout>
+                                <Label Grid.Column="2" FontFamily="TablerIcons" Text="&#xea61;" FontSize="18" TextColor="{StaticResource Primary}" VerticalOptions="Center" />
+                            </Grid>
+                            <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnCompetitorSelected" /></Border.GestureRecognizers>
+                        </Border>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Detail View: Stats Row -->
+                <Border Style="{StaticResource CardFrame}">
+                    <VerticalStackLayout Spacing="14">
+                        <Label Text="آمار کلیدی @rival_brand" Style="{StaticResource SubheadingLabel}" />
+                        <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="8">
+                            <Border Style="{StaticResource StatCard}">
+                                <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                                    <Label Text="۴۵.۲K" FontSize="16" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                                    <Label Text="فالوور" FontSize="10" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <Border Grid.Column="1" Style="{StaticResource StatCard}">
+                                <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                                    <Label Text="۱,۲۰۰" FontSize="16" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                                    <Label Text="لایک میانگین" FontSize="10" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <Border Grid.Column="2" Style="{StaticResource StatCard}">
+                                <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                                    <Label Text="۸۵" FontSize="16" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                                    <Label Text="کامنت" FontSize="10" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <Border Grid.Column="3" Style="{StaticResource StatCard}">
+                                <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                                    <Label Text="۳۲۰" FontSize="16" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                                    <Label Text="شیر" FontSize="10" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                            </Border>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Content Style Breakdown -->
+                <Border Style="{StaticResource CardFrame}">
+                    <VerticalStackLayout Spacing="14">
+                        <Label Text="سبک محتوا (ماه اخیر)" Style="{StaticResource SubheadingLabel}" />
+                        <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10">
+                            <Border Style="{StaticResource SmallCardFrame}" Padding="12">
+                                <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
+                                    <Label Text="۶۰٪" FontSize="20" FontFamily="VazirmatnBold" TextColor="{StaticResource Primary}" HorizontalOptions="Center" />
+                                    <Label Text="آموزشی" FontSize="11" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <Border Grid.Column="1" Style="{StaticResource SmallCardFrame}" Padding="12">
+                                <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
+                                    <Label Text="۲۵٪" FontSize="20" FontFamily="VazirmatnBold" TextColor="{StaticResource Success}" HorizontalOptions="Center" />
+                                    <Label Text="فروش" FontSize="11" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <Border Grid.Column="2" Style="{StaticResource SmallCardFrame}" Padding="12">
+                                <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
+                                    <Label Text="۱۵٪" FontSize="20" FontFamily="VazirmatnBold" TextColor="#2196F3" HorizontalOptions="Center" />
+                                    <Label Text="ترند" FontSize="11" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                            </Border>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Monthly Posts -->
+                <Border Style="{StaticResource CardFrame}">
+                    <VerticalStackLayout Spacing="14">
+                        <HorizontalStackLayout Spacing="10">
+                            <Label FontFamily="TablerIcons" Text="&#xea59;" FontSize="20" TextColor="{StaticResource Primary}" />
+                            <Label Text="تعداد پست ماهانه" Style="{StaticResource SubheadingLabel}" />
+                        </HorizontalStackLayout>
+                        <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="8">
+                            <Border Style="{StaticResource StatCard}">
+                                <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                                    <Label Text="۳۲" FontSize="18" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                                    <Label Text="هفته ۱" FontSize="10" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <Border Grid.Column="1" Style="{StaticResource StatCard}">
+                                <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                                    <Label Text="۲۸" FontSize="18" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                                    <Label Text="هفته ۲" FontSize="10" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <Border Grid.Column="2" Style="{StaticResource StatCard}">
+                                <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                                    <Label Text="۳۵" FontSize="18" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                                    <Label Text="هفته ۳" FontSize="10" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <Border Grid.Column="3" Style="{StaticResource StatCard}">
+                                <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                                    <Label Text="۲۴" FontSize="18" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                                    <Label Text="هفته ۴" FontSize="10" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                            </Border>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Latest Ads -->
+                <Border Style="{StaticResource CardFrame}">
+                    <VerticalStackLayout Spacing="14">
+                        <HorizontalStackLayout Spacing="10">
+                            <Label FontFamily="TablerIconsFilled" Text="&#xfd14;" FontSize="20" TextColor="{StaticResource Primary}" />
+                            <Label Text="تبلیغات اخیر" Style="{StaticResource SubheadingLabel}" />
+                        </HorizontalStackLayout>
+                        <Border Style="{StaticResource SmallCardFrame}" Padding="12">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <VerticalStackLayout Spacing="4">
+                                    <Label Text="کمپین تخفیف نوروزی" FontSize="13" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" />
+                                    <Label Text="۳ روز پیش • اینستاگرام" FontSize="11" Style="{StaticResource CaptionLabel}" />
+                                </VerticalStackLayout>
+                                <Border Grid.Column="1" BackgroundColor="#1FFF6B35" StrokeShape="{RoundRectangle CornerRadius=8}" Padding="8,3">
+                                    <Label Text="فعال" FontSize="10" TextColor="{StaticResource Primary}" />
+                                </Border>
+                            </Grid>
+                        </Border>
+                        <Border Style="{StaticResource SmallCardFrame}" Padding="12">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <VerticalStackLayout Spacing="4">
+                                    <Label Text="معرفی محصول جدید" FontSize="13" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" />
+                                    <Label Text="۱ هفته پیش • تلگرام" FontSize="11" Style="{StaticResource CaptionLabel}" />
+                                </VerticalStackLayout>
+                                <Border Grid.Column="1" BackgroundColor="{StaticResource SurfaceLight}" StrokeShape="{RoundRectangle CornerRadius=8}" Padding="8,3">
+                                    <Label Text="پایان یافته" FontSize="10" TextColor="{StaticResource TextSecondary}" />
+                                </Border>
+                            </Grid>
+                        </Border>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Pricing Estimation -->
+                <Border Style="{StaticResource CardFrame}">
+                    <VerticalStackLayout Spacing="14">
+                        <HorizontalStackLayout Spacing="10">
+                            <Label FontFamily="TablerIconsFilled" Text="&#xfd11;" FontSize="20" TextColor="{StaticResource Primary}" />
+                            <Label Text="تخمین هزینه تبلیغ" Style="{StaticResource SubheadingLabel}" />
+                        </HorizontalStackLayout>
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                            <Border Style="{StaticResource StatCard}">
+                                <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                                    <Label Text="۲.۵M" FontSize="16" FontFamily="VazirmatnBold" TextColor="{StaticResource Primary}" HorizontalOptions="Center" />
+                                    <Label Text="هر پست" FontSize="10" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <Border Grid.Column="1" Style="{StaticResource StatCard}">
+                                <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                                    <Label Text="۱.۲M" FontSize="16" FontFamily="VazirmatnBold" TextColor="{StaticResource Primary}" HorizontalOptions="Center" />
+                                    <Label Text="هر استوری" FontSize="10" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                            </Border>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Comparison Chart -->
+                <Border Style="{StaticResource CardFrame}">
+                    <VerticalStackLayout Spacing="14">
+                        <HorizontalStackLayout Spacing="10">
+                            <Label FontFamily="TablerIcons" Text="&#xeb35;" FontSize="20" TextColor="{StaticResource Primary}" />
+                            <Label Text="مقایسه شما و رقیب" Style="{StaticResource SubheadingLabel}" />
+                        </HorizontalStackLayout>
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                            <Border Style="{StaticResource SmallCardFrame}" Padding="12">
+                                <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
+                                    <Border WidthRequest="40" HeightRequest="40" StrokeShape="{RoundRectangle CornerRadius=12}" BackgroundColor="{StaticResource Primary}">
+                                        <Label Text="ش" FontSize="16" FontFamily="VazirmatnBold" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                                    </Border>
+                                    <Label Text="صفحه شما" FontSize="12" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                                    <Label Text="۳۲.۱K فالوور" FontSize="11" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <Border Grid.Column="1" Style="{StaticResource SmallCardFrame}" Padding="12">
+                                <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
+                                    <Border WidthRequest="40" HeightRequest="40" StrokeShape="{RoundRectangle CornerRadius=12}" BackgroundColor="#E1306C">
+                                        <Label Text="ر" FontSize="16" FontFamily="VazirmatnBold" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                                    </Border>
+                                    <Label Text="رقیب" FontSize="12" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                                    <Label Text="۴۵.۲K فالوور" FontSize="11" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                            </Border>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

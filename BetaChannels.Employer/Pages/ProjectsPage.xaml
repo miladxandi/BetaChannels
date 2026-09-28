@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BetaChannels.Employer.Pages.ProjectsPage"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto,*">
+        <!-- Header -->
+        <Grid Grid.Row="0" Padding="20,16" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="12" BackgroundColor="{StaticResource Background}">
+            <Button Grid.Column="0" Text="→" FontSize="18" WidthRequest="40" HeightRequest="40"
+                    CornerRadius="12" BackgroundColor="{StaticResource Surface}"
+                    TextColor="{StaticResource TextPrimary}" Clicked="OnBackClicked" />
+            <Label Grid.Column="1" Text="پروژه‌های من" Style="{StaticResource SubheadingLabel}" VerticalOptions="Center" />
+            <Button Grid.Column="2" Text="+" FontSize="20" WidthRequest="40" HeightRequest="40"
+                    CornerRadius="12" BackgroundColor="{StaticResource Primary}"
+                    TextColor="White" Clicked="OnAddClicked" />
+        </Grid>
+
+        <!-- Project List -->
+        <CollectionView Grid.Row="1" x:Name="ProjectList" Margin="20,12">
+            <CollectionView.EmptyView>
+                <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="16" Padding="40">
+                    <Label FontFamily="TablerIconsFilled" Text="&#xf749;" FontSize="48" TextColor="{StaticResource TextSecondary}" HorizontalOptions="Center" />
+                    <Label Text="هنوز پروژه‌ای ایجاد نکردید" Style="{StaticResource SubheadingLabel}" HorizontalOptions="Center" />
+                    <Label Text="اولین پروژه خود را ایجاد کنید" Style="{StaticResource SecondaryLabel}" HorizontalOptions="Center" />
+                    <Button Text="ایجاد پروژه جدید" Style="{StaticResource PrimaryButton}" Margin="0,16,0,0" Clicked="OnAddClicked" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Style="{StaticResource CardFrame}" Margin="0,0,0,16" Padding="20">
+                        <VerticalStackLayout Spacing="8">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Label Grid.Column="0" Text="{Binding Title}" FontSize="16" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" />
+                                <Border Grid.Column="1" StrokeShape="{RoundRectangle CornerRadius=20}" Padding="12,4"
+                                       BackgroundColor="{Binding IsOpen, Converter={StaticResource BoolToOpenColorConverter}}">
+                                    <Label Text="{Binding IsOpen, Converter={StaticResource BoolToOpenTextConverter}}"
+                                           FontSize="11" FontFamily="VazirmatnBold" TextColor="{Binding IsOpen, Converter={StaticResource BoolToOpenTextColorConverter}}" />
+                                </Border>
+                            </Grid>
+                            <Label Text="{Binding Description}" FontSize="13" Style="{StaticResource SecondaryLabel}" LineBreakMode="WordWrap" MaxLines="2" />
+                            <Grid ColumnDefinitions="*,Auto" Margin="0,8,0,0">
+                                <HorizontalStackLayout Grid.Column="0" Spacing="8">
+                                    <Label Text="{Binding Budget, Converter={StaticResource PriceConverter}}" FontSize="14" FontFamily="VazirmatnBold" TextColor="{StaticResource Primary}" />
+                                    <Label Text="{Binding Category, Converter={StaticResource SkillNameConverter}}" FontSize="12" Style="{StaticResource CaptionLabel}" />
+                                </HorizontalStackLayout>
+                                <Label Grid.Column="1" Text="{Binding DeadlineText}" FontSize="12" Style="{StaticResource CaptionLabel}" VerticalOptions="Center" />
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Create Project Modal Overlay -->
+        <Grid x:Name="CreateModal" BackgroundColor="#B3000000" IsVisible="False" ZIndex="20"
+              HorizontalOptions="Fill" VerticalOptions="Fill">
+            <Border Margin="40" Padding="24" Style="{StaticResource CardFrame}" VerticalOptions="Center">
+                <ScrollView>
+                    <VerticalStackLayout Spacing="16">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="ایجاد پروژه جدید" Style="{StaticResource SubheadingLabel}" />
+                            <Button Text="×" FontSize="18" WidthRequest="36" HeightRequest="36" CornerRadius="18"
+                                    BackgroundColor="{StaticResource SurfaceLight}" TextColor="{StaticResource TextSecondary}"
+                                    Clicked="OnCloseModalClicked" />
+                        </Grid>
+
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="عنوان پروژه" Style="{StaticResource SecondaryLabel}" FontSize="14" />
+                            <Entry x:Name="TitleEntry" Style="{StaticResource FormEntry}" Placeholder="مثال: فیلم‌برداری مراسم عروسی" />
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="توضیحات" Style="{StaticResource SecondaryLabel}" FontSize="14" />
+                            <Editor x:Name="DescEditor" Style="{StaticResource FormEditor}" Placeholder="توضیحات کامل پروژه..." HeightRequest="100" />
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="دسته‌بندی" Style="{StaticResource SecondaryLabel}" FontSize="14" />
+                            <Picker x:Name="CategoryPicker" Style="{StaticResource FormEntry}" />
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="بودجه (تومان)" Style="{StaticResource SecondaryLabel}" FontSize="14" />
+                            <Entry x:Name="BudgetEntry" Style="{StaticResource FormEntry}" Placeholder="0" Keyboard="Numeric" FlowDirection="LeftToRight" />
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="مهلت انجام (روز)" Style="{StaticResource SecondaryLabel}" FontSize="14" />
+                            <Entry x:Name="DeadlineEntry" Style="{StaticResource FormEntry}" Placeholder="30" Keyboard="Numeric" FlowDirection="LeftToRight" />
+                        </VerticalStackLayout>
+
+                        <Button Text="ایجاد پروژه" Style="{StaticResource FullWidthButton}" Clicked="OnCreateClicked" />
+                    </VerticalStackLayout>
+                </ScrollView>
+            </Border>
+        </Grid>
+    </Grid>
+</ContentPage>

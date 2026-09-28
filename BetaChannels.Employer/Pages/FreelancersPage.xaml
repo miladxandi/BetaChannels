@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BetaChannels.Employer.Pages.FreelancersPage"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto,Auto,Auto,*">
+
+        <!-- Header -->
+        <Grid Grid.Row="0" Padding="20,16" ColumnDefinitions="Auto,*" ColumnSpacing="12" BackgroundColor="{StaticResource Background}">
+            <Button Grid.Column="0" Text="→" FontSize="18" WidthRequest="40" HeightRequest="40"
+                    CornerRadius="12" BackgroundColor="{StaticResource Surface}"
+                    TextColor="{StaticResource TextPrimary}" Clicked="OnBackClicked" />
+            <Label Grid.Column="1" Text="جستجوی فریلنسر" Style="{StaticResource SubheadingLabel}" VerticalOptions="Center" />
+        </Grid>
+
+        <!-- Search -->
+        <Border Grid.Row="1" Margin="20,0,20,12" Padding="0"
+               StrokeShape="{RoundRectangle CornerRadius=14}"
+               BackgroundColor="{StaticResource Surface}"
+               Stroke="{StaticResource BorderColor}">
+            <Grid ColumnDefinitions="*,Auto" Padding="14,0">
+                <Entry Grid.Column="0" x:Name="SearchEntry" Placeholder="جستجوی فریلنسر..."
+                       Style="{StaticResource FormEntry}" BackgroundColor="Transparent"
+                       TextChanged="OnSearchTextChanged" />
+                <Label Grid.Column="1" FontFamily="TablerIcons" Text="&#xeb1c;" FontSize="18" TextColor="{StaticResource TextSecondary}" VerticalOptions="Center" />
+            </Grid>
+        </Border>
+
+        <!-- Filter Chips -->
+        <ScrollView Grid.Row="2" Orientation="Horizontal" Padding="20,0" HeightRequest="40">
+            <HorizontalStackLayout x:Name="CategoryChips" Spacing="8" />
+        </ScrollView>
+
+        <!-- Freelancer List -->
+        <CollectionView Grid.Row="3" x:Name="FreelancerList" Margin="20,12">
+            <CollectionView.EmptyView>
+                <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="16" Padding="40">
+                    <Label FontFamily="TablerIcons" Text="&#xebf2;" FontSize="48" TextColor="{StaticResource TextSecondary}" HorizontalOptions="Center" />
+                    <Label Text="فریلنسری یافت نشد" Style="{StaticResource SubheadingLabel}" HorizontalOptions="Center" />
+                    <Label Text="فیلترهای جستجو را تغییر دهید" Style="{StaticResource SecondaryLabel}" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Style="{StaticResource CardFrame}" Margin="0,0,0,16" Padding="20">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnViewProfileClicked" CommandParameter="{Binding Id}" />
+                        </Border.GestureRecognizers>
+                        <VerticalStackLayout Spacing="12">
+                            <!-- Header Row -->
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="15">
+                                <Border Grid.Column="0" WidthRequest="56" HeightRequest="56"
+                                       StrokeShape="{RoundRectangle CornerRadius=28}"
+                                       BackgroundColor="{StaticResource Primary}">
+                                    <Label Text="{Binding FullName, Converter={StaticResource FirstCharConverter}}"
+                                           FontSize="22" FontFamily="VazirmatnBold" TextColor="White"
+                                           HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                    <Label Text="{Binding FullName}" FontSize="16" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" />
+                                    <Label Text="{Binding Bio}" FontSize="13" Style="{StaticResource SecondaryLabel}" LineBreakMode="TailTruncation" MaxLines="1" />
+                                </VerticalStackLayout>
+                                <Border Grid.Column="2" Style="{StaticResource StatusBadge}" VerticalOptions="Center"
+                                       BackgroundColor="{Binding Status, Converter={StaticResource StatusColorConverter}}">
+                                    <Label Text="{Binding Status, Converter={StaticResource StatusNameConverter}}"
+                                           FontSize="11" FontFamily="VazirmatnBold" TextColor="{Binding Status, Converter={StaticResource StatusTextColorConverter}}" />
+                                </Border>
+                            </Grid>
+
+                            <!-- Meta Row -->
+                            <HorizontalStackLayout Spacing="16">
+                                <HorizontalStackLayout Spacing="4">
+                                    <Label FontFamily="TablerIconsFilled" Text="&#xf6a6;" FontSize="13" TextColor="#FFC107" />
+                                    <Label Text="{Binding Rating, StringFormat='{0:F1}'}" FontSize="13" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" />
+                                    <Label Text="{Binding TotalReviews, StringFormat='({0})'}" FontSize="13" Style="{StaticResource SecondaryLabel}" />
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout Spacing="4">
+                                    <Label FontFamily="TablerIcons" Text="&#xeaad;" FontSize="13" TextColor="{StaticResource TextSecondary}" />
+                                    <Label Text="{Binding CompletedProjects}" FontSize="13" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" />
+                                    <Label Text="پروژه" FontSize="13" Style="{StaticResource SecondaryLabel}" />
+                                </HorizontalStackLayout>
+                                <Label Text="{Binding HourlyRate, Converter={StaticResource PriceConverter}}" FontSize="13" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" />
+                            </HorizontalStackLayout>
+
+                            <!-- Skills -->
+                            <FlexLayout Wrap="Wrap" Direction="Row" BindableLayout.ItemsSource="{Binding Skills}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Style="{StaticResource SkillTag}" Margin="0,0,6,6">
+                                            <Label Text="{Binding ., Converter={StaticResource SkillNameConverter}}"
+                                                   FontSize="11" TextColor="{StaticResource Primary}" FontFamily="Vazirmatn" />
+                                        </Border>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </FlexLayout>
+
+                            <!-- Action Buttons -->
+                            <HorizontalStackLayout Spacing="8" Margin="0,4,0,0">
+                                <Button Text="استخدام" Style="{StaticResource PrimaryButton}"
+                                        HorizontalOptions="FillAndExpand" HeightRequest="40" FontSize="13"
+                                        Clicked="OnHireClicked" CommandParameter="{Binding Id}" />
+                                <Button FontFamily="TablerIcons" Text="&#xea9a;" Style="{StaticResource OutlineButton}"
+                                        WidthRequest="48" HeightRequest="40" FontSize="16" Padding="0"
+                                        Clicked="OnViewProfileClicked" CommandParameter="{Binding Id}" />
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

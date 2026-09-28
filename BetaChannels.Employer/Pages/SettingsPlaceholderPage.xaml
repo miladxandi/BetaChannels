@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BetaChannels.Employer.Pages.SettingsPlaceholderPage"
+             Shell.NavBarIsVisible="False"
+             FlowDirection="RightToLeft">
+    <ScrollView>
+        <VerticalStackLayout Padding="18,12,18,28" Spacing="16">
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12" Padding="0,4,0,8">
+                <Button Text="‹" FontSize="28" WidthRequest="44" HeightRequest="44" CornerRadius="14"
+                        BackgroundColor="{StaticResource SurfaceLight}" TextColor="{StaticResource TextPrimary}"
+                        Clicked="OnBackClicked" />
+                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                    <Label Text="تنظیمات" Style="{StaticResource HeadingLabel}" />
+                    <Label Text="حساب کاربری و ترجیحات شما" Style="{StaticResource CaptionLabel}" />
+                </VerticalStackLayout>
+            </Grid>
+
+            <Border Style="{StaticResource CardFrame}">
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                    <Border WidthRequest="52" HeightRequest="52" StrokeShape="{RoundRectangle CornerRadius=17}" BackgroundColor="{StaticResource PrimaryDark}">
+                        <Label x:Name="AvatarLabel" Text="ک" FontFamily="VazirmatnBold" FontSize="20" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="3">
+                        <Label x:Name="NameLabel" Text="کارفرما" Style="{StaticResource SubheadingLabel}" />
+                        <Label Text="حساب کارفرما" Style="{StaticResource CaptionLabel}" />
+                    </VerticalStackLayout>
+                    <Button Grid.Column="2" Text="ویرایش" Style="{StaticResource OutlineButton}" HeightRequest="38" Padding="12,0" FontSize="12" Clicked="OnEditNameClicked" />
+                </Grid>
+            </Border>
+
+            <Label Text="اعلان‌ها" Style="{StaticResource SubheadingLabel}" Margin="4,4,0,0" />
+            <Border Style="{StaticResource SmallCardFrame}" Padding="16,8">
+                <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="4">
+                    <Grid ColumnDefinitions="*,Auto" Padding="0,8">
+                        <VerticalStackLayout Spacing="2">
+                            <Label Text="پیام‌های جدید" Style="{StaticResource BodyLabel}" />
+                            <Label Text="وقتی پیام تازه‌ای دریافت می‌کنید" Style="{StaticResource CaptionLabel}" />
+                        </VerticalStackLayout>
+                        <Switch x:Name="MessagesSwitch" Grid.Column="1" Toggled="OnMessagesToggled" OnColor="{StaticResource Success}" />
+                    </Grid>
+                    <BoxView Grid.Row="1" Style="{StaticResource Divider}" Margin="0,2" />
+                    <Grid Grid.Row="2" ColumnDefinitions="*,Auto" Padding="0,8" Margin="0,12,0,0">
+                        <VerticalStackLayout Spacing="2">
+                            <Label Text="به‌روزرسانی پروژه‌ها" Style="{StaticResource BodyLabel}" />
+                            <Label Text="وضعیت پروژه و پیشنهادهای تازه" Style="{StaticResource CaptionLabel}" />
+                        </VerticalStackLayout>/
+                        <Switch x:Name="ProjectsSwitch" Grid.Column="1" Toggled="OnProjectsToggled" OnColor="{StaticResource Success}" />
+                    </Grid>
+                </Grid>
+            </Border>
+
+            <Label Text="راهنما و حساب" Style="{StaticResource SubheadingLabel}" Margin="4,4,0,0" />
+            <Border Style="{StaticResource SmallCardFrame}" Padding="0,4">
+                <VerticalStackLayout Spacing="0">
+                    <Button Text="راهنمای استفاده از پنل" HorizontalOptions="Fill"
+                            BackgroundColor="Transparent" TextColor="{StaticResource TextPrimary}" Clicked="OnHelpClicked" />
+                    <BoxView Style="{StaticResource Divider}" Margin="14,0" />
+                    <Button Text="تماس با پشتیبانی" HorizontalOptions="Fill"
+                            BackgroundColor="Transparent" TextColor="{StaticResource TextPrimary}" Clicked="OnSupportClicked" />
+                    <BoxView Style="{StaticResource Divider}" Margin="14,0" />
+                    <Button Text="خروج از حساب" HorizontalOptions="Fill"
+                            BackgroundColor="Transparent" TextColor="{StaticResource Danger}" Clicked="OnLogoutClicked" />
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

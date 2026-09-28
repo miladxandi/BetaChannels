@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BetaChannels.Employer.Pages.PaymentsPage"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto,Auto,*">
+        <!-- Header -->
+        <Grid Grid.Row="0" Padding="20,16" ColumnDefinitions="Auto,*" ColumnSpacing="12" BackgroundColor="{StaticResource Background}">
+            <Button Grid.Column="0" Text="→" FontSize="18" WidthRequest="40" HeightRequest="40"
+                    CornerRadius="12" BackgroundColor="{StaticResource Surface}"
+                    TextColor="{StaticResource TextPrimary}" Clicked="OnBackClicked" />
+            <Label Grid.Column="1" Text="پرداخت‌ها" Style="{StaticResource SubheadingLabel}" VerticalOptions="Center" />
+        </Grid>
+
+        <!-- Stats Row -->
+        <Grid Grid.Row="1" Padding="20,0,20,16" ColumnDefinitions="*,*,*,*" ColumnSpacing="10">
+            <Border Grid.Column="0" Style="{StaticResource StatCard}">
+                <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                    <Label Text="" FontSize="18" HorizontalOptions="Center" />
+                    <Label x:Name="TotalSpentLabel" FontSize="16" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                    <Label Text="هزینه کل" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Border>
+            <Border Grid.Column="1" Style="{StaticResource StatCard}">
+                <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                    <Label Text="" FontSize="18" HorizontalOptions="Center" />
+                    <Label x:Name="PendingLabel" FontSize="16" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                    <Label Text="در انتظار" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Border>
+            <Border Grid.Column="2" Style="{StaticResource StatCard}">
+                <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                    <Label FontFamily="TablerIconsFilled" Text="&#x101e6;" FontSize="18" TextColor="#4CAF50" HorizontalOptions="Center" />
+                    <Label x:Name="CompletedLabel" FontSize="16" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                    <Label Text="تکمیل شده" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Border>
+            <Border Grid.Column="3" Style="{StaticResource StatCard}">
+                <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                    <Label Text="" FontSize="18" HorizontalOptions="Center" />
+                    <Label x:Name="TotalCountLabel" FontSize="16" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                    <Label Text="کل تراکنش" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+
+        <!-- Payment List -->
+        <CollectionView Grid.Row="2" x:Name="PaymentList" Margin="20,0">
+            <CollectionView.EmptyView>
+                <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="16" Padding="40">
+                    <Label FontFamily="TablerIcons" Text="&#xea84;" FontSize="48" TextColor="{StaticResource TextSecondary}" HorizontalOptions="Center" />
+                    <Label Text="تراکنشی یافت نشد" Style="{StaticResource SubheadingLabel}" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Style="{StaticResource SmallCardFrame}" Margin="0,0,0,12" Padding="16">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <VerticalStackLayout Grid.Column="0" Spacing="4">
+                                <Label Text="{Binding Description}" FontSize="14" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" />
+                                <Label Text="{Binding CreatedAtText}" FontSize="12" Style="{StaticResource CaptionLabel}" />
+                                <Border StrokeShape="{RoundRectangle CornerRadius=20}" Padding="10,4" WidthRequest="80"
+                                       BackgroundColor="{Binding Status, Converter={StaticResource PaymentStatusColorConverter}}">
+                                    <Label Text="{Binding Status, Converter={StaticResource PaymentStatusNameConverter}}"
+                                           FontSize="11" FontFamily="VazirmatnBold" TextColor="{Binding Status, Converter={StaticResource PaymentStatusTextColorConverter}}" />
+                                </Border>
+                            </VerticalStackLayout>
+                            <Label Grid.Column="1" Text="{Binding Amount, Converter={StaticResource PriceConverter}}"
+                                   FontSize="14" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}"
+                                   VerticalOptions="Center" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

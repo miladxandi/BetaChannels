@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BetaChannels.Employer.Pages.BetaNetworksPage"
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False"
+             FlowDirection="RightToLeft">
+
+    <Grid>
+        <BoxView HeightRequest="180" VerticalOptions="Start" HorizontalOptions="Fill">
+            <BoxView.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#30FF6B35" Offset="0" />
+                    <GradientStop Color="Transparent" Offset="1" />
+                </LinearGradientBrush>
+            </BoxView.Background>
+        </BoxView>
+
+        <ScrollView>
+            <VerticalStackLayout Padding="16,0,16,20" Spacing="16">
+
+                <!-- Header -->
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12" Padding="0,16,0,8">
+                    <Border WidthRequest="44" HeightRequest="44" StrokeShape="{RoundRectangle CornerRadius=12}"
+                            BackgroundColor="{StaticResource Surface}" Stroke="{StaticResource BorderColor}">
+                        <Label FontFamily="TablerIcons" Text="&#xea64;" FontSize="20"
+                               TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                        <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnBackTapped" /></Border.GestureRecognizers>
+                    </Border>
+                    <Label Grid.Column="1" Text="شبکه‌های بتاچنل" FontSize="20" FontFamily="VazirmatnBold"
+                           TextColor="{StaticResource TextPrimary}" VerticalOptions="Center" />
+                </Grid>
+
+                <!-- Network Grid -->
+                <Border Style="{StaticResource CardFrame}">
+                    <VerticalStackLayout Spacing="14">
+                        <Label Text="شبکه‌های فعال" Style="{StaticResource SubheadingLabel}" />
+                        <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto" ColumnSpacing="12" RowSpacing="12">
+                            <!-- Instagram -->
+                            <Border Style="{StaticResource SmallCardFrame}" Padding="12">
+                                <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
+                                    <Border WidthRequest="48" HeightRequest="48" StrokeShape="{RoundRectangle CornerRadius=14}" HorizontalOptions="Center">
+                                        <Border.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                <GradientStop Color="#833AB4" Offset="0" />
+                                                <GradientStop Color="#FD1D1D" Offset="0.5" />
+                                                <GradientStop Color="#FCB045" Offset="1" />
+                                            </LinearGradientBrush>
+                                        </Border.Background>
+                                        <Label FontFamily="TablerIconsFilled" Text="&#xfa4a;" FontSize="24" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                                    </Border>
+                                    <Label Text="اینستاگرام" FontSize="11" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                                    <Label Text="۱۲.۵K" FontSize="10" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <!-- Telegram -->
+                            <Border Grid.Column="1" Style="{StaticResource SmallCardFrame}" Padding="12">
+                                <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
+                                    <Border WidthRequest="48" HeightRequest="48" StrokeShape="{RoundRectangle CornerRadius=14}"
+                                            BackgroundColor="#0088cc" HorizontalOptions="Center">
+                                        <Label FontFamily="TablerIconsFilled" Text="&#x101ca;" FontSize="24" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                                    </Border>
+                                    <Label Text="تلگرام" FontSize="11" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                                    <Label Text="۸.۲K" FontSize="10" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <!-- Bale -->
+                            <Border Grid.Column="2" Style="{StaticResource SmallCardFrame}" Padding="12">
+                                <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
+                                    <Border WidthRequest="48" HeightRequest="48" StrokeShape="{RoundRectangle CornerRadius=14}"
+                                            BackgroundColor="#00e09e" HorizontalOptions="Center">
+                                        <Label FontFamily="TablerIconsFilled" Text="&#xf6a6;" FontSize="24" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                                    </Border>
+                                    <Label Text="بله" FontSize="11" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                                    <Label Text="۳.۱K" FontSize="10" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <!-- WhatsApp -->
+                            <Border Grid.Row="1" Style="{StaticResource SmallCardFrame}" Padding="12">
+                                <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
+                                    <Border WidthRequest="48" HeightRequest="48" StrokeShape="{RoundRectangle CornerRadius=14}"
+                                            BackgroundColor="#25D366" HorizontalOptions="Center">
+                                        <Label FontFamily="TablerIconsFilled" Text="&#xfa49;" FontSize="24" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                                    </Border>
+                                    <Label Text="واتساپ" FontSize="11" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                                    <Label Text="۵.۷K" FontSize="10" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <!-- Website -->
+                            <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource SmallCardFrame}" Padding="12">
+                                <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
+                                    <Border WidthRequest="48" HeightRequest="48" StrokeShape="{RoundRectangle CornerRadius=14}"
+                                            BackgroundColor="{StaticResource Primary}" HorizontalOptions="Center">
+                                        <Label FontFamily="TablerIconsFilled" Text="&#x101c7;" FontSize="24" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                                    </Border>
+                                    <Label Text="وب‌سایت" FontSize="11" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                                    <Label Text="۱۵.۳K" FontSize="10" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <!-- Aparat -->
+                            <Border Grid.Row="1" Grid.Column="2" Style="{StaticResource SmallCardFrame}" Padding="12">
+                                <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
+                                    <Border WidthRequest="48" HeightRequest="48" StrokeShape="{RoundRectangle CornerRadius=14}"
+                                            BackgroundColor="#ED145B" HorizontalOptions="Center">
+                                        <Label FontFamily="TablerIconsFilled" Text="&#x1009b;" FontSize="24" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                                    </Border>
+                                    <Label Text="آپارات" FontSize="11" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                                    <Label Text="۲.۸K" FontSize="10" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                            </Border>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Add Service/Product CTA -->
+                <Border StrokeShape="{RoundRectangle CornerRadius=16}" Padding="20"
+                        BackgroundColor="{StaticResource SurfaceCard}">
+                    <Border.Stroke>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#FF6B35" Offset="0" />
+                            <GradientStop Color="#FF4500" Offset="1" />
+                        </LinearGradientBrush>
+                    </Border.Stroke>
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="14">
+                        <VerticalStackLayout Spacing="4" VerticalOptions="Center">
+                            <Label Text="خدمات یا محصول خود را اضافه کنید" FontSize="14" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" />
+                            <Label Text="در تمام شبکه‌ها نمایش داده می‌شود" FontSize="12" Style="{StaticResource CaptionLabel}" />
+                        </VerticalStackLayout>
+                        <Border Grid.Column="1" BackgroundColor="{StaticResource Primary}"
+                                StrokeShape="{RoundRectangle CornerRadius=12}" Padding="14,10" VerticalOptions="Center">
+                            <Label FontFamily="TablerIcons" Text="&#x101ce;" FontSize="20" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                    </Grid>
+                    <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnAddServiceTapped" /></Border.GestureRecognizers>
+                </Border>
+
+                <!-- Service Preview -->
+                <Border Style="{StaticResource CardFrame}">
+                    <VerticalStackLayout Spacing="14">
+                        <Label Text="پیش‌نمایش نمایش خدمات" Style="{StaticResource SubheadingLabel}" />
+                        <Border Style="{StaticResource SmallCardFrame}" Padding="14">
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                                <Border Grid.Column="0" WidthRequest="44" HeightRequest="44" StrokeShape="{RoundRectangle CornerRadius=12}"
+                                        BackgroundColor="{StaticResource Primary}">
+                                    <Label FontFamily="TablerIcons" Text="&#xeb0b;" FontSize="20" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                    <Label Text="طراحی لوگو حرفه‌ای" FontSize="14" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" />
+                                    <Label Text="شبکه: اینستاگرام، تلگرام، وب‌سایت" FontSize="11" Style="{StaticResource CaptionLabel}" />
+                                </VerticalStackLayout>
+                                <Label Grid.Column="2" Text="۴۹۹K" FontSize="14" FontFamily="VazirmatnBold" TextColor="{StaticResource Primary}" VerticalOptions="Center" />
+                            </Grid>
+                        </Border>
+                        <Border Style="{StaticResource SmallCardFrame}" Padding="14">
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                                <Border Grid.Column="0" WidthRequest="44" HeightRequest="44" StrokeShape="{RoundRectangle CornerRadius=12}"
+                                        BackgroundColor="#4CAF50">
+                                    <Label FontFamily="TablerIcons" Text="&#x10114;" FontSize="20" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                    <Label Text="مشاوره بازاریابی" FontSize="14" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" />
+                                    <Label Text="شبکه: واتساپ، بله" FontSize="11" Style="{StaticResource CaptionLabel}" />
+                                </VerticalStackLayout>
+                                <Label Grid.Column="2" Text="۲۹۹K" FontSize="14" FontFamily="VazirmatnBold" TextColor="{StaticResource Primary}" VerticalOptions="Center" />
+                            </Grid>
+                        </Border>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Pricing Plans -->
+                <Border Style="{StaticResource CardFrame}">
+                    <VerticalStackLayout Spacing="14">
+                        <Label Text="پلن‌های شبکه" Style="{StaticResource SubheadingLabel}" />
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                            <Border Style="{StaticResource SmallCardFrame}" Padding="14">
+                                <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                                    <Label Text="پایه" FontSize="16" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                                    <Label Text="۳ شبکه" FontSize="12" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                                    <Label Text="۱۹۹K/ماه" FontSize="14" FontFamily="VazirmatnBold" TextColor="{StaticResource Primary}" HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <Border Grid.Column="1" Style="{StaticResource SmallCardFrame}" Padding="14">
+                                <Border.Stroke>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                        <GradientStop Color="#FF6B35" Offset="0" />
+                                        <GradientStop Color="#FF4500" Offset="1" />
+                                    </LinearGradientBrush>
+                                </Border.Stroke>
+                                <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                                    <Label Text="حرفه‌ای" FontSize="16" FontFamily="VazirmatnBold" TextColor="{StaticResource Primary}" HorizontalOptions="Center" />
+                                    <Label Text="نامحدود" FontSize="12" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                                    <Label Text="۴۹۹K/ماه" FontSize="14" FontFamily="VazirmatnBold" TextColor="{StaticResource Primary}" HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                            </Border>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

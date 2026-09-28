@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BetaChannels.Employer.Pages.Divar.DivarAnalyticsPage"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto,*">
+        <!-- Header -->
+        <Grid Grid.Row="0" Padding="20,16" ColumnDefinitions="*,Auto" BackgroundColor="{StaticResource Background}">
+            <Label Grid.Column="0" Text=" آمار آگهی‌های دیوار" Style="{StaticResource SubheadingLabel}" VerticalOptions="Center" />
+            <Button Grid.Column="1" Text="بروزرسانی" Style="{StaticResource OutlineButton}" HeightRequest="36" FontSize="12" Padding="12,0" Clicked="OnRefreshClicked" />
+        </Grid>
+
+        <!-- Content -->
+        <ScrollView Grid.Row="1" Padding="20">
+            <VerticalStackLayout Spacing="16">
+                <!-- Loading State -->
+                <VerticalStackLayout x:Name="LoadingView" VerticalOptions="Center" Padding="40" IsVisible="True">
+                    <Label Text="در حال دریافت اطلاعات آگهی‌ها..." Style="{StaticResource BodyLabel}" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+
+                <!-- Error State -->
+                <VerticalStackLayout x:Name="ErrorView" IsVisible="False" VerticalOptions="Center" Padding="40" Spacing="16">
+                    <Label FontFamily="TablerIcons" Text="&#xea06;" FontSize="48" TextColor="{StaticResource Danger}" HorizontalOptions="Center" />
+                    <Label Text="خطا در دریافت اطلاعات" Style="{StaticResource SubheadingLabel}" HorizontalOptions="Center" />
+                    <Label x:Name="ErrorLabel" Style="{StaticResource SecondaryLabel}" HorizontalOptions="Center" HorizontalTextAlignment="Center" />
+                    <Button Text="تلاش مجدد" Style="{StaticResource PrimaryButton}" Margin="0,16,0,0" Clicked="OnRefreshClicked" />
+                </VerticalStackLayout>
+
+                <!-- Empty State -->
+                <VerticalStackLayout x:Name="EmptyView" IsVisible="False" VerticalOptions="Center" Padding="40" Spacing="16">
+                    <Label FontFamily="TablerIcons" Text="&#xeead;" FontSize="48" TextColor="{StaticResource TextSecondary}" HorizontalOptions="Center" />
+                    <Label Text="آگهی یافت نشد" Style="{StaticResource SubheadingLabel}" HorizontalOptions="Center" />
+                    <Label Text="هیچ آگهی فعالی در حساب دیوار شما یافت نشد." Style="{StaticResource SecondaryLabel}" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+
+                <!-- Posts List -->
+                <VerticalStackLayout x:Name="PostsView" IsVisible="False" Spacing="16">
+                    <CollectionView x:Name="PostsList">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Style="{StaticResource SmallCardFrame}" Margin="0,0,0,12" Padding="16">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnPostSelected" CommandParameter="{Binding Token}" />
+                                    </Border.GestureRecognizers>
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <Label Grid.Column="0" Text="{Binding Title}" FontSize="15" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" />
+                                        <Label Grid.Column="1" Text="{Binding Status}" FontSize="11" Style="{StaticResource CaptionLabel}" VerticalOptions="Center" />
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                    <!-- Stats for selected post -->
+                    <VerticalStackLayout x:Name="StatsView" IsVisible="False" Spacing="16">
+                        <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10">
+                            <Border Grid.Column="0" Style="{StaticResource StatCard}">
+                                <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                                    <Label x:Name="TotalViewsLabel" FontSize="18" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                                    <Label Text="بازدید کل" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <Border Grid.Column="1" Style="{StaticResource StatCard}">
+                                <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                                    <Label x:Name="TotalImpressionsLabel" FontSize="18" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                                    <Label Text="نمایش کل" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <Border Grid.Column="2" Style="{StaticResource StatCard}">
+                                <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                                    <Label x:Name="TotalChatsLabel" FontSize="18" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                                    <Label Text="چت‌ها" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                            </Border>
+                        </Grid>
+
+                        <!-- Daily Stats Table -->
+                        <Border Style="{StaticResource CardFrame}" Padding="16">
+                            <VerticalStackLayout Spacing="12">
+                                <Label Text="آمار ۷ روز اخیر" Style="{StaticResource SubheadingLabel}" />
+                                <CollectionView x:Name="DailyStatsList">
+                                    <CollectionView.Header>
+                                        <Grid ColumnDefinitions="*,*,*,*" Padding="0,0,0,8">
+                                            <Label Grid.Column="0" Text="تاریخ" FontSize="12" FontFamily="VazirmatnBold" TextColor="{StaticResource TextSecondary}" />
+                                            <Label Grid.Column="1" Text="بازدید" FontSize="12" FontFamily="VazirmatnBold" TextColor="{StaticResource TextSecondary}" HorizontalOptions="Center" />
+                                            <Label Grid.Column="2" Text="نمایش" FontSize="12" FontFamily="VazirmatnBold" TextColor="{StaticResource TextSecondary}" HorizontalOptions="Center" />
+                                            <Label Grid.Column="3" Text="چت" FontSize="12" FontFamily="VazirmatnBold" TextColor="{StaticResource TextSecondary}" HorizontalOptions="Center" />
+                                        </Grid>
+                                    </CollectionView.Header>
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid ColumnDefinitions="*,*,*,*" Padding="0,6">
+                                                <Label Grid.Column="0" Text="{Binding Date}" FontSize="12" TextColor="{StaticResource TextPrimary}" />
+                                                <Label Grid.Column="1" Text="{Binding Views}" FontSize="12" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                                                <Label Grid.Column="2" Text="{Binding Impressions}" FontSize="12" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                                                <Label Grid.Column="3" Text="{Binding Chats}" FontSize="12" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </VerticalStackLayout>
+                        </Border>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

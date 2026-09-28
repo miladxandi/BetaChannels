@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BetaChannels.Employer.Pages.Divar.DivarLoginPage"
+             NavigationPage.HasNavigationBar="False">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30,60,30,30" Spacing="0">
+
+            <!-- Logo Section -->
+            <VerticalStackLayout HorizontalOptions="Center" Spacing="15" Margin="0,0,0,40">
+                <Border WidthRequest="80" HeightRequest="80"
+                       StrokeShape="{RoundRectangle CornerRadius=24}"
+                       BackgroundColor="{StaticResource Primary}"
+                       HorizontalOptions="Center">
+                    <Label Text="B" FontSize="40" FontFamily="VazirmatnBold"
+                           TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                </Border>
+                <Label Text="اتصال حساب دیوار" Style="{StaticResource HeadingLabel}"
+                       FontSize="22" HorizontalOptions="Center" />
+            </VerticalStackLayout>
+
+            <!-- Form Card -->
+            <Border Style="{StaticResource CardFrame}">
+                <Grid>
+                    <!-- Loading State -->
+                    <VerticalStackLayout x:Name="LoadingView" VerticalOptions="Center" Padding="40" IsVisible="True">
+                        <Label Text="در حال بارگذاری..." Style="{StaticResource BodyLabel}" HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+
+                    <!-- Connected State -->
+                    <VerticalStackLayout x:Name="ConnectedView" IsVisible="False" Spacing="0">
+                        <VerticalStackLayout HorizontalOptions="Center" Spacing="12" Padding="20">
+                            <Label FontFamily="TablerIconsFilled" Text="&#x101e6;" FontSize="48" TextColor="#4CAF50" HorizontalOptions="Center" />
+                            <Label Text="حساب دیوار متصل است" Style="{StaticResource SubheadingLabel}" HorizontalOptions="Center" />
+                            <Label Text="حساب دیوار شما با موفقیت به بتا چنل متصل شده است. اکنون می‌توانید آمار آگهی‌های خود را مشاهده کنید."
+                                   Style="{StaticResource SecondaryLabel}" HorizontalOptions="Center" HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                        <Button Text="مشاهده آمار آگهی‌ها" Style="{StaticResource FullWidthButton}" Margin="0,24,0,0" Clicked="OnGoToAnalyticsClicked" />
+                        <Button Text="اتصال مجدد" Style="{StaticResource OutlineButton}" HorizontalOptions="Fill" Margin="0,12,0,0" Clicked="OnReconnectClicked" />
+                    </VerticalStackLayout>
+
+                    <!-- Not Connected State -->
+                    <VerticalStackLayout x:Name="NotConnectedView" IsVisible="False" Spacing="0">
+                        <VerticalStackLayout HorizontalOptions="Center" Spacing="12" Padding="20">
+                            <Label FontFamily="TablerIcons" Text="&#xeade;" FontSize="48" TextColor="{StaticResource Primary}" HorizontalOptions="Center" />
+                            <Label Text="اتصال به دیوار" Style="{StaticResource SubheadingLabel}" HorizontalOptions="Center" />
+                            <Label Text="برای مشاهده آمار آگهی‌ها و مدیریت خدمات در بتا چنل، حساب دیوار خود را متصل کنید."
+                                   Style="{StaticResource SecondaryLabel}" HorizontalOptions="Center" HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+
+                        <Border x:Name="ErrorBox" Style="{StaticResource ErrorBox}" IsVisible="False" Padding="12" Margin="0,16,0,0">
+                            <Label x:Name="ErrorLabel" TextColor="{StaticResource Danger}" FontSize="14" FontFamily="Vazirmatn" />
+                        </Border>
+
+                        <Button x:Name="ConnectButton" Text="اتصال حساب دیوار" Style="{StaticResource FullWidthButton}"
+                                Margin="0,24,0,0" Clicked="OnConnectClicked" />
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

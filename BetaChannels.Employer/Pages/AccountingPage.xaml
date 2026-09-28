@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BetaChannels.Employer.Pages.AccountingPage"
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False"
+             FlowDirection="RightToLeft">
+
+    <Grid>
+        <BoxView HeightRequest="180" VerticalOptions="Start" HorizontalOptions="Fill">
+            <BoxView.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#30FF6B35" Offset="0" />
+                    <GradientStop Color="Transparent" Offset="1" />
+                </LinearGradientBrush>
+            </BoxView.Background>
+        </BoxView>
+
+        <ScrollView>
+            <VerticalStackLayout Padding="16,0,16,20" Spacing="16">
+
+                <!-- Header -->
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12" Padding="0,16,0,8">
+                    <Border WidthRequest="44" HeightRequest="44" StrokeShape="{RoundRectangle CornerRadius=12}"
+                            BackgroundColor="{StaticResource Surface}" Stroke="{StaticResource BorderColor}">
+                        <Label FontFamily="TablerIcons" Text="&#xea64;" FontSize="20"
+                               TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                        <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnBackTapped" /></Border.GestureRecognizers>
+                    </Border>
+                    <Label Grid.Column="1" Text="حسابداری و فروش" FontSize="20" FontFamily="VazirmatnBold"
+                           TextColor="{StaticResource TextPrimary}" VerticalOptions="Center" />
+                </Grid>
+
+                <!-- Stats Row -->
+                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10">
+                    <Border Style="{StaticResource StatCard}">
+                        <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                            <Label FontFamily="TablerIconsFilled" Text="&#xfe80;" FontSize="22" TextColor="{StaticResource Primary}" HorizontalOptions="Center" />
+                            <Label Text="۱۲.۵M" FontSize="16" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                            <Label Text="کل فروش" FontSize="10" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border Grid.Column="1" Style="{StaticResource StatCard}">
+                        <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                            <Label FontFamily="TablerIconsFilled" Text="&#x10114;" FontSize="22" TextColor="{StaticResource Success}" HorizontalOptions="Center" />
+                            <Label Text="۲۴" FontSize="16" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                            <Label Text="فاکتورها" FontSize="10" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border Grid.Column="2" Style="{StaticResource StatCard}">
+                        <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                            <Label FontFamily="TablerIconsFilled" Text="&#xfd11;" FontSize="22" TextColor="{StaticResource Warning}" HorizontalOptions="Center" />
+                            <Label Text="۳.۲M" FontSize="16" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
+                            <Label Text="معوق" FontSize="10" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+
+                <!-- Tab Switcher -->
+                <Border Style="{StaticResource CardFrame}" Padding="4">
+                    <Grid ColumnDefinitions="*,*,*">
+                        <Border x:Name="InvoicesTab" BackgroundColor="{StaticResource Primary}"
+                                StrokeShape="{RoundRectangle CornerRadius=14}" Padding="0,10">
+                            <Label Text="فاکتورها" FontSize="12" FontFamily="VazirmatnBold" TextColor="White" HorizontalOptions="Center" />
+                            <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnInvoicesTab" /></Border.GestureRecognizers>
+                        </Border>
+                        <Border x:Name="NetworksTab" Grid.Column="1" BackgroundColor="Transparent"
+                                StrokeShape="{RoundRectangle CornerRadius=14}" Padding="0,10">
+                            <Label Text="گزارش شبکه‌ها" FontSize="12" FontFamily="VazirmatnBold" TextColor="{StaticResource TextSecondary}" HorizontalOptions="Center" />
+                            <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnNetworksTab" /></Border.GestureRecognizers>
+                        </Border>
+                        <Border x:Name="GatewayTab" Grid.Column="2" BackgroundColor="Transparent"
+                                StrokeShape="{RoundRectangle CornerRadius=14}" Padding="0,10">
+                            <Label Text="درگاه پرداخت" FontSize="12" FontFamily="VazirmatnBold" TextColor="{StaticResource TextSecondary}" HorizontalOptions="Center" />
+                            <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnGatewayTab" /></Border.GestureRecognizers>
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <!-- Invoices Section -->
+                <VerticalStackLayout x:Name="InvoicesSection" Spacing="12">
+                    <Border Style="{StaticResource CardFrame}">
+                        <VerticalStackLayout Spacing="12">
+                            <Border Style="{StaticResource SmallCardFrame}" Padding="14">
+                                <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="10">
+                                    <VerticalStackLayout Spacing="4">
+                                        <Label Text="فاکتور #۱۰۲۴" FontSize="14" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" />
+                                        <Label Text="۱۴۰۳/۰۹/۱۵" FontSize="11" Style="{StaticResource CaptionLabel}" />
+                                    </VerticalStackLayout>
+                                    <Label Grid.Column="1" Text="۲,۵۰۰,۰۰۰ ت" FontSize="13" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" VerticalOptions="Center" />
+                                    <Border Grid.Column="2" BackgroundColor="#1F4CAF50" StrokeShape="{RoundRectangle CornerRadius=8}" Padding="10,4">
+                                        <Label Text="پرداخت شده" FontSize="10" TextColor="{StaticResource Success}" />
+                                    </Border>
+                                </Grid>
+                            </Border>
+                            <Border Style="{StaticResource SmallCardFrame}" Padding="14">
+                                <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="10">
+                                    <VerticalStackLayout Spacing="4">
+                                        <Label Text="فاکتور #۱۰۲۳" FontSize="14" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" />
+                                        <Label Text="۱۴۰۳/۰۹/۱۲" FontSize="11" Style="{StaticResource CaptionLabel}" />
+                                    </VerticalStackLayout>
+                                    <Label Grid.Column="1" Text="۱,۸۰۰,۰۰۰ ت" FontSize="13" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" VerticalOptions="Center" />
+                                    <Border Grid.Column="2" BackgroundColor="#1FFFC107" StrokeShape="{RoundRectangle CornerRadius=8}" Padding="10,4">
+                                        <Label Text="در انتظار" FontSize="10" TextColor="{StaticResource Warning}" />
+                                    </Border>
+                                </Grid>
+                            </Border>
+                            <Border Style="{StaticResource SmallCardFrame}" Padding="14">
+                                <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="10">
+                                    <VerticalStackLayout Spacing="4">
+                                        <Label Text="فاکتور #۱۰۲۲" FontSize="14" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" />
+                                        <Label Text="۱۴۰۳/۰۹/۰۸" FontSize="11" Style="{StaticResource CaptionLabel}" />
+                                    </VerticalStackLayout>
+                                    <Label Grid.Column="1" Text="۹۵۰,۰۰۰ ت" FontSize="13" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" VerticalOptions="Center" />
+                                    <Border Grid.Column="2" BackgroundColor="#1F4CAF50" StrokeShape="{RoundRectangle CornerRadius=8}" Padding="10,4">
+                                        <Label Text="پرداخت شده" FontSize="10" TextColor="{StaticResource Success}" />
+                                    </Border>
+                                </Grid>
+                            </Border>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- Networks Report Section (hidden) -->
+                <VerticalStackLayout x:Name="NetworksSection" Spacing="12" IsVisible="False">
+                    <Border Style="{StaticResource CardFrame}">
+                        <VerticalStackLayout Spacing="14">
+                            <Label Text="فروش بر اساس شبکه" Style="{StaticResource SubheadingLabel}" />
+                            <Border Style="{StaticResource SmallCardFrame}" Padding="14">
+                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                                    <Border Grid.Column="0" WidthRequest="40" HeightRequest="40" StrokeShape="{RoundRectangle CornerRadius=12}">
+                                        <Border.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                <GradientStop Color="#833AB4" Offset="0" />
+                                                <GradientStop Color="#FD1D1D" Offset="1" />
+                                            </LinearGradientBrush>
+                                        </Border.Background>
+                                        <Label FontFamily="TablerIconsFilled" Text="&#xfa4a;" FontSize="20" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                                    </Border>
+                                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                        <Label Text="اینستاگرام" FontSize="13" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" />
+                                        <BoxView HeightRequest="6" Color="{StaticResource SurfaceLight}" WidthRequest="120" HorizontalOptions="Start">
+                                            <BoxView.Clip>
+                                                <RoundRectangleGeometry Rect="0,0,96,6" CornerRadius="3" />
+                                            </BoxView.Clip>
+                                        </BoxView>
+                                    </VerticalStackLayout>
+                                    <Label Grid.Column="2" Text="۶.۲M" FontSize="13" FontFamily="VazirmatnBold" TextColor="{StaticResource Primary}" VerticalOptions="Center" />
+                                </Grid>
+                            </Border>
+                            <Border Style="{StaticResource SmallCardFrame}" Padding="14">
+                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                                    <Border Grid.Column="0" WidthRequest="40" HeightRequest="40" StrokeShape="{RoundRectangle CornerRadius=12}" BackgroundColor="#0088cc">
+                                        <Label FontFamily="TablerIconsFilled" Text="&#x101ca;" FontSize="20" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                                    </Border>
+                                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                        <Label Text="تلگرام" FontSize="13" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" />
+                                    </VerticalStackLayout>
+                                    <Label Grid.Column="2" Text="۳.۸M" FontSize="13" FontFamily="VazirmatnBold" TextColor="{StaticResource Primary}" VerticalOptions="Center" />
+                                </Grid>
+                            </Border>
+                            <Border Style="{StaticResource SmallCardFrame}" Padding="14">
+                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                                    <Border Grid.Column="0" WidthRequest="40" HeightRequest="40" StrokeShape="{RoundRectangle CornerRadius=12}" BackgroundColor="{StaticResource Primary}">
+                                        <Label FontFamily="TablerIconsFilled" Text="&#x101c7;" FontSize="20" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                                    </Border>
+                                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                        <Label Text="وب‌سایت" FontSize="13" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" />
+                                    </VerticalStackLayout>
+                                    <Label Grid.Column="2" Text="۲.۵M" FontSize="13" FontFamily="VazirmatnBold" TextColor="{StaticResource Primary}" VerticalOptions="Center" />
+                                </Grid>
+                            </Border>
+                            <Button Text="افزودن شبکه" Style="{StaticResource OutlineButton}" HeightRequest="40" Clicked="OnAddNetworkClicked" />
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- Payment Gateway Section (hidden) -->
+                <VerticalStackLayout x:Name="GatewaySection" Spacing="12" IsVisible="False">
+                    <Border Style="{StaticResource CardFrame}">
+                        <VerticalStackLayout Spacing="14">
+                            <Label Text="تنظیمات درگاه پرداخت" Style="{StaticResource SubheadingLabel}" />
+                            <Border Style="{StaticResource SmallCardFrame}" Padding="14">
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <VerticalStackLayout Spacing="4">
+                                        <Label Text="درگاه زرین‌پال" FontSize="14" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" />
+                                        <Label Text="متصل" FontSize="12" TextColor="{StaticResource Success}" />
+                                    </VerticalStackLayout>
+                                    <Border Grid.Column="1" BackgroundColor="{StaticResource Success}" StrokeShape="{RoundRectangle CornerRadius=10}" Padding="12,6">
+                                        <Label Text="فعال" FontSize="11" FontFamily="VazirmatnBold" TextColor="White" />
+                                    </Border>
+                                </Grid>
+                            </Border>
+                            <Border Style="{StaticResource SmallCardFrame}" Padding="14">
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <VerticalStackLayout Spacing="4">
+                                        <Label Text="درگاه پی‌پینگ" FontSize="14" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" />
+                                        <Label Text="غیرفعال" FontSize="12" TextColor="{StaticResource TextSecondary}" />
+                                    </VerticalStackLayout>
+                                    <Border Grid.Column="1" BackgroundColor="{StaticResource SurfaceLight}" StrokeShape="{RoundRectangle CornerRadius=10}" Padding="12,6"
+                                            Stroke="{StaticResource BorderColor}" StrokeThickness="1">
+                                        <Label Text="فعال‌سازی" FontSize="11" FontFamily="VazirmatnBold" TextColor="{StaticResource TextSecondary}" />
+                                    </Border>
+                                </Grid>
+                            </Border>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Create Invoice FAB -->
+        <Border HorizontalOptions="End" VerticalOptions="End" Margin="20"
+                WidthRequest="56" HeightRequest="56" StrokeShape="{RoundRectangle CornerRadius=16}"
+                BackgroundColor="{StaticResource Primary}">
+            <Label FontFamily="TablerIcons" Text="&#x101ce;" FontSize="24" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+            <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnCreateInvoiceTapped" /></Border.GestureRecognizers>
+        </Border>
+    </Grid>
+</ContentPage>

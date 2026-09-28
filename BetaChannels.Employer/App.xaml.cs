@@ -5,16 +5,16 @@ using Microsoft.Extensions.DependencyInjection;
 namespace BetaChannels.Employer;
 
 /// <summary>
-/// ایونت اتصال موفق دیوار — Blazor component مشترک می‌شود
+/// ایونت اتصال موفق دیوار
 /// </summary>
 public partial class App : Application
 {
     public static event Action? DivarConnected;
 
-    public App()
+    public App(IServiceProvider serviceProvider)
     {
         InitializeComponent();
-        MainPage = new MainPage();
+        MainPage = new AppShell(serviceProvider);
     }
 
     /// <summary>
@@ -48,7 +48,7 @@ public partial class App : Application
                     }
                 }
 
-                // اطلاع به Blazor component از طریق ایونت استاتیک
+                // اطلاع از طریق ایونت استاتیک
                 await MainThread.InvokeOnMainThreadAsync(() =>
                 {
                     DivarConnected?.Invoke();

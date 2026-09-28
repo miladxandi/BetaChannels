@@ -1,5 +1,6 @@
 using BetaChannels.Shared.DTOs;
 using BetaChannels.Shared.Interfaces;
+using BetaChannels.Shared.Services;
 
 namespace BetaChannels.Employer.Services;
 
@@ -8,6 +9,7 @@ public class AppState
     private readonly IAuthService _authService;
     private Guid? _userId;
     private bool _isAuthenticated;
+    private bool _initialized;
 
     public AppState(IAuthService authService)
     {
@@ -28,6 +30,33 @@ public class AppState
 
     public string? UserFullName { get; set; }
 
+    /// <summary>
+    /// بارگذاری وضعیت احراز هویت از حافظه امن (در شروع اپ فراخوانی شود)
+    /// </summary>
+    public async Task InitializeAsync()
+    {
+        if (_initialized) return;
+        _initialized = true;
+
+        if (_authService is AdmetrixAuthService admetrixAuth)
+        {
+            await admetrixAuth.InitializeAsync();
+        }
+
+        _isAuthenticated = await _authService.IsAuthenticatedAsync();
+        _userId = await _authService.GetCurrentUserIdAsync();
+
+        if (_isAuthenticated)
+        {
+            var token = await _authService.GetStoredTokenAsync();
+            if (!string.IsNullOrEmpty(token))
+            {
+                // استخراج نام کاربر از توکن (در صورت وجود)
+                UserFullName = "کارفرما";
+            }
+        }
+    }
+
     public async Task<bool> LoginAsync(LoginDto dto)
     {
         var result = await _authService.LoginAsync(dto);
@@ -35,6 +64,8 @@ public class AppState
         {
             _userId = result.UserId;
             _isAuthenticated = true;
+            if (!string.IsNullOrEmpty(result.Name))
+                UserFullName = result.Name;
         }
         return result.Success;
     }
@@ -46,6 +77,26 @@ public class AppState
         {
             _userId = result.UserId;
             _isAuthenticated = true;
+            if (!string.IsNullOrEmpty(result.Name))
+                UserFullName = result.Name;
+        }
+        return result.Success;
+    }
+
+    public async Task<OtpRequestResultDto> RequestOtpAsync(string phone)
+    {
+        return await _authService.RequestPhoneOtpAsync(phone);
+    }
+
+    public async Task<bool> VerifyOtpAsync(string phone, string code)
+    {
+        var result = await _authService.VerifyPhoneOtpAsync(phone, code);
+        if (result.Success)
+        {
+            _userId = result.UserId;
+            _isAuthenticated = true;
+            if (!string.IsNullOrEmpty(result.Name))
+                UserFullName = result.Name;
         }
         return result.Success;
     }
