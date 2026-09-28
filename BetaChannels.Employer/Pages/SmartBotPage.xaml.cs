@@ -9,7 +9,7 @@ public partial class SmartBotPage : ContentPage
 
     private async void OnBackTapped(object? sender, TappedEventArgs e)
     {
-        await Shell.Current.GoToAsync("..");
+        await Shell.Current.GoToAsync("//main/dashboard");
     }
 
     private async void OnAddReplyClicked(object? sender, EventArgs e)

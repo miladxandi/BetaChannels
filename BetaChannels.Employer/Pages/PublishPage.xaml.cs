@@ -9,7 +9,7 @@ public partial class PublishPage : ContentPage
 
     private async void OnBackTapped(object? sender, TappedEventArgs e)
     {
-        await Shell.Current.GoToAsync("..");
+        await Shell.Current.GoToAsync("//main/dashboard");
     }
 
     private async void OnUploadImageTapped(object? sender, TappedEventArgs e)

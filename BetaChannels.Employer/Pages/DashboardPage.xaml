@@ -26,8 +26,8 @@
         </BoxView>
 
         <!-- Main Content -->
-        <ScrollView x:Name="MainContent">
-            <VerticalStackLayout Padding="0,0,0,10" Spacing="0">
+        <ScrollView x:Name="MainContent" HorizontalOptions="Fill">
+            <VerticalStackLayout Padding="0,0,0,10" Spacing="0" HorizontalOptions="Fill">
 
                 <!-- Top Bar -->
                 <Grid Padding="20,16" ColumnDefinitions="*,Auto">
@@ -38,7 +38,7 @@
                 </Grid>
 
                 <!-- Hero Banner -->
-                <Border Margin="16,0,16,20" Padding="28,24"
+                <Border Margin="16,0,16,20" Padding="20,18"
                        StrokeShape="{RoundRectangle CornerRadius=20}"
                        BackgroundColor="{StaticResource SurfaceCard}">
                     <Border.Stroke>
@@ -48,9 +48,9 @@
                             <GradientStop Color="#FF6B35" Offset="1" />
                         </LinearGradientBrush>
                     </Border.Stroke>
-                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16">
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
                         <VerticalStackLayout Spacing="8" VerticalOptions="Center">
-                            <Label FontSize="24" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}">
+                            <Label FontSize="18" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}">
                                 <Label.FormattedText>
                                     <FormattedString>
                                         <Span Text="رشد " />
@@ -62,13 +62,13 @@
                             <Label Text="با ابزارهای هوشمند و یکپارچه" Style="{StaticResource SecondaryLabel}" FontSize="14" />
                         </VerticalStackLayout>
                         <Label Grid.Column="1" FontFamily="TablerIcons"
-                               Text="&#xec45;" FontSize="80"
+                               Text="&#xec45;" FontSize="48"
                                TextColor="{StaticResource Primary}" VerticalOptions="Center" />
                     </Grid>
                 </Border>
 
-                <!-- Feature Grid 3x3 -->
-                <Grid Padding="16,0" ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="12" RowSpacing="12">
+                <!-- Feature Grid -->
+                <Grid Padding="16,0" ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto" ColumnSpacing="12" RowSpacing="12">
                     <!-- Row 1: مدیریت رشد پیج, ایده میلیونی, ساخت سایت -->
                     <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource SmallCardFrame}" Padding="16,12">
                         <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
@@ -110,7 +110,7 @@
                         </VerticalStackLayout>
                         <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnIdeasTapped" /></Border.GestureRecognizers>
                     </Border>
-                    <Border Grid.Row="0" Grid.Column="2" Style="{StaticResource SmallCardFrame}" Padding="16,12">
+                    <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource SmallCardFrame}" Padding="16,12">
                         <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
                             <Border WidthRequest="56" HeightRequest="56" StrokeShape="{RoundRectangle CornerRadius=16}"
                                     HorizontalOptions="Center" Margin="0,0,0,8">
@@ -131,7 +131,7 @@
                         <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnContentSeoTapped" /></Border.GestureRecognizers>
                     </Border>
                     <!-- Row 2: دیوار, برگزاری کمپین, رشد اجتماعی -->
-                    <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource SmallCardFrame}" Padding="16,12">
+                    <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource SmallCardFrame}" Padding="16,12">
                         <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
                             <Border WidthRequest="56" HeightRequest="56" StrokeShape="{RoundRectangle CornerRadius=14}"
                                     BackgroundColor="#E53935" HorizontalOptions="Center" Margin="0,0,0,8">
@@ -144,7 +144,7 @@
                         </VerticalStackLayout>
                         <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnDivarTapped" /></Border.GestureRecognizers>
                     </Border>
-                    <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource SmallCardFrame}" Padding="16,12">
+                    <Border Grid.Row="2" Grid.Column="0" Style="{StaticResource SmallCardFrame}" Padding="16,12">
                         <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
                             <Border WidthRequest="56" HeightRequest="56" StrokeShape="{RoundRectangle CornerRadius=16}"
                                     HorizontalOptions="Center" Margin="0,0,0,8">
@@ -164,7 +164,7 @@
                         </VerticalStackLayout>
                         <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnAdChannelsTapped" /></Border.GestureRecognizers>
                     </Border>
-                    <Border Grid.Row="1" Grid.Column="2" Style="{StaticResource SmallCardFrame}" Padding="16,12">
+                    <Border Grid.Row="2" Grid.Column="1" Style="{StaticResource SmallCardFrame}" Padding="16,12">
                         <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
                             <Border WidthRequest="56" HeightRequest="56" StrokeShape="{RoundRectangle CornerRadius=16}"
                                     HorizontalOptions="Center" Margin="0,0,0,8">
@@ -185,7 +185,7 @@
                         <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnNetworksTapped" /></Border.GestureRecognizers>
                     </Border>
                     <!-- Row 3: گزارش فروش, تحلیل رقبا, پاسخ هوشمند -->
-                    <Border Grid.Row="2" Grid.Column="0" Style="{StaticResource SmallCardFrame}" Padding="16,12">
+                    <Border Grid.Row="3" Grid.Column="0" Style="{StaticResource SmallCardFrame}" Padding="16,12">
                         <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
                             <Border WidthRequest="56" HeightRequest="56" StrokeShape="{RoundRectangle CornerRadius=16}"
                                     HorizontalOptions="Center" Margin="0,0,0,8">
@@ -204,7 +204,7 @@
                         </VerticalStackLayout>
                         <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnAccountingTapped" /></Border.GestureRecognizers>
                     </Border>
-                    <Border Grid.Row="2" Grid.Column="1" Style="{StaticResource SmallCardFrame}" Padding="16,12">
+                    <Border Grid.Row="3" Grid.Column="1" Style="{StaticResource SmallCardFrame}" Padding="16,12">
                         <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
                             <Border WidthRequest="56" HeightRequest="56" StrokeShape="{RoundRectangle CornerRadius=16}"
                                     HorizontalOptions="Center" Margin="0,0,0,8">
@@ -215,7 +215,7 @@
                                     </LinearGradientBrush>
                                 </Border.Background>
                                 <Label FontFamily="TablerIcons"
-                                       Text="&#xeb35;" FontSize="28"
+                                       Text="&#xeb35;" FontSize="24"
                                        TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
                             </Border>
                             <Label Text="تحلیل رقبا" FontSize="12" FontFamily="VazirmatnBold" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" />
@@ -224,7 +224,7 @@
                         </VerticalStackLayout>
                         <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnCompetitorsTapped" /></Border.GestureRecognizers>
                     </Border>
-                    <Border Grid.Row="2" Grid.Column="2" Style="{StaticResource SmallCardFrame}" Padding="16,12">
+                    <Border Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Center" MaximumWidthRequest="240" Style="{StaticResource SmallCardFrame}" Padding="16,12">
                         <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
                             <Border WidthRequest="56" HeightRequest="56" StrokeShape="{RoundRectangle CornerRadius=16}"
                                     HorizontalOptions="Center" Margin="0,0,0,8">
@@ -255,8 +255,8 @@
                                    TextColor="{StaticResource Primary}" />
                             <Label Text="عملکرد این ماه" Style="{StaticResource SubheadingLabel}" />
                         </HorizontalStackLayout>
-                        <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="10">
-                            <Border Grid.Column="0" Style="{StaticResource StatCard}">
+                        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="10" RowSpacing="10">
+                            <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource StatCard}">
                                 <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
                                     <Border WidthRequest="40" HeightRequest="40" StrokeShape="{RoundRectangle CornerRadius=12}"
                                             HorizontalOptions="Center" Margin="0,0,0,4">
@@ -274,7 +274,7 @@
                                     <Label Text="بازدید" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
                                 </VerticalStackLayout>
                             </Border>
-                            <Border Grid.Column="1" Style="{StaticResource StatCard}">
+                            <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource StatCard}">
                                 <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
                                     <Border WidthRequest="40" HeightRequest="40" StrokeShape="{RoundRectangle CornerRadius=12}"
                                             HorizontalOptions="Center" Margin="0,0,0,4">
@@ -292,7 +292,7 @@
                                     <Label Text="مشتری" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
                                 </VerticalStackLayout>
                             </Border>
-                            <Border Grid.Column="2" Style="{StaticResource StatCard}">
+                            <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource StatCard}">
                                 <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
                                     <Border WidthRequest="40" HeightRequest="40" StrokeShape="{RoundRectangle CornerRadius=12}"
                                             HorizontalOptions="Center" Margin="0,0,0,4">
@@ -310,7 +310,7 @@
                                     <Label Text="فروش" Style="{StaticResource CaptionLabel}" HorizontalOptions="Center" />
                                 </VerticalStackLayout>
                             </Border>
-                            <Border Grid.Column="3" Style="{StaticResource StatCard}">
+                            <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource StatCard}">
                                 <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
                                     <Border WidthRequest="40" HeightRequest="40" StrokeShape="{RoundRectangle CornerRadius=12}"
                                             HorizontalOptions="Center" Margin="0,0,0,4">
@@ -341,15 +341,15 @@
                             <GradientStop Color="#FF4500" Offset="1" />
                         </LinearGradientBrush>
                     </Border.Background>
-                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16">
-                        <HorizontalStackLayout Grid.Column="0" Spacing="14" VerticalOptions="Center">
+                    <Grid RowDefinitions="Auto,Auto" RowSpacing="12">
+                        <HorizontalStackLayout Grid.Row="0" Spacing="6" HorizontalOptions="Center">
                             <Label FontFamily="TablerIcons"
-                                   Text="&#xeb35;" FontSize="28"
+                                   Text="&#xeb35;" FontSize="24"
                                    TextColor="White" VerticalOptions="Center" />
-                            <Label Text="با ما کلیک کسب‌وکار رو&#10;به سطح بعدی برسون!" FontSize="14" FontFamily="VazirmatnBold"
+                            <Label Text="با ما کلیک کسب‌وکار رو به سطح بعدی برسون!" FontSize="13" FontFamily="VazirmatnBold" HorizontalTextAlignment="Center"
                                    TextColor="White" VerticalOptions="Center" />
                         </HorizontalStackLayout>
-                        <Border Grid.Column="1" BackgroundColor="#1a1a2e"
+                        <Border Grid.Row="1" HorizontalOptions="Start" BackgroundColor="#1a1a2e"
                                StrokeShape="{RoundRectangle CornerRadius=12}" Padding="16,10"
                                Stroke="#FF6B35" StrokeThickness="1.5" VerticalOptions="Center">
                             <HorizontalStackLayout Spacing="6">

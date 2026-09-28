@@ -11,7 +11,7 @@ public partial class GrowthManagementPage : ContentPage
 
     private async void OnBackTapped(object? sender, TappedEventArgs e)
     {
-        await Shell.Current.GoToAsync("..");
+        await Shell.Current.GoToAsync("//main/dashboard");
     }
 
     private void OnEmployerTabTapped(object? sender, TappedEventArgs e)
