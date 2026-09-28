@@ -44,7 +44,7 @@
                         <VerticalStackLayout Spacing="2">
                             <Label Text="به‌روزرسانی پروژه‌ها" Style="{StaticResource BodyLabel}" />
                             <Label Text="وضعیت پروژه و پیشنهادهای تازه" Style="{StaticResource CaptionLabel}" />
-                        </VerticalStackLayout>/
+                        </VerticalStackLayout>
                         <Switch x:Name="ProjectsSwitch" Grid.Column="1" Toggled="OnProjectsToggled" OnColor="{StaticResource Success}" />
                     </Grid>
                 </Grid>

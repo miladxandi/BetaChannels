@@ -51,7 +51,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: BetaChannels-Freelancer-Signed-APK
-          path: BetaChannels.Freelancer/bin/Release/net10.0-android/**/*.apk
+          path: BetaChannels.Freelancer/bin/Release/net10.0-android/publish/*.apk
+          retention-days: 3
 
   build-employer:
     name: Build Employer Signed APK
@@ -90,7 +91,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: BetaChannels-Employer-Signed-APK
-          path: BetaChannels.Employer/bin/Release/net10.0-android/**/*.apk
+          path: BetaChannels.Employer/bin/Release/net10.0-android/publish/*.apk
+          retention-days: 3
 
   release:
     name: Attach APKs to Release
